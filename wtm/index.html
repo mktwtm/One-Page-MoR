@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WTM — Merchant of Record for Brazil</title>
-<link rel="icon" href="assets/favicon.svg">
+<link rel="icon" href="assets/submark_color.svg" type="image/svg+xml">
 <link rel="stylesheet" href="colors_and_type.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
@@ -1484,7 +1484,7 @@ a{color:inherit;text-decoration:none}
         <a href="#" data-i18n="footer.terms">Terms of use</a>
         <a href="#" data-i18n="footer.contact">Contact</a>
       </div>
-      <span data-i18n="footer.copy">© 2025 WTM. All rights reserved.</span>
+      <span data-i18n-html="footer.copy">© 2025 WTM. All rights reserved.</span>
     </div>
   </div>
   <div class="footer-base">
@@ -1623,7 +1623,7 @@ a{color:inherit;text-decoration:none}
       'cta.btn1':'Talk to a specialist <i data-lucide="arrow-right"></i>','cta.btn2':'Contact on LinkedIn',
       /* FOOTER */
       'footer.tagline':'empowering expansion.','footer.privacy':'Privacy policy','footer.terms':'Terms of use','footer.contact':'Contact',
-      'footer.copy':'© 2025 WTM. All rights reserved.',
+      'footer.copy':'© YEAR WTM. All rights reserved.',
       'footer.places':'Brazil · USA · Canada · México · Peru · Uruguay · Portugal · UAE',
       'footer.since':'Empowering global business expansion since 2003.',
     },
@@ -1741,7 +1741,7 @@ a{color:inherit;text-decoration:none}
       'cta.btn1':'Falar com especialista <i data-lucide="arrow-right"></i>','cta.btn2':'Contato no LinkedIn',
       /* FOOTER */
       'footer.tagline':'expansão com poder.','footer.privacy':'Política de privacidade','footer.terms':'Termos de uso','footer.contact':'Contato',
-      'footer.copy':'© 2025 WTM. Todos os direitos reservados.',
+      'footer.copy':'© YEAR WTM. Todos os direitos reservados.',
       'footer.places':'Brasil · EUA · Canadá · México · Peru · Uruguai · Portugal · EAU',
       'footer.since':'Impulsionando a expansão global de negócios desde 2003.',
     },
@@ -1859,13 +1859,15 @@ a{color:inherit;text-decoration:none}
       'cta.btn1':'Hablar con especialista <i data-lucide="arrow-right"></i>','cta.btn2':'Contacto en LinkedIn',
       /* FOOTER */
       'footer.tagline':'expansión con poder.','footer.privacy':'Política de privacidad','footer.terms':'Términos de uso','footer.contact':'Contacto',
-      'footer.copy':'© 2025 WTM. Todos los derechos reservados.',
+      'footer.copy':'© YEAR WTM. Todos los derechos reservados.',
       'footer.places':'Brasil · EE.UU. · Canadá · México · Perú · Uruguay · Portugal · EAU',
       'footer.since':'Impulsando la expansión global de negocios desde 2003.',
     }
   };
 
   let currentLang = 'en';
+
+  const YEAR = new Date().getFullYear();
 
   function applyLang(lang) {
     const t = T[lang] || T.en;
@@ -1876,7 +1878,7 @@ a{color:inherit;text-decoration:none}
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
       const k = el.getAttribute('data-i18n-html');
       if (t[k] != null) {
-        el.innerHTML = t[k];
+        el.innerHTML = t[k].replace('YEAR', YEAR);
         if (window.lucide) lucide.createIcons({ nodes: [el] });
       }
     });
