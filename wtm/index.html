@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WTM — Merchant of Record for Brazil</title>
+<link rel="icon" href="assets/favicon.svg">
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+/* ─────────────────────────────────────────────
+   Page-level resets + layout
+   ───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:var(--font-body);font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+:root{
+  --maxw:1200px;
+  --pad:clamp(24px,5vw,72px);
+}
+
+/* lucide sizing */
+[data-lucide]{width:1em;height:1em;stroke-width:2;flex-shrink:0}
+
+/* ─────────────────────────────────────────────
+   Building blocks
+   ───────────────────────────────────────────── */
+.eyebrow{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brand);
+  display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;display:block}
+.eyebrow-light{color:rgba(255,255,255,.78)}
+.eyebrow-violet{color:var(--accent)}
+.eyebrow-danger{color:var(--danger)}
+
+.h-display{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(2.4rem,5.2vw,4.4rem);
+  line-height:1.04;letter-spacing:-.025em;text-wrap:balance;
+}
+.h-section{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(1.9rem,3.4vw,3rem);
+  line-height:1.08;letter-spacing:-.022em;text-wrap:balance;
+}
+.h-card{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:1.1rem;letter-spacing:-.01em;line-height:1.25;
+}
+.lead{
+  font-family:var(--font-body);font-weight:300;
+  font-size:clamp(1.05rem,1.4vw,1.2rem);
+  line-height:1.62;color:var(--fg-muted);
+  text-wrap:pretty;max-width:62ch;
+}
+
+/* tagline / Versatylo lowercase */
+.versatylo{
+  font-family:var(--font-display);font-weight:400;
+  text-transform:lowercase;letter-spacing:-.01em;line-height:.95;
+}
+
+/* Buttons — stadium pill, matching logo letterforms */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-heading);font-weight:600;font-size:14px;
+  letter-spacing:.01em;
+  padding:13px 24px;border-radius:9999px;
+  border:1px solid transparent;cursor:pointer;
+  transition:transform var(--dur-base) var(--ease-out),
+             background var(--dur-base) var(--ease-out),
+             border-color var(--dur-base) var(--ease-out),
+             box-shadow var(--dur-base) var(--ease-out),
+             color var(--dur-base) var(--ease-out);
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:#fff;box-shadow:var(--shadow-accent)}
+.btn-accent:hover{background:var(--accent-hover)}
+.btn-brand{background:var(--brand);color:#fff;box-shadow:var(--shadow-brand)}
+.btn-brand:hover{background:var(--brand-hover)}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--border-strong);background:#fafbfc}
+.btn-light{background:#fff;color:var(--brand)}
+.btn-light:hover{background:var(--bg-soft)}
+.btn-ghost-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost-light:hover{background:rgba(255,255,255,.08);border-color:#fff}
+.btn [data-lucide]{font-size:16px;stroke-width:2.2}
+
+/* shared section frames */
+.section{padding:clamp(80px,9vw,128px) var(--pad)}
+.section-inner{max-width:var(--maxw);margin:0 auto}
+.section-head{margin-bottom:clamp(40px,5vw,64px)}
+.section-head .lead{margin-top:18px}
+.section-head .eyebrow{margin-bottom:18px}
+
+.section-dark{background:var(--wtm-ink);color:#fff}
+.section-dark .h-section,.section-dark h3,.section-dark h4{color:#fff}
+.section-dark .lead{color:rgba(236,236,238,.78)}
+
+.section-deep{
+  background:linear-gradient(180deg,#0F2D3D 0%,var(--wtm-deep-teal) 100%);
+  color:#fff;
+}
+.section-deep .h-section,.section-deep h3,.section-deep h4{color:#fff}
+.section-deep .lead{color:rgba(236,236,238,.85)}
+
+.section-pearl{background:var(--bg-soft)}
+
+/* numbered tag, brand-book convention 01. 02. */
+.num{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:12px;letter-spacing:.18em;color:var(--fg-soft);
+}
+.num-light{color:rgba(255,255,255,.5)}
+
+/* small data pill */
+.data-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-heading);font-weight:500;font-size:11.5px;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 12px;border-radius:9999px;
+  border:1px solid var(--border);background:#fff;color:var(--fg-muted);
+}
+.data-pill.dot::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:currentColor;
+  flex-shrink:0;
+}
+.data-pill-on-dark{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:rgba(236,236,238,.8)}
+.data-pill-violet{color:var(--accent);border-color:rgba(134,62,243,.3);background:rgba(134,62,243,.08)}
+.data-pill-warn{color:var(--warning);border-color:rgba(201,139,27,.3);background:rgba(201,139,27,.08)}
+.data-pill-danger{color:var(--danger);border-color:rgba(194,64,58,.25);background:rgba(194,64,58,.06)}
+.data-pill-ocean{color:var(--wtm-ocean);border-color:rgba(11,108,138,.25);background:rgba(11,108,138,.06)}
+
+/* ─────────────────────────────────────────────
+   NAV
+   ───────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px var(--pad);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px) saturate(1.3);
+  -webkit-backdrop-filter:blur(12px) saturate(1.3);
+  transition:box-shadow var(--dur-base) var(--ease-out),background var(--dur-base) var(--ease-out);
+}
+.nav.scrolled{box-shadow:0 1px 0 var(--border-soft),var(--shadow-xs)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto;gap:32px}
+.nav-logo{display:inline-flex;align-items:center}
+.nav-logo img{height:30px;width:auto}
+.nav-links{display:flex;gap:30px}
+.nav-links a{
+  font-family:var(--font-heading);font-weight:500;font-size:14px;
+  color:var(--fg);letter-spacing:.01em;
+  transition:color var(--dur-base) var(--ease-out);
+}
+.nav-links a:hover{color:var(--wtm-ocean)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-toggle{
+  display:inline-flex;align-items:center;
+  border:1px solid var(--border);border-radius:9999px;padding:4px;
+  font-family:var(--font-heading);font-weight:600;font-size:11px;letter-spacing:.12em;
+}
+.lang-toggle span{padding:4px 10px;border-radius:9999px;color:var(--fg-muted);cursor:pointer}
+.lang-toggle span.on{background:var(--brand);color:#fff}
+
+/* ─────────────────────────────────────────────
+   HERO
+   ───────────────────────────────────────────── */
+.hero{
+  position:relative;overflow:hidden;
+  min-height:88svh;display:flex;align-items:center;
+  padding:clamp(80px,10vw,140px) var(--pad) clamp(80px,8vw,120px);
+  color:#fff;isolation:isolate;
+}
+.hero-photo{
+  position:absolute;inset:0;z-index:-2;
+  background:url("assets/photo_pattern_01.jpg") center/cover no-repeat;
+}
+.hero-scrim{
+  position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(115deg,rgba(5,5,5,.82) 0%,rgba(22,70,93,.78) 50%,rgba(11,108,138,.55) 100%),
+    radial-gradient(ellipse 60% 70% at 85% 30%,rgba(134,62,243,.22) 0%,transparent 60%);
+}
+.hero-inner{max-width:var(--maxw);margin:0 auto;width:100%;position:relative}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--font-heading);font-weight:600;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.78);margin-bottom:32px;
+}
+.hero-eyebrow::before{content:"";width:36px;height:1px;background:rgba(255,255,255,.45);display:block}
+.hero h1{color:#fff;max-width:18ch}
+.hero h1 .accent{color:#A77BFF}
+.hero-lead{
+  color:rgba(236,236,238,.88);max-width:60ch;margin-top:28px;
+  font-size:clamp(1.05rem,1.4vw,1.18rem);font-weight:300;line-height:1.6;
+}
+.hero-tagline{
+  margin-top:32px;color:rgba(255,255,255,.72);font-size:1.5rem;
+}
+.hero-tagline em{color:#fff;font-style:normal}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
+.hero-pills{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;
+}
+
+/* hero strip — kpi row */
+.hero-strip{
+  margin-top:clamp(60px,7vw,96px);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid rgba(255,255,255,.18);
+}
+.hero-strip > div{
+  padding:28px 0;
+  display:flex;flex-direction:column;gap:6px;
+  border-right:1px solid rgba(255,255,255,.12);
+  padding-right:24px;
+}
+.hero-strip > div + div{padding-left:32px}
+.hero-strip > div:last-child{border-right:none}
+.hs-num{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(1.6rem,2.4vw,2.1rem);letter-spacing:-.025em;color:#fff;
+}
+.hs-num span{color:#A77BFF}
+.hs-label{font-size:13px;color:rgba(236,236,238,.72)}
+
+/* ─────────────────────────────────────────────
+   S2 — Tax reality
+   ───────────────────────────────────────────── */
+.s-tax{background:var(--wtm-ink);position:relative;overflow:hidden}
+.s-tax::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 60% at 100% 0%,rgba(11,108,138,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 100%,rgba(134,62,243,.10) 0%,transparent 60%);
+}
+.s-tax .section-inner{position:relative}
+.tax-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:48px}
+
+.tax-block-title{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(236,236,238,.55);margin-bottom:18px;
+}
+.tax-list{display:flex;flex-direction:column}
+.tax-row{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);
+}
+.tax-row:last-child{border-bottom:none}
+.tax-name{font-family:var(--font-heading);font-weight:500;font-size:15px;color:#fff;display:block}
+.tax-note{font-size:13px;color:rgba(236,236,238,.55);margin-top:4px;line-height:1.5}
+.tax-rate{
+  font-family:var(--font-heading);font-weight:600;font-size:15px;
+  color:#E59A8E;white-space:nowrap;
+}
+.tax-rate.warn{color:#E5C27A}
+.tax-foot{margin-top:24px;font-size:13px;color:rgba(236,236,238,.55);line-height:1.6;max-width:50ch}
+
+.vat-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+  border-radius:var(--r-md);padding:32px 28px;
+}
+.vat-title{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(236,236,238,.55);margin-bottom:24px;
+}
+.vat-bars{display:flex;flex-direction:column;gap:24px}
+.vat-bar-label{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:10px;font-size:14px;color:rgba(236,236,238,.78);
+}
+.vat-bar-label b{font-family:var(--font-heading);font-weight:600;font-size:15px}
+.vat-bar-label .now{color:#E5C27A}
+.vat-bar-label .future{color:#E59A8E}
+.vat-bar{height:8px;border-radius:9999px;background:rgba(255,255,255,.08);overflow:hidden}
+.vat-bar-fill{height:100%;border-radius:9999px}
+.vat-bar-now{width:50%;background:linear-gradient(90deg,#C98B1B,#E5C27A)}
+.vat-bar-future{width:100%;background:linear-gradient(90deg,#C2403A,#E59A8E)}
+.vat-foot{
+  margin-top:24px;border-top:1px solid rgba(255,255,255,.10);padding-top:18px;
+  font-size:13px;color:rgba(236,236,238,.55);line-height:1.6;
+}
+
+.expect-card{
+  margin-top:18px;
+  background:rgba(194,64,58,.06);border:1px solid rgba(194,64,58,.22);
+  border-radius:var(--r-md);padding:24px 24px;
+}
+.expect-card .tax-block-title{color:rgba(229,154,142,.85);margin-bottom:14px}
+.expect-list{display:flex;flex-direction:column;gap:10px}
+.expect-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(236,236,238,.75);line-height:1.5;list-style:none}
+.expect-list li [data-lucide]{color:#E59A8E;font-size:14px;margin-top:3px}
+
+/* ─────────────────────────────────────────────
+   S3 — Commercial impact
+   ───────────────────────────────────────────── */
+.s-commercial{background:#fff}
+.commercial-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+
+.kpi-list{margin-top:32px;display:flex;flex-direction:column}
+.kpi-row{
+  display:flex;gap:16px;padding:18px 0;
+  border-bottom:1px solid var(--border-soft);
+}
+.kpi-row:last-child{border-bottom:none}
+.kpi-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:9px}
+.kpi-dot.danger{background:var(--danger)}
+.kpi-dot.warn{background:var(--warning)}
+.kpi-dot.brand{background:var(--brand)}
+.kpi-row p{font-size:15px;line-height:1.6;color:var(--fg-muted)}
+.kpi-row p strong{color:var(--fg);font-weight:600}
+
+.consequence-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.consequence-card{
+  border-radius:var(--r-md);
+  padding:28px 24px;
+  border:1px solid var(--border-soft);
+  background:#fff;
+  transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out);
+  display:flex;flex-direction:column;gap:12px;
+}
+.consequence-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--border)}
+.consequence-card .ic{
+  width:40px;height:40px;border-radius:9999px;
+  display:grid;place-items:center;font-size:18px;
+}
+.consequence-card.cc-teal{background:#F1F8FB;border-color:#D4E8F0}
+.consequence-card.cc-teal .ic{background:#fff;color:var(--wtm-ocean);box-shadow:var(--shadow-xs)}
+.consequence-card.cc-teal .h-card{color:var(--wtm-deep-teal)}
+
+.consequence-card.cc-pearl{background:var(--bg-soft);border-color:var(--border-soft)}
+.consequence-card.cc-pearl .ic{background:#fff;color:var(--fg-muted);box-shadow:var(--shadow-xs)}
+
+.consequence-card.cc-violet{background:#F4ECFD;border-color:#DCC4FB}
+.consequence-card.cc-violet .ic{background:#fff;color:var(--accent);box-shadow:var(--shadow-xs)}
+.consequence-card.cc-violet .h-card{color:var(--wtm-indigo)}
+
+.consequence-card.cc-deep{background:var(--wtm-deep-teal);border-color:var(--wtm-deep-teal)}
+.consequence-card.cc-deep .ic{background:rgba(255,255,255,.12);color:#fff}
+.consequence-card.cc-deep .h-card{color:#fff}
+.consequence-card.cc-deep p{color:rgba(255,255,255,.75)}
+.consequence-card p{font-size:13.5px;line-height:1.6;color:var(--fg-muted)}
+
+/* ─────────────────────────────────────────────
+   S4 — Case studies
+   ───────────────────────────────────────────── */
+.s-case{position:relative;overflow:hidden}
+.s-case::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(134,62,243,.10) 0%,transparent 70%);
+}
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;position:relative}
+
+.case-card{
+  border-radius:var(--r-lg);padding:36px 32px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+  display:flex;flex-direction:column;gap:18px;
+}
+.case-card.violet{
+  background:linear-gradient(155deg,rgba(69,31,119,.45) 0%,rgba(22,70,93,.4) 100%);
+  border-color:rgba(134,62,243,.25);
+}
+.case-head{display:flex;align-items:center;gap:14px}
+.case-ic{
+  width:44px;height:44px;border-radius:9999px;
+  display:grid;place-items:center;font-size:18px;
+}
+.case-ic.danger{background:rgba(194,64,58,.14);color:#E59A8E;border:1px solid rgba(194,64,58,.3)}
+.case-ic.violet{background:rgba(134,62,243,.18);color:#C8A8FF;border:1px solid rgba(134,62,243,.35)}
+.case-head h4{font-family:var(--font-heading);font-weight:600;font-size:1.05rem;color:#fff}
+.case-head .case-meta{
+  display:block;margin-top:3px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  font-family:var(--font-heading);color:rgba(255,255,255,.5);
+}
+.case-stat{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(2rem,3.5vw,3.2rem);letter-spacing:-.03em;color:#E59A8E;line-height:1;
+}
+.case-stat.smaller{font-size:1.6rem}
+.case-stat-label{font-size:13.5px;color:rgba(236,236,238,.65);line-height:1.5}
+.case-lessons{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.case-lessons .lesson{
+  display:flex;align-items:flex-start;gap:12px;font-size:13.5px;
+  color:rgba(236,236,238,.7);line-height:1.55;
+}
+.case-lessons .lesson .num{color:rgba(255,255,255,.4);margin-top:2px;flex-shrink:0}
+
+.case-card.violet blockquote{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:clamp(1.1rem,1.7vw,1.35rem);line-height:1.32;letter-spacing:-.015em;
+  color:rgba(255,255,255,.92);
+}
+.case-card.violet blockquote em{font-style:normal;color:#C8A8FF}
+.case-quote-sub{font-size:14px;color:rgba(236,236,238,.65);line-height:1.6}
+.case-card .case-divider{
+  border-top:1px solid rgba(255,255,255,.10);padding-top:22px;margin-top:6px;
+  display:flex;flex-direction:column;gap:14px;
+}
+
+/* ─────────────────────────────────────────────
+   S5 — Transition quote (Versatylo lockup)
+   ───────────────────────────────────────────── */
+.s-quote{
+  background:var(--wtm-ink);position:relative;overflow:hidden;
+  padding:clamp(80px,10vw,140px) var(--pad);
+  color:#fff;text-align:center;
+}
+.s-quote::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(134,62,243,.22) 0%,transparent 65%);
+}
+.s-quote .section-inner{position:relative;max-width:920px}
+.s-quote-mark{
+  width:64px;height:64px;border-radius:9999px;margin:0 auto 32px;
+  display:grid;place-items:center;
+  background:rgba(134,62,243,.14);border:1px solid rgba(134,62,243,.32);
+}
+.s-quote-mark img{width:32px;height:32px;filter:brightness(1.4)}
+.s-quote .versatylo{
+  font-size:clamp(2rem,5vw,4.5rem);
+  color:rgba(255,255,255,.6);
+}
+.s-quote .versatylo .high{color:#fff}
+.s-quote .versatylo .accent{color:#A77BFF}
+
+/* ─────────────────────────────────────────────
+   S6 — Solution / MoR diagram
+   ───────────────────────────────────────────── */
+.s-solution{background:var(--bg-soft)}
+.solution-tagline{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fff;border:1px solid var(--border-soft);
+  padding:10px 18px;border-radius:9999px;margin-top:28px;
+  font-family:var(--font-heading);font-weight:600;font-size:14px;
+  color:var(--accent);
+}
+.solution-tagline [data-lucide]{font-size:16px}
+
+.mor-diagram{
+  margin-top:48px;
+  display:grid;grid-template-columns:1fr 64px 1.2fr 64px 1fr;
+  align-items:stretch;
+  border-radius:var(--r-lg);overflow:hidden;
+  background:#fff;border:1px solid var(--border-soft);
+  box-shadow:var(--shadow-md);
+}
+.mor-col{padding:36px 28px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.mor-col-label{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--fg-soft);
+}
+.mor-col h4{font-family:var(--font-heading);font-weight:700;font-size:1.4rem;letter-spacing:-.02em;color:var(--brand)}
+.mor-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.mor-col li{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.45;color:var(--fg-muted)}
+.mor-col li::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--brand);margin-top:9px;flex-shrink:0;opacity:.5}
+.mor-col.buyer,.mor-col.seller{background:#fff}
+.mor-col.wtm{
+  background:linear-gradient(160deg,#0F2D3D 0%,var(--wtm-deep-teal) 100%);
+  position:relative;overflow:hidden;color:#fff;
+}
+.mor-col.wtm::before{
+  content:"";position:absolute;top:-100px;right:-100px;width:260px;height:260px;
+  background:radial-gradient(circle,rgba(134,62,243,.28) 0%,transparent 65%);
+}
+.mor-col.wtm .mor-col-label{color:#A8DCE8}
+.mor-col.wtm h4{color:#fff;font-size:1.6rem}
+.mor-col.wtm li{color:rgba(255,255,255,.78)}
+.mor-col.wtm li::before{background:#A77BFF;opacity:.9}
+.mor-col.wtm .wtm-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(134,62,243,.22);border:1px solid rgba(134,62,243,.42);
+  padding:6px 14px;border-radius:9999px;
+  font-family:var(--font-heading);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:#D4BAFF;position:relative;z-index:1;
+}
+.mor-col.wtm .wtm-badge::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:#A77BFF;
+  box-shadow:0 0 0 4px rgba(167,123,255,.25);
+}
+.mor-arrow{
+  display:grid;place-items:center;background:var(--bg-soft);
+}
+.mor-arrow span{
+  width:36px;height:36px;border-radius:9999px;background:#fff;
+  display:grid;place-items:center;color:var(--brand);
+  box-shadow:var(--shadow-sm);
+}
+
+/* ─────────────────────────────────────────────
+   S7 — Compare
+   ───────────────────────────────────────────── */
+.s-compare{background:#fff}
+.compare-wrap{margin-top:48px;border:1px solid var(--border-soft);border-radius:var(--r-lg);overflow:hidden}
+.compare-header,.compare-row{
+  display:grid;grid-template-columns:1.6fr 1fr 1fr;
+}
+.compare-header{
+  background:var(--bg-soft);border-bottom:1px solid var(--border-soft);
+}
+.compare-header > div{
+  padding:18px 24px;
+  font-family:var(--font-heading);font-weight:600;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+}
+.compare-header .h-without{color:var(--fg-muted)}
+.compare-header .h-with{color:var(--brand)}
+.compare-row{border-bottom:1px solid var(--border-soft)}
+.compare-row:last-child{border-bottom:none}
+.compare-row > div{padding:20px 24px;font-size:14.5px;line-height:1.5}
+.cr-topic{
+  font-family:var(--font-heading);font-weight:600;font-size:14.5px;color:var(--fg);
+  display:flex;align-items:center;
+}
+.cr-without{color:var(--fg-muted);background:#fff;border-left:1px solid var(--border-soft)}
+.cr-with{color:var(--fg);background:#F1F8FB;border-left:1px solid var(--border-soft)}
+.cr-without [data-lucide]{color:var(--danger);font-size:16px;margin-right:8px;vertical-align:-3px}
+.cr-with [data-lucide]{color:var(--success);font-size:16px;margin-right:8px;vertical-align:-3px}
+
+/* ─────────────────────────────────────────────
+   S8 — Benefits
+   ───────────────────────────────────────────── */
+.s-benefits{background:var(--bg-soft)}
+.benefits-grid{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.benefit-card{
+  background:#fff;border:1px solid var(--border-soft);border-radius:var(--r-md);
+  padding:32px 26px;display:flex;flex-direction:column;gap:14px;
+  position:relative;overflow:hidden;
+  transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out);
+}
+.benefit-card::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform var(--dur-slow) var(--ease-out);
+}
+.benefit-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border)}
+.benefit-card:hover::after{transform:scaleX(1)}
+.benefit-card .ic{
+  width:48px;height:48px;border-radius:9999px;
+  display:grid;place-items:center;font-size:20px;color:var(--brand);
+}
+.benefit-card .ic.teal{background:#E6F2F6}
+.benefit-card .ic.deep{background:#E1ECF1}
+.benefit-card .ic.violet{background:#F1E6FF;color:var(--accent)}
+.benefit-card .ic.green{background:#E2F4EA;color:var(--success)}
+.benefit-card p{font-size:14px;line-height:1.6;color:var(--fg-muted)}
+
+/* ─────────────────────────────────────────────
+   S9 — Action steps
+   ───────────────────────────────────────────── */
+.s-action{
+  background:linear-gradient(180deg,#0F2D3D 0%,var(--wtm-deep-teal) 100%);color:#fff;
+}
+.action-grid{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.action-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+  border-radius:var(--r-md);padding:28px 26px;
+  display:flex;flex-direction:column;gap:10px;
+  transition:background var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out);
+}
+.action-card:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18)}
+.action-card .step{
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;color:#A8DCE8;
+}
+.action-card h4{font-family:var(--font-heading);font-weight:600;font-size:1rem;color:#fff;letter-spacing:-.005em}
+.action-card p{font-size:13.5px;line-height:1.6;color:rgba(236,236,238,.7)}
+
+/* ─────────────────────────────────────────────
+   S10 — Globe / global presence
+   ───────────────────────────────────────────── */
+.s-globe{background:var(--wtm-ink);position:relative;overflow:hidden}
+.s-globe::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 60% at 25% 70%,rgba(11,108,138,.18) 0%,transparent 65%),
+    radial-gradient(ellipse 40% 50% at 75% 35%,rgba(134,62,243,.10) 0%,transparent 60%);
+}
+.s-globe .section-inner{position:relative}
+.globe-head{max-width:660px;margin-bottom:48px}
+
+.globe-frame{
+  border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);
+  background:rgba(255,255,255,.02);overflow:hidden;
+}
+.globe-svg{display:block;width:100%;height:auto}
+.pin-label{
+  font-family:"Work Sans",sans-serif;font-size:10px;font-weight:600;
+  fill:rgba(236,236,238,.85);letter-spacing:.12em;text-transform:uppercase;
+}
+.pin-label.violet{fill:#C8A8FF}
+.pin-label.hero{font-size:11px;fill:#fff}
+.pin-label-sub{
+  font-family:"Work Sans",sans-serif;font-size:8px;font-weight:500;
+  fill:rgba(167,123,255,.8);letter-spacing:.18em;text-transform:uppercase;
+}
+@keyframes pinPulse    { 0% { r: 14; opacity: .55; } 70% { r: 28; opacity: 0; } 100% { r: 28; opacity: 0; } }
+@keyframes pinPulseBig { 0% { r: 22; opacity: .6;  } 70% { r: 44; opacity: 0; } 100% { r: 44; opacity: 0; } }
+.pin-ring{animation:pinPulse 3s ease-out infinite}
+.pin-ring-2{animation:pinPulse 3s ease-out 1.4s infinite}
+[data-loc="brazil"] .pin-ring{animation:pinPulseBig 2.6s ease-out infinite}
+[data-loc="canada"] .pin-ring{animation-delay:.4s}
+[data-loc="mexico"] .pin-ring{animation-delay:.8s}
+[data-loc="peru"] .pin-ring{animation-delay:1.2s}
+[data-loc="uruguay"] .pin-ring{animation-delay:1.6s}
+[data-loc="portugal"] .pin-ring{animation-delay:.6s}
+[data-loc="uae"] .pin-ring{animation-delay:1s}
+
+.globe-pills{
+  display:flex;flex-wrap:wrap;gap:10px;
+  padding:22px 28px;border-top:1px solid rgba(255,255,255,.08);
+}
+.g-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 16px;border-radius:9999px;
+  font-family:var(--font-heading);font-weight:600;font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+  color:rgba(236,236,238,.78);
+  transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out);
+}
+.g-pill:hover{background:rgba(255,255,255,.08);color:#fff}
+.g-pill.active{
+  background:rgba(134,62,243,.18);border-color:rgba(134,62,243,.4);color:#D4BAFF;
+}
+
+/* ─────────────────────────────────────────────
+   S11 — CTA
+   ───────────────────────────────────────────── */
+.s-cta{
+  position:relative;overflow:hidden;text-align:center;
+  padding:clamp(100px,11vw,160px) var(--pad);
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse 60% 70% at 20% 30%,rgba(134,62,243,.45) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 60% at 80% 80%,rgba(11,108,138,.55) 0%,transparent 65%),
+    linear-gradient(160deg,#0F2D3D 0%,var(--wtm-deep-teal) 45%,#1F1240 100%);
+  color:#fff;
+}
+.s-cta-photo{
+  position:absolute;inset:0;z-index:-2;
+  background:url("assets/photo_pattern_05.jpg") center/cover no-repeat;
+  opacity:.18;mix-blend-mode:luminosity;
+}
+.s-cta-scrim{
+  position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,transparent 0%,rgba(5,5,5,.4) 100%);
+}
+.s-cta .section-inner{max-width:760px;color:#fff;position:relative;z-index:1}
+.s-cta .versatylo{
+  font-size:clamp(2.2rem,5vw,4rem);color:#fff;margin-bottom:20px;
+}
+.s-cta .versatylo .accent{color:#A77BFF}
+.s-cta .lead{color:rgba(236,236,238,.85);margin:0 auto;max-width:60ch}
+.cta-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  border:1px solid rgba(255,255,255,.18);border-radius:var(--r-md);overflow:hidden;
+  margin:48px 0;
+}
+.cta-stat{padding:24px 18px;border-right:1px solid rgba(255,255,255,.18);text-align:center}
+.cta-stat:last-child{border-right:none}
+.cta-stat-num{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(1.6rem,2.4vw,2.2rem);letter-spacing:-.025em;color:#fff;display:block;
+  line-height:1;
+}
+.cta-stat-num span{color:#A77BFF}
+.cta-stat-label{font-size:12px;color:rgba(236,236,238,.72);letter-spacing:.06em;margin-top:6px;display:block}
+.cta-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.trust-row{
+  display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:40px;
+}
+.trust-avatar{
+  width:36px;height:36px;border-radius:9999px;border:2px solid var(--wtm-ink);
+  background:linear-gradient(135deg,var(--wtm-deep-teal),var(--accent));
+  display:grid;place-items:center;
+  font-family:var(--font-heading);font-weight:700;font-size:11px;color:#fff;
+  margin-left:-10px;
+}
+.trust-avatar:first-child{margin-left:0}
+.trust-text{margin-left:8px;font-size:13px;color:rgba(236,236,238,.78)}
+.trust-text strong{color:#fff;font-weight:600}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+   ───────────────────────────────────────────── */
+.footer{
+  background:var(--wtm-ink);color:#fff;
+  padding:64px var(--pad) 32px;
+}
+.footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:48px;flex-wrap:wrap}
+.footer-brand{display:flex;flex-direction:column;gap:14px;max-width:320px}
+.footer-brand img{height:30px;width:auto}
+.footer-brand .versatylo{font-size:1.5rem;color:rgba(255,255,255,.85)}
+.footer-meta{display:flex;flex-direction:column;gap:14px;align-items:flex-end;font-size:13px;color:rgba(236,236,238,.5)}
+.footer-links{display:flex;gap:22px}
+.footer-links a{font-family:var(--font-heading);font-weight:500;font-size:13px;color:rgba(236,236,238,.55);transition:color var(--dur-base) var(--ease-out)}
+.footer-links a:hover{color:#fff}
+.footer-base{
+  max-width:var(--maxw);margin:32px auto 0;padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:flex;justify-content:space-between;font-size:12px;color:rgba(236,236,238,.4);flex-wrap:wrap;gap:8px;
+}
+
+/* ─────────────────────────────────────────────
+   Reveal animations
+   ───────────────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+
+@keyframes heroFadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-eyebrow{animation:heroFadeUp .6s .1s var(--ease-out) both}
+.hero h1{animation:heroFadeUp .6s .22s var(--ease-out) both}
+.hero-lead{animation:heroFadeUp .6s .34s var(--ease-out) both}
+.hero-tagline{animation:heroFadeUp .6s .42s var(--ease-out) both}
+.hero-actions{animation:heroFadeUp .6s .54s var(--ease-out) both}
+.hero-pills{animation:heroFadeUp .6s .62s var(--ease-out) both}
+.hero-strip{animation:heroFadeUp .6s .74s var(--ease-out) both}
+
+/* ─────────────────────────────────────────────
+   Responsive
+   ───────────────────────────────────────────── */
+@media (max-width:1024px){
+  .tax-grid,.commercial-grid,.case-grid{grid-template-columns:1fr;gap:48px}
+  .benefits-grid{grid-template-columns:repeat(2,1fr)}
+  .action-grid{grid-template-columns:repeat(2,1fr)}
+  .mor-diagram{grid-template-columns:1fr;}
+  .mor-arrow{padding:14px 0}
+  .mor-arrow span{transform:rotate(90deg)}
+  .nav-links{display:none}
+}
+@media (max-width:720px){
+  .hero-strip{grid-template-columns:1fr}
+  .hero-strip > div{border-right:none;border-bottom:1px solid rgba(255,255,255,.12);padding-left:0!important}
+  .consequence-cards{grid-template-columns:1fr}
+  .benefits-grid{grid-template-columns:1fr}
+  .action-grid{grid-template-columns:1fr}
+  .compare-header{display:none}
+  .compare-row{grid-template-columns:1fr;border-bottom:1px solid var(--border-soft);padding:8px 0}
+  .compare-row > div{padding:12px 18px}
+  .cr-without,.cr-with{border-left:none;border-top:1px solid var(--border-soft)}
+  .cta-stats{grid-template-columns:1fr}
+  .cta-stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.18)}
+  .cta-stat:last-child{border-bottom:none}
+  .footer-inner,.footer-meta{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo" aria-label="WTM home">
+      <img src="assets/wtm_color.svg" alt="WTM">
+    </a>
+    <div class="nav-links">
+      <a href="#tax">Tax reform</a>
+      <a href="#solution">Solution</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#next-steps">Next steps</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <span class="on">EN</span><span>PT</span>
+      </div>
+      <a href="#cta" class="btn btn-brand" style="padding:10px 20px;font-size:13px">Talk to a specialist</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-photo"></div>
+  <div class="hero-scrim"></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Brazil tax reform &middot; SaaS, AI &amp; cloud &middot; 2025–2033</div>
+
+    <h1 class="h-display">
+      Your current go-to-market for Brazil may not survive the <span class="accent">new tax model.</span>
+    </h1>
+
+    <p class="hero-lead">
+      Brazil is moving from a market where cross-border SaaS non-compliance was often invisible, to a market where tax friction can directly affect sales, renewals, expansion and customer experience. The 2027 transition has already started.
+    </p>
+
+    <p class="hero-tagline versatylo">
+      empowering expansion. <em>without the tax surprise.</em>
+    </p>
+
+    <div class="hero-actions">
+      <a href="#cta" class="btn btn-accent">Talk to a specialist <i data-lucide="arrow-right"></i></a>
+      <a href="#tax" class="btn btn-ghost-light">Understand your exposure</a>
+    </div>
+
+    <div class="hero-pills">
+      <span class="data-pill data-pill-on-dark"><span class="dot" style="background:#E59A8E"></span>Revenue risk</span>
+      <span class="data-pill data-pill-on-dark"><span class="dot" style="background:#E5C27A"></span>Churn exposure</span>
+      <span class="data-pill data-pill-on-dark"><span class="dot" style="background:#A77BFF"></span>Provider liability</span>
+      <span class="data-pill data-pill-on-dark"><span class="dot" style="background:#A8DCE8"></span>CAC pressure</span>
+    </div>
+
+    <div class="hero-strip">
+      <div>
+        <span class="hs-num">4,000<span>+</span></span>
+        <span class="hs-label">Companies expanded through WTM</span>
+      </div>
+      <div>
+        <span class="hs-num">20<span>+</span></span>
+        <span class="hs-label">Years of cross-border expertise</span>
+      </div>
+      <div>
+        <span class="hs-num">2027</span>
+        <span class="hs-label">When enforcement materially increases</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S2 — TAX REALITY
+     ═══════════════════════════════════════════════ -->
+<section class="section s-tax" id="tax">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow eyebrow-light" style="color:#E59A8E">The tax reality</div>
+      <h2 class="h-section" style="color:#fff;margin-top:18px">
+        Brazil's tax layer is larger than your customers realize — and it's about to grow.
+      </h2>
+      <p class="lead">
+        When a Brazilian company buys SaaS from a foreign supplier, it typically sees only the subscription price, the exchange rate, and an IOF charge. The full picture is far more complex.
+      </p>
+    </div>
+
+    <div class="tax-grid">
+      <div class="reveal d1">
+        <div class="tax-block-title">Current obligations on your Brazilian customers</div>
+        <div class="tax-list">
+          <div class="tax-row">
+            <div>
+              <span class="tax-name">IOF — Foreign exchange tax</span>
+              <span class="tax-note">Automatically charged by bank or card issuer</span>
+            </div>
+            <span class="tax-rate">3.50%</span>
+          </div>
+          <div class="tax-row">
+            <div>
+              <span class="tax-name">IRRF — Withholding income tax</span>
+              <span class="tax-note">On most international outbound payments</span>
+            </div>
+            <span class="tax-rate">up to 33%</span>
+          </div>
+          <div class="tax-row">
+            <div>
+              <span class="tax-name">CIDE — Contribution on technology</span>
+              <span class="tax-note">Royalties, technical services, software remittances — reinforced by the Netflix/CIDE precedent</span>
+            </div>
+            <span class="tax-rate">10%</span>
+          </div>
+          <div class="tax-row">
+            <div>
+              <span class="tax-name">PIS-importation</span>
+              <span class="tax-note">Federal social contribution on imports</span>
+            </div>
+            <span class="tax-rate">1.65%</span>
+          </div>
+          <div class="tax-row">
+            <div>
+              <span class="tax-name">COFINS-importation</span>
+              <span class="tax-note">Federal social contribution on imports</span>
+            </div>
+            <span class="tax-rate">7.60%</span>
+          </div>
+          <div class="tax-row">
+            <div>
+              <span class="tax-name">ISS-importation</span>
+              <span class="tax-note">Municipal service tax on imported services</span>
+            </div>
+            <span class="tax-rate">2%–5%</span>
+          </div>
+          <div class="tax-row">
+            <div>
+              <span class="tax-name">Reporting obligations</span>
+              <span class="tax-note">REINF, DCTFWeb / MIT, corporate tax reporting</span>
+            </div>
+            <span class="tax-rate warn">Monthly</span>
+          </div>
+        </div>
+        <p class="tax-foot">
+          Many buyers do not handle these obligations correctly, creating a market distortion: foreign SaaS looked cheaper than it really was because customers were not internalizing the full tax burden.
+        </p>
+      </div>
+
+      <div class="reveal d2">
+        <div class="vat-card">
+          <div class="vat-title">Indirect tax layer — current vs. future reform</div>
+          <div class="vat-bars">
+            <div>
+              <div class="vat-bar-label">
+                <span>Current indirect layer (PIS + COFINS + ISS)</span>
+                <b class="now">~14.25%</b>
+              </div>
+              <div class="vat-bar"><div class="vat-bar-fill vat-bar-now"></div></div>
+            </div>
+            <div>
+              <div class="vat-bar-label">
+                <span>Expected dual VAT layer (CBS + IBS)</span>
+                <b class="future">~25–28%</b>
+              </div>
+              <div class="vat-bar"><div class="vat-bar-fill vat-bar-future"></div></div>
+            </div>
+          </div>
+          <p class="vat-foot">
+            IRRF, IOF and CIDE remain relevant alongside the new VAT structure. Foreign sellers will need to support compliance directly or through reliable local partners. Under the new VAT environment, taxes become more visible, more enforceable, and more important for customers that want to generate credits.
+          </p>
+        </div>
+
+        <div class="expect-card">
+          <div class="tax-block-title">From 2027 onward, expect</div>
+          <ul class="expect-list">
+            <li><i data-lucide="arrow-right"></i> Higher tax visibility and digital reporting</li>
+            <li><i data-lucide="arrow-right"></i> Broader cross-checking of international payments</li>
+            <li><i data-lucide="arrow-right"></i> Stronger buyer-side pressure for compliant invoices</li>
+            <li><i data-lucide="arrow-right"></i> CFO, tax and procurement teams demanding local billing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S3 — COMMERCIAL CONSEQUENCES
+     ═══════════════════════════════════════════════ -->
+<section class="section s-commercial">
+  <div class="section-inner">
+    <div class="commercial-grid">
+      <div class="reveal">
+        <div class="eyebrow">Commercial impact</div>
+        <h2 class="h-section" style="margin-top:18px">
+          This is not a tax department problem. It is a revenue problem.
+        </h2>
+        <p class="lead">
+          A U.S. SaaS vendor may think: "this is a Brazilian tax issue. My customer must deal with it." That may be true legally — but commercially, it is incomplete.
+        </p>
+
+        <div class="kpi-list">
+          <div class="kpi-row">
+            <span class="kpi-dot danger"></span>
+            <p>When the Brazilian customer's tax cost increases, your <strong>churn rate rises</strong> — customers cancel, downgrade or migrate to locally compliant vendors.</p>
+          </div>
+          <div class="kpi-row">
+            <span class="kpi-dot danger"></span>
+            <p><strong>CAC increases</strong> as sales teams spend more time overcoming procurement and tax objections before closing.</p>
+          </div>
+          <div class="kpi-row">
+            <span class="kpi-dot warn"></span>
+            <p><strong>Expansion revenue slows</strong> — customers avoid adding seats, tokens or usage when total tax cost becomes unpredictable.</p>
+          </div>
+          <div class="kpi-row">
+            <span class="kpi-dot warn"></span>
+            <p><strong>Enterprise deals stall</strong> — larger customers require local invoices and tax-compliant documentation before signing.</p>
+          </div>
+          <div class="kpi-row">
+            <span class="kpi-dot brand"></span>
+            <p>Local billing with WTM <strong>turns compliance into a growth lever</strong> — a structured, local buying experience that improves NRR and conversion.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="consequence-cards reveal d2">
+        <div class="consequence-card cc-teal">
+          <span class="ic"><i data-lucide="trending-down"></i></span>
+          <h3 class="h-card">Churn risk</h3>
+          <p>Customers may cancel, downgrade or migrate to locally compliant alternatives as tax costs become visible.</p>
+        </div>
+        <div class="consequence-card cc-pearl">
+          <span class="ic"><i data-lucide="repeat"></i></span>
+          <h3 class="h-card">CAC pressure</h3>
+          <p>Longer sales cycles driven by procurement and tax objections translate directly into higher acquisition costs.</p>
+        </div>
+        <div class="consequence-card cc-violet">
+          <span class="ic"><i data-lucide="file-x-2"></i></span>
+          <h3 class="h-card">RFP disqualification</h3>
+          <p>Without local invoicing capability, you may be eliminated from enterprise procurement processes before negotiations begin.</p>
+        </div>
+        <div class="consequence-card cc-deep">
+          <span class="ic"><i data-lucide="alert-triangle"></i></span>
+          <h3 class="h-card">Provider liability</h3>
+          <p>As the Netflix/CIDE precedent shows, tax issues in Brazil can escalate to earnings-level events and board-level risk.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S4 — CASE STUDIES
+     ═══════════════════════════════════════════════ -->
+<section class="section section-dark s-case">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="color:#E59A8E">Real precedents</div>
+      <h2 class="h-section" style="margin-top:18px">
+        The companies that ignored Brazil's tax exposure learned it on their earnings call.
+      </h2>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-card reveal d1">
+        <div class="case-head">
+          <span class="case-ic danger"><i data-lucide="zap"></i></span>
+          <div>
+            <h4>Netflix &amp; CIDE</h4>
+            <span class="case-meta">Earnings impact &middot; Global investor event</span>
+          </div>
+        </div>
+        <div class="case-stat">$619M</div>
+        <p class="case-stat-label">Tax-related expense connected to a dispute with Brazilian tax authorities, contributing to a major stock market reaction.</p>
+        <div class="case-stat smaller">~10% drop</div>
+        <p class="case-stat-label">Share price decline in a single trading session, representing approximately USD 33 billion in market value impact.</p>
+        <div class="case-lessons">
+          <div class="lesson"><span class="num num-light">01.</span><span>Brazil tax issues can become earnings issues.</span></div>
+          <div class="lesson"><span class="num num-light">02.</span><span>Brazil tax issues can become investor-relations issues.</span></div>
+          <div class="lesson"><span class="num num-light">03.</span><span>Board-level visibility increases once the exposure becomes material.</span></div>
+        </div>
+      </div>
+
+      <div class="case-card violet reveal d2">
+        <div class="case-head">
+          <span class="case-ic violet"><i data-lucide="scale"></i></span>
+          <div>
+            <h4>Apple / App Store precedent</h4>
+            <span class="case-meta">Substance over form</span>
+          </div>
+        </div>
+        <blockquote>
+          Brazilian authorities may look beyond labels such as <em>"payment facilitator"</em> or <em>"marketplace"</em> and analyze the economic substance of the flow.
+        </blockquote>
+        <p class="case-quote-sub">The questions regulators ask: who charges the customer? Who is effectively responsible for the Brazilian tax treatment? Can the current structure withstand local scrutiny?</p>
+
+        <div class="case-divider">
+          <div class="eyebrow eyebrow-light" style="color:rgba(255,255,255,.5)">The lesson for every U.S. SaaS company</div>
+          <p style="font-size:14.5px;color:rgba(236,236,238,.7);line-height:1.65">
+            Brazilian tax issues are no longer just local compliance problems. They can become earnings problems, investor-relations problems and board-level risk events — especially when Brazilian revenue grows but the vendor remains non-localized for billing and tax purposes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S5 — TRANSITION QUOTE (Versatylo lockup)
+     ═══════════════════════════════════════════════ -->
+<section class="s-quote">
+  <div class="section-inner reveal">
+    <div class="s-quote-mark">
+      <img src="assets/submark_light.svg" alt="">
+    </div>
+    <p class="versatylo">
+      <span class="high">you do not just need tax support.</span><br>
+      <span class="accent">you need the transaction to work.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S6 — SOLUTION
+     ═══════════════════════════════════════════════ -->
+<section class="section s-solution" id="solution">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow">WTM Merchant of Record</div>
+      <h2 class="h-section" style="margin-top:18px">
+        A Merchant of Record built for both sides of the transaction.
+      </h2>
+      <p class="lead">
+        WTM operates as your local Merchant of Record in Brazil, removing tax, payment and compliance complexity from your operation and from your customer's buying process. The solution is not simply to pay more tax — it is to design a compliant buying experience.
+      </p>
+      <div class="solution-tagline">
+        <i data-lucide="sparkles"></i>
+        Most MoRs solve your problem. WTM solves the transaction.
+      </div>
+    </div>
+
+    <div class="mor-diagram reveal d2">
+      <div class="mor-col buyer">
+        <span class="mor-col-label">01. Buyer</span>
+        <h4>Brazilian customer</h4>
+        <ul>
+          <li>Buys locally, in BRL</li>
+          <li>Receives a compliant Nota Fiscal</li>
+          <li>Generates CBS/IBS tax credits</li>
+          <li>Predictable total cost</li>
+          <li>No internal tax friction</li>
+        </ul>
+      </div>
+      <div class="mor-arrow"><span><i data-lucide="arrow-right"></i></span></div>
+      <div class="mor-col wtm">
+        <span class="mor-col-label">02. Merchant of Record</span>
+        <h4>WTM</h4>
+        <span class="wtm-badge">Active in Brazil</span>
+        <ul>
+          <li>Local billing &amp; Nota Fiscal (NF-e)</li>
+          <li>Payment processing in BRL</li>
+          <li>Tax collection &amp; remittance</li>
+          <li>Full CBS/IBS compliance</li>
+          <li>REINF, DCTFWeb reporting</li>
+          <li>Reconciliation &amp; reporting</li>
+        </ul>
+      </div>
+      <div class="mor-arrow"><span><i data-lucide="arrow-right"></i></span></div>
+      <div class="mor-col seller">
+        <span class="mor-col-label">03. Seller (you)</span>
+        <h4>Your business</h4>
+        <ul>
+          <li>Receives clean payment</li>
+          <li>Zero Brazilian tax liability</li>
+          <li>No local entity required</li>
+          <li>Lower churn from Brazil</li>
+          <li>Scales across LATAM</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S7 — COMPARE
+     ═══════════════════════════════════════════════ -->
+<section class="section s-compare">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow">Comparison</div>
+      <h2 class="h-section" style="margin-top:18px">Direct selling vs. selling through WTM.</h2>
+    </div>
+
+    <div class="compare-wrap reveal d2">
+      <div class="compare-header">
+        <div></div>
+        <div class="h-without">Without WTM</div>
+        <div class="h-with">With WTM</div>
+      </div>
+
+      <div class="compare-row">
+        <div class="cr-topic">Tax handling</div>
+        <div class="cr-without"><i data-lucide="x"></i>Buyer handles taxes manually, often incorrectly</div>
+        <div class="cr-with"><i data-lucide="check"></i>WTM handles all collection and remittance</div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-topic">Local invoice</div>
+        <div class="cr-without"><i data-lucide="x"></i>No Nota Fiscal — procurement friction</div>
+        <div class="cr-with"><i data-lucide="check"></i>Compliant NF-e issued for every transaction</div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-topic">Tax credits (CBS/IBS)</div>
+        <div class="cr-without"><i data-lucide="x"></i>No local credits generated for buyer</div>
+        <div class="cr-with"><i data-lucide="check"></i>Buyer generates full CBS/IBS credits</div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-topic">Provider liability</div>
+        <div class="cr-without"><i data-lucide="x"></i>You may carry retroactive liability</div>
+        <div class="cr-with"><i data-lucide="check"></i>Exposure dramatically reduced via WTM structure</div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-topic">Churn risk</div>
+        <div class="cr-without"><i data-lucide="x"></i>Tax cost increase → cancellations and downgrades</div>
+        <div class="cr-with"><i data-lucide="check"></i>Compliant path removes churn driver</div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-topic">Enterprise deals</div>
+        <div class="cr-without"><i data-lucide="x"></i>RFP disqualification without local billing</div>
+        <div class="cr-with"><i data-lucide="check"></i>Full documentation for finance, tax and procurement</div>
+      </div>
+      <div class="compare-row">
+        <div class="cr-topic">Sales cycle</div>
+        <div class="cr-without"><i data-lucide="x"></i>Longer cycles; higher CAC from tax objections</div>
+        <div class="cr-with"><i data-lucide="check"></i>Smoother buying experience; lower friction at close</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S8 — BENEFITS
+     ═══════════════════════════════════════════════ -->
+<section class="section s-benefits" id="benefits">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow">Why WTM</div>
+      <h2 class="h-section" style="margin-top:18px">Key benefits.</h2>
+    </div>
+
+    <div class="benefits-grid">
+      <div class="benefit-card reveal d1">
+        <span class="num">01.</span>
+        <span class="ic teal"><i data-lucide="shield-check"></i></span>
+        <h3 class="h-card">Protect margins</h3>
+        <p>Reduce exposure to unexpected tax costs and pricing distortion. Correct tax embedding prevents the hidden margin erosion that surprises at renewal time.</p>
+      </div>
+      <div class="benefit-card reveal d2">
+        <span class="num">02.</span>
+        <span class="ic deep"><i data-lucide="trending-up"></i></span>
+        <h3 class="h-card">Increase win rate</h3>
+        <p>Offer a local, compliant buying experience that eliminates RFP disqualification and removes procurement objections before they stall the deal.</p>
+      </div>
+      <div class="benefit-card reveal d3">
+        <span class="num">03.</span>
+        <span class="ic violet"><i data-lucide="repeat"></i></span>
+        <h3 class="h-card">Reduce churn &amp; CAC</h3>
+        <p>A structured local buying path removes the primary driver of tax-related churn and shortens sales cycles — directly improving NRR and lowering acquisition costs.</p>
+      </div>
+      <div class="benefit-card reveal d4">
+        <span class="num">04.</span>
+        <span class="ic green"><i data-lucide="rocket"></i></span>
+        <h3 class="h-card">Scale safely to 2033</h3>
+        <p>Use WTM's local infrastructure to navigate the full transition period through 2033 and expand across the broader LATAM market with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S9 — ACTION STEPS
+     ═══════════════════════════════════════════════ -->
+<section class="section s-action" id="next-steps">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow eyebrow-light" style="color:#A8DCE8">Strategic roadmap</div>
+      <h2 class="h-section" style="color:#fff;margin-top:18px">Act before the reform becomes fully operational.</h2>
+      <p class="lead">The first step is not to open an entity in Brazil or choose an unverified reseller. The first step is to map your current exposure and model how costs change from now through 2033.</p>
+    </div>
+
+    <div class="action-grid">
+      <div class="action-card reveal d1">
+        <span class="step">Step 01</span>
+        <h4>Map your Brazil footprint</h4>
+        <p>Identify all Brazilian customers, revenue streams and current payment methods to understand the full scope of your exposure.</p>
+      </div>
+      <div class="action-card reveal d2">
+        <span class="step">Step 02</span>
+        <h4>Estimate customer tax exposure</h4>
+        <p>Assess how much tax each customer currently carries — and model how that burden changes through the transition to 2033.</p>
+      </div>
+      <div class="action-card reveal d3">
+        <span class="step">Step 03</span>
+        <h4>Identify accounts at risk</h4>
+        <p>Flag customers most likely to churn, downgrade or delay renewal as tax costs increase and compliance scrutiny rises.</p>
+      </div>
+      <div class="action-card reveal d1">
+        <span class="step">Step 04</span>
+        <h4>Review contract language</h4>
+        <p>Assess whether your current agreements adequately address tax responsibility, liability allocation and compliance obligations.</p>
+      </div>
+      <div class="action-card reveal d2">
+        <span class="step">Step 05</span>
+        <h4>Prepare local billing with WTM</h4>
+        <p>Design a compliant local buying path — local invoice, payment in BRL, full CBS/IBS support — ready before customers ask.</p>
+      </div>
+      <div class="action-card reveal d3">
+        <span class="step">Step 06</span>
+        <h4>Train your go-to-market teams</h4>
+        <p>Align sales, finance, legal and customer success teams on how to position Brazil compliance as a competitive advantage, not a cost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S10 — GLOBE
+     ═══════════════════════════════════════════════ -->
+<section class="section s-globe" id="global">
+  <div class="section-inner">
+    <div class="globe-head reveal">
+      <div class="eyebrow eyebrow-light" style="color:#A8DCE8">Global presence</div>
+      <h2 class="h-section" style="color:#fff;margin-top:18px">Operating where your customers need you.</h2>
+      <p class="lead">WTM has on-the-ground infrastructure across the Americas, Europe and the Middle East — ensuring your Brazilian expansion is backed by a network that understands every market.</p>
+    </div>
+
+    <div class="globe-frame reveal d2">
+      <svg class="globe-svg" viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <radialGradient id="mapMask" cx="50%" cy="50%" r="50%">
+            <stop offset="20%" stop-color="white" stop-opacity="1"/>
+            <stop offset="85%" stop-color="white" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="white" stop-opacity="0"/>
+          </radialGradient>
+          <mask id="mapFade"><rect width="1100" height="560" fill="url(#mapMask)"/></mask>
+          <filter id="pinGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <radialGradient id="aura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#863EF3" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#863EF3" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="aura2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#0B6C8A" stop-opacity="0.32"/>
+            <stop offset="100%" stop-color="#0B6C8A" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="arcGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#863EF3"/>
+            <stop offset="100%" stop-color="#0B6C8A"/>
+          </linearGradient>
+        </defs>
+
+        <!-- dotted world map (equirectangular) -->
+        <g mask="url(#mapFade)"><circle cx="231" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="455" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="469" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="483" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="497" cy="7" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="455" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="469" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="483" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="497" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="735" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="21" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="455" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="469" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="483" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="721" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="735" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1015" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1029" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1043" cy="35" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="49" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="63" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="77" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="91" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="105" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="119" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="133" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="147" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="161" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="455" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="469" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="483" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="721" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="735" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1015" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1029" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1043" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1057" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1071" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1085" cy="49" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="63" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="77" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="91" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="105" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="119" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="133" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="147" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="161" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="455" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="469" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="721" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="735" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1015" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1029" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1043" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1057" cy="63" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="91" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="105" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="119" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="133" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="147" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="161" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="455" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="721" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="735" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1015" cy="77" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="119" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="133" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="147" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="161" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="735" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="91" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="161" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="105" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="161" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="119" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="133" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="147" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="175" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="161" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="189" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="175" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="203" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="189" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="217" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="259" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="203" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="231" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="245" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="721" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="749" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="217" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="721" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="763" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="231" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="273" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="721" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="245" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="287" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="707" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="777" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="259" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="301" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="273" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="511" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="791" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="805" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="819" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="833" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="287" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="525" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="301" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="539" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="679" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="847" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="315" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="553" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="329" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="567" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="861" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="875" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="889" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="343" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="357" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="581" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="371" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="315" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="385" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="427" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="441" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="399" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="413" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="595" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="665" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="693" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="903" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1015" cy="413" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="329" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="637" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="651" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1015" cy="427" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="399" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="623" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1015" cy="441" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="385" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="609" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="917" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="931" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="945" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="959" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1001" cy="455" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="469" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="469" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="469" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="973" cy="469" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="987" cy="469" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="483" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="483" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="371" cy="483" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1085" cy="483" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="497" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="497" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1071" cy="497" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="1085" cy="497" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="511" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="357" cy="511" r="2" fill="#0B6C8A" opacity="0.55"/><circle cx="343" cy="525" r="2" fill="#0B6C8A" opacity="0.55"/></g>
+
+        <!-- arcs between WTM nodes -->
+        <g fill="none" stroke-linecap="round" opacity="0.35" stroke="url(#arcGrad1)" stroke-width="1.2">
+          <path d="M 251 160 Q 320 260 391 368"/>
+          <path d="M 251 160 Q 380 130 526 160"/>
+          <path d="M 391 368 Q 385 410 379 452"/>
+          <path d="M 238 228 Q 245 195 251 160"/>
+          <path d="M 260 100 Q 256 130 251 160"/>
+          <path d="M 318 360 Q 354 364 391 368"/>
+          <path d="M 526 160 Q 620 180 715 224"/>
+        </g>
+
+        <!-- pins -->
+        <g data-loc="canada">
+          <circle cx="260" cy="100" r="32" fill="url(#aura2)"/>
+          <circle cx="260" cy="100" r="16" fill="none" stroke="#0B6C8A" stroke-width="1" opacity="0.55" class="pin-ring"/>
+          <circle cx="260" cy="100" r="5" fill="#0B6C8A" filter="url(#pinGlow)"/>
+          <circle cx="260" cy="100" r="2.5" fill="#fff"/>
+          <text x="272" y="96" class="pin-label">CANADA</text>
+        </g>
+        <g data-loc="usa">
+          <circle cx="251" cy="160" r="34" fill="url(#aura)"/>
+          <circle cx="251" cy="160" r="18" fill="none" stroke="#863EF3" stroke-width="1.2" opacity="0.55" class="pin-ring"/>
+          <circle cx="251" cy="160" r="6" fill="#863EF3" filter="url(#pinGlow)"/>
+          <circle cx="251" cy="160" r="3" fill="#fff"/>
+          <text x="263" y="156" class="pin-label violet">USA</text>
+        </g>
+        <g data-loc="mexico">
+          <circle cx="238" cy="228" r="28" fill="url(#aura2)"/>
+          <circle cx="238" cy="228" r="14" fill="none" stroke="#0B6C8A" stroke-width="1" opacity="0.5" class="pin-ring"/>
+          <circle cx="238" cy="228" r="5" fill="#0B6C8A" filter="url(#pinGlow)"/>
+          <circle cx="238" cy="228" r="2.5" fill="#fff"/>
+          <text x="250" y="224" class="pin-label">MÉXICO</text>
+        </g>
+        <g data-loc="peru">
+          <circle cx="318" cy="360" r="28" fill="url(#aura2)"/>
+          <circle cx="318" cy="360" r="14" fill="none" stroke="#0B6C8A" stroke-width="1" opacity="0.5" class="pin-ring"/>
+          <circle cx="318" cy="360" r="5" fill="#0B6C8A" filter="url(#pinGlow)"/>
+          <circle cx="318" cy="360" r="2.5" fill="#fff"/>
+          <text x="296" y="378" class="pin-label">PERU</text>
+        </g>
+        <g data-loc="brazil">
+          <circle cx="391" cy="368" r="50" fill="url(#aura)" opacity="0.9"/>
+          <circle cx="391" cy="368" r="28" fill="none" stroke="#863EF3" stroke-width="1.4" opacity="0.6" class="pin-ring"/>
+          <circle cx="391" cy="368" r="16" fill="none" stroke="#863EF3" stroke-width="1" opacity="0.35" class="pin-ring pin-ring-2"/>
+          <circle cx="391" cy="368" r="8" fill="#863EF3" filter="url(#pinGlow)"/>
+          <circle cx="391" cy="368" r="4" fill="#fff"/>
+          <text x="403" y="364" class="pin-label violet hero">BRASIL</text>
+          <text x="403" y="378" class="pin-label-sub">Focus market</text>
+        </g>
+        <g data-loc="uruguay">
+          <circle cx="379" cy="452" r="26" fill="url(#aura2)"/>
+          <circle cx="379" cy="452" r="13" fill="none" stroke="#0B6C8A" stroke-width="1" opacity="0.45" class="pin-ring"/>
+          <circle cx="379" cy="452" r="5" fill="#0B6C8A" filter="url(#pinGlow)"/>
+          <circle cx="379" cy="452" r="2.5" fill="#fff"/>
+          <text x="391" y="448" class="pin-label">URUGUAY</text>
+        </g>
+        <g data-loc="portugal">
+          <circle cx="526" cy="160" r="30" fill="url(#aura2)"/>
+          <circle cx="526" cy="160" r="16" fill="none" stroke="#0B6C8A" stroke-width="1" opacity="0.5" class="pin-ring"/>
+          <circle cx="526" cy="160" r="5.5" fill="#0B6C8A" filter="url(#pinGlow)"/>
+          <circle cx="526" cy="160" r="2.8" fill="#fff"/>
+          <text x="500" y="148" class="pin-label">PORTUGAL</text>
+        </g>
+        <g data-loc="uae">
+          <circle cx="715" cy="224" r="30" fill="url(#aura2)"/>
+          <circle cx="715" cy="224" r="16" fill="none" stroke="#0B6C8A" stroke-width="1" opacity="0.5" class="pin-ring"/>
+          <circle cx="715" cy="224" r="5.5" fill="#0B6C8A" filter="url(#pinGlow)"/>
+          <circle cx="715" cy="224" r="2.8" fill="#fff"/>
+          <text x="727" y="220" class="pin-label">UAE</text>
+        </g>
+      </svg>
+
+      <div class="globe-pills">
+        <span class="g-pill">Canada</span>
+        <span class="g-pill">USA</span>
+        <span class="g-pill">México</span>
+        <span class="g-pill">Peru</span>
+        <span class="g-pill active">Brasil</span>
+        <span class="g-pill">Uruguay</span>
+        <span class="g-pill">Portugal</span>
+        <span class="g-pill">UAE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     S11 — CTA
+     ═══════════════════════════════════════════════ -->
+<section class="s-cta" id="cta">
+  <div class="s-cta-photo"></div>
+  <div class="s-cta-scrim"></div>
+
+  <div class="section-inner reveal">
+    <div class="trust-row">
+      <div class="trust-avatar">SG</div>
+      <div class="trust-avatar">MR</div>
+      <div class="trust-avatar">AT</div>
+      <div class="trust-avatar">CL</div>
+      <div class="trust-avatar">+</div>
+      <span class="trust-text">Trusted by <strong>4,000+</strong> companies worldwide</span>
+    </div>
+
+    <p class="versatylo">
+      understand your brazil exposure<br>
+      <span class="accent">before it becomes a sales problem.</span>
+    </p>
+
+    <p class="lead" style="margin:12px auto 0">
+      Chosen by over 4,000 companies that have expanded into new markets in a reliable and simplified way, with full compliance across their operations.
+    </p>
+
+    <div class="cta-stats">
+      <div class="cta-stat">
+        <span class="cta-stat-num">4,000<span>+</span></span>
+        <span class="cta-stat-label">Companies expanded</span>
+      </div>
+      <div class="cta-stat">
+        <span class="cta-stat-num">20<span>+</span></span>
+        <span class="cta-stat-label">Years of expertise</span>
+      </div>
+      <div class="cta-stat">
+        <span class="cta-stat-num">2027</span>
+        <span class="cta-stat-label">Prepare now</span>
+      </div>
+    </div>
+
+    <p style="font-family:var(--font-heading);font-weight:600;font-size:1.1rem;color:#fff;margin-bottom:28px;text-wrap:balance;max-width:46ch;margin-left:auto;margin-right:auto">
+      Brazil is professionalizing how foreign digital services are bought, taxed, documented and reported. The winners will be the companies that treat compliance as a competitive advantage.
+    </p>
+
+    <div class="cta-actions">
+      <a href="#" class="btn btn-light">Talk to a specialist <i data-lucide="arrow-right"></i></a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn btn-ghost-light">Contact on LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/wtm_branco.svg" alt="WTM">
+      <p class="versatylo">empowering expansion.</p>
+    </div>
+    <div class="footer-meta">
+      <div class="footer-links">
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms of use</a>
+        <a href="#">Contact</a>
+      </div>
+      <span>© 2025 WTM. All rights reserved.</span>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span>Brazil &middot; USA &middot; Canada &middot; México &middot; Peru &middot; Uruguay &middot; Portugal &middot; UAE</span>
+    <span>Empowering global business expansion since 2003.</span>
+  </div>
+</footer>
+
+<script>
+  // nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  }, { passive: true });
+
+  // reveals
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // language toggle (visual only)
+  document.querySelectorAll('.lang-toggle span').forEach(s => {
+    s.addEventListener('click', () => {
+      document.querySelectorAll('.lang-toggle span').forEach(x => x.classList.remove('on'));
+      s.classList.add('on');
+    });
+  });
+
+  // lucide icons
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

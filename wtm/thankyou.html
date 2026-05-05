@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thank you — WTM</title>
+<link rel="icon" href="assets/favicon.svg">
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:var(--font-body);font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+[data-lucide]{width:1em;height:1em;stroke-width:2;flex-shrink:0}
+
+:root{
+  --maxw:1100px;
+  --pad:clamp(24px,5vw,72px);
+}
+
+/* Type primitives */
+.eyebrow{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brand);
+  display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;display:block}
+.eyebrow-light{color:rgba(255,255,255,.78)}
+
+.h-display{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  line-height:1.04;letter-spacing:-.025em;text-wrap:balance;
+}
+.h-section{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(1.6rem,2.4vw,2.1rem);
+  line-height:1.1;letter-spacing:-.018em;text-wrap:balance;
+}
+.h-card{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:1.05rem;letter-spacing:-.01em;line-height:1.3;
+}
+.lead{
+  font-family:var(--font-body);font-weight:300;
+  font-size:clamp(1.05rem,1.3vw,1.18rem);
+  line-height:1.62;color:var(--fg-muted);
+  text-wrap:pretty;max-width:60ch;
+}
+.versatylo{
+  font-family:var(--font-display);font-weight:400;
+  text-transform:lowercase;letter-spacing:-.01em;line-height:.95;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-heading);font-weight:600;font-size:14px;
+  padding:13px 24px;border-radius:9999px;
+  border:1px solid transparent;cursor:pointer;
+  transition:transform var(--dur-base) var(--ease-out),
+             background var(--dur-base) var(--ease-out),
+             border-color var(--dur-base) var(--ease-out),
+             box-shadow var(--dur-base) var(--ease-out);
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:#fff;box-shadow:var(--shadow-accent)}
+.btn-accent:hover{background:var(--accent-hover)}
+.btn-brand{background:var(--brand);color:#fff;box-shadow:var(--shadow-brand)}
+.btn-brand:hover{background:var(--brand-hover)}
+.btn-ghost{background:transparent;color:var(--fg);border-color:var(--border)}
+.btn-ghost:hover{border-color:var(--border-strong);background:#fafbfc}
+.btn-ghost-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost-light:hover{background:rgba(255,255,255,.08);border-color:#fff}
+.btn-light{background:#fff;color:var(--brand)}
+.btn-light:hover{background:var(--bg-soft)}
+.btn [data-lucide]{font-size:16px;stroke-width:2.2}
+
+/* ─────────────────────────────────────────────
+   NAV
+   ───────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px var(--pad);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px) saturate(1.3);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto;gap:32px}
+.nav-logo img{height:30px;width:auto}
+.nav-links{display:flex;gap:30px}
+.nav-links a{font-family:var(--font-heading);font-weight:500;font-size:14px;color:var(--fg);transition:color var(--dur-base) var(--ease-out)}
+.nav-links a:hover{color:var(--wtm-ocean)}
+.nav-right{display:flex;align-items:center;gap:14px}
+
+/* ─────────────────────────────────────────────
+   HERO — confirmation
+   ───────────────────────────────────────────── */
+.hero{
+  position:relative;overflow:hidden;
+  padding:clamp(80px,9vw,120px) var(--pad) clamp(60px,7vw,80px);
+  color:#fff;isolation:isolate;
+}
+.hero-photo{
+  position:absolute;inset:0;z-index:-2;
+  background:url("assets/photo_pattern_05.jpg") center/cover no-repeat;
+}
+.hero-scrim{
+  position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(115deg,rgba(5,5,5,.82) 0%,rgba(22,70,93,.78) 50%,rgba(11,108,138,.55) 100%),
+    radial-gradient(ellipse 60% 70% at 80% 20%,rgba(134,62,243,.28) 0%,transparent 60%);
+}
+.hero-inner{
+  max-width:var(--maxw);margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+}
+.hero-mark{
+  width:84px;height:84px;border-radius:9999px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  margin-bottom:32px;position:relative;
+}
+.hero-mark::before,.hero-mark::after{
+  content:"";position:absolute;border-radius:9999px;border:1px solid rgba(167,123,255,.45);
+  inset:-10px;animation:ringPulse 3.4s ease-out infinite;
+}
+.hero-mark::after{inset:-22px;animation-delay:.8s;border-color:rgba(167,123,255,.25)}
+@keyframes ringPulse{
+  0%{opacity:.8;transform:scale(.85)}
+  70%{opacity:0;transform:scale(1.1)}
+  100%{opacity:0;transform:scale(1.1)}
+}
+.hero-mark [data-lucide]{font-size:38px;color:#A77BFF}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--font-heading);font-weight:600;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.78);margin-bottom:24px;
+}
+.hero-eyebrow::before{content:"";width:36px;height:1px;background:rgba(255,255,255,.45);display:block}
+.hero h1{color:#fff;max-width:14ch}
+.hero h1 .accent{color:#A77BFF}
+.hero-lead{
+  color:rgba(236,236,238,.88);max-width:48ch;margin-top:24px;
+  font-size:clamp(1.05rem,1.3vw,1.15rem);font-weight:300;line-height:1.62;
+}
+.hero-tagline{margin-top:24px;color:rgba(255,255,255,.72);font-size:1.4rem}
+.hero-tagline em{color:#fff;font-style:normal}
+
+/* Right column — submission summary card */
+.summary-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--r-lg);
+  padding:32px 32px;
+  backdrop-filter:blur(8px);
+  position:relative;
+  overflow:hidden;
+}
+.summary-card::before{
+  content:"";position:absolute;top:-80px;right:-80px;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(134,62,243,.32) 0%,transparent 65%);
+  pointer-events:none;
+}
+.summary-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.10);margin-bottom:20px;
+}
+.summary-title{
+  font-family:var(--font-heading);font-weight:600;font-size:13px;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(236,236,238,.55);
+}
+.status-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 12px;border-radius:9999px;
+  background:rgba(74,138,84,.18);border:1px solid rgba(74,138,84,.42);color:#9CC9A4;
+}
+.status-pill::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:#9CC9A4;
+  box-shadow:0 0 0 4px rgba(156,201,164,.22);
+}
+.summary-row{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:18px;
+  padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.summary-row:last-of-type{border-bottom:none}
+.summary-label{
+  font-family:var(--font-heading);font-weight:500;font-size:11.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(236,236,238,.5);
+}
+.summary-value{
+  font-family:var(--font-heading);font-weight:500;font-size:14.5px;
+  color:#fff;text-align:right;
+}
+.summary-foot{
+  margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.10);
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:rgba(236,236,238,.65);
+}
+.summary-foot [data-lucide]{font-size:14px;color:#A77BFF}
+
+/* ─────────────────────────────────────────────
+   TIMELINE
+   ───────────────────────────────────────────── */
+.section{padding:clamp(72px,8vw,112px) var(--pad)}
+.section-inner{max-width:var(--maxw);margin:0 auto}
+.section-head{margin-bottom:48px;max-width:60ch}
+.section-head .eyebrow{margin-bottom:18px}
+.section-head .lead{margin-top:16px}
+
+.s-timeline{background:#fff}
+.timeline{
+  margin-top:48px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  position:relative;
+}
+.timeline::before{
+  content:"";position:absolute;top:32px;left:6%;right:6%;height:1px;
+  background:linear-gradient(90deg,var(--brand) 0%,var(--brand) 33%,var(--border) 33%,var(--border) 100%);
+}
+.tl-step{
+  padding:0 24px;text-align:left;
+  display:flex;flex-direction:column;gap:14px;position:relative;
+}
+.tl-step:first-child{padding-left:0}
+.tl-step:last-child{padding-right:0}
+.tl-step .dot{
+  width:64px;height:64px;border-radius:9999px;
+  background:#fff;border:1px solid var(--border);
+  display:grid;place-items:center;
+  position:relative;z-index:1;color:var(--fg-muted);font-size:22px;
+}
+.tl-step.done .dot{background:var(--brand);border-color:var(--brand);color:#fff;box-shadow:var(--shadow-brand)}
+.tl-step.now .dot{
+  background:#fff;border-color:var(--accent);color:var(--accent);
+  box-shadow:0 0 0 6px rgba(134,62,243,.10);
+}
+.tl-step .num{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:11px;letter-spacing:.18em;color:var(--fg-soft);
+}
+.tl-step.done .num,.tl-step.now .num{color:var(--brand)}
+.tl-step h4{font-family:var(--font-heading);font-weight:600;font-size:1.05rem;color:var(--fg);letter-spacing:-.005em}
+.tl-step p{font-size:14px;line-height:1.6;color:var(--fg-muted)}
+.tl-step .when{
+  font-family:var(--font-heading);font-weight:600;font-size:11.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+}
+.tl-step.done .when{color:var(--success)}
+
+/* ─────────────────────────────────────────────
+   WHILE-YOU-WAIT
+   ───────────────────────────────────────────── */
+.s-resources{background:var(--bg-soft)}
+.res-grid{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.res-card{
+  background:#fff;border:1px solid var(--border-soft);border-radius:var(--r-md);
+  padding:32px 28px;display:flex;flex-direction:column;gap:14px;
+  position:relative;overflow:hidden;cursor:pointer;
+  transition:transform var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out);
+}
+.res-card::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+  background:linear-gradient(90deg,var(--brand),var(--accent));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform var(--dur-slow) var(--ease-out);
+}
+.res-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--border)}
+.res-card:hover::after{transform:scaleX(1)}
+.res-card .ic{
+  width:48px;height:48px;border-radius:9999px;
+  display:grid;place-items:center;font-size:20px;
+}
+.res-card .ic.teal{background:#E6F2F6;color:var(--wtm-ocean)}
+.res-card .ic.violet{background:#F1E6FF;color:var(--accent)}
+.res-card .ic.deep{background:#E1ECF1;color:var(--brand)}
+.res-card .num{
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.18em;color:var(--fg-soft);
+}
+.res-card p{font-size:14px;line-height:1.6;color:var(--fg-muted)}
+.res-card .res-link{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-heading);font-weight:600;font-size:13px;color:var(--accent);
+  margin-top:auto;
+}
+.res-card .res-link [data-lucide]{font-size:14px;transition:transform var(--dur-base) var(--ease-out)}
+.res-card:hover .res-link [data-lucide]{transform:translateX(3px)}
+
+/* ─────────────────────────────────────────────
+   QUOTE / VERSATYLO
+   ───────────────────────────────────────────── */
+.s-quote{
+  background:linear-gradient(180deg,#0F2D3D 0%,var(--wtm-deep-teal) 100%);
+  position:relative;overflow:hidden;color:#fff;
+}
+.s-quote::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 60% at 80% 30%,rgba(134,62,243,.20) 0%,transparent 65%),
+    radial-gradient(ellipse 40% 50% at 15% 80%,rgba(11,108,138,.30) 0%,transparent 60%);
+}
+.s-quote .section-inner{position:relative}
+.quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.quote-meta{display:flex;flex-direction:column;gap:14px}
+.quote-meta .eyebrow{color:#A8DCE8}
+.quote-meta .eyebrow::before{background:#A8DCE8}
+.quote-meta .versatylo{color:rgba(255,255,255,.55);font-size:clamp(1.8rem,3.8vw,3.4rem);text-wrap:balance}
+.quote-meta .versatylo .high{color:#fff}
+.quote-meta .versatylo .accent{color:#A77BFF}
+.quote-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border:1px solid rgba(255,255,255,.14);border-radius:var(--r-lg);overflow:hidden;
+  background:rgba(255,255,255,.04);
+}
+.qs{padding:32px 28px;border-right:1px solid rgba(255,255,255,.10);border-bottom:1px solid rgba(255,255,255,.10)}
+.qs:nth-child(2n){border-right:none}
+.qs:nth-child(n+3){border-bottom:none}
+.qs-num{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(1.8rem,2.6vw,2.4rem);letter-spacing:-.025em;color:#fff;display:block;
+}
+.qs-num span{color:#A77BFF}
+.qs-label{font-size:12.5px;color:rgba(236,236,238,.65);letter-spacing:.04em;margin-top:6px;display:block;line-height:1.5}
+
+/* ─────────────────────────────────────────────
+   FOLLOW-UP CTA
+   ───────────────────────────────────────────── */
+.s-followup{background:#fff}
+.followup-card{
+  display:grid;grid-template-columns:1fr 1fr;gap:0;
+  border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid var(--border-soft);
+  box-shadow:var(--shadow-md);
+}
+.followup-left{padding:48px 44px;display:flex;flex-direction:column;gap:18px;justify-content:center}
+.followup-left h3{font-family:var(--font-heading);font-weight:700;font-size:clamp(1.5rem,2.2vw,1.9rem);letter-spacing:-.02em;line-height:1.15;color:var(--fg);text-wrap:balance}
+.followup-left p{font-size:15px;line-height:1.6;color:var(--fg-muted)}
+.followup-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.followup-right{
+  background:url("assets/photo_pattern_03.jpg") center/cover no-repeat;
+  position:relative;min-height:280px;
+}
+.followup-right::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(22,70,93,.5) 0%,rgba(69,31,119,.62) 100%);
+}
+.followup-right .badge{
+  position:absolute;left:32px;top:32px;z-index:1;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:9999px;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:#fff;backdrop-filter:blur(6px);
+}
+.followup-right .stamp{
+  position:absolute;left:32px;bottom:32px;right:32px;z-index:1;
+  color:#fff;
+}
+.followup-right .stamp .versatylo{font-size:clamp(1.5rem,2.4vw,2rem);color:#fff;text-wrap:balance}
+.followup-right .stamp .versatylo .accent{color:#C8A8FF}
+
+/* ─────────────────────────────────────────────
+   FOOTER
+   ───────────────────────────────────────────── */
+.footer{
+  background:var(--wtm-ink);color:#fff;
+  padding:56px var(--pad) 28px;margin-top:auto;
+}
+.footer-inner{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:48px;flex-wrap:wrap}
+.footer-brand{display:flex;flex-direction:column;gap:14px;max-width:320px}
+.footer-brand img{height:30px;width:auto}
+.footer-brand .versatylo{font-size:1.4rem;color:rgba(255,255,255,.85)}
+.footer-meta{display:flex;flex-direction:column;gap:14px;align-items:flex-end;font-size:13px;color:rgba(236,236,238,.5)}
+.footer-links{display:flex;gap:22px}
+.footer-links a{font-family:var(--font-heading);font-weight:500;font-size:13px;color:rgba(236,236,238,.55);transition:color var(--dur-base) var(--ease-out)}
+.footer-links a:hover{color:#fff}
+.footer-base{
+  max-width:var(--maxw);margin:28px auto 0;padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:flex;justify-content:space-between;font-size:12px;color:rgba(236,236,238,.4);flex-wrap:wrap;gap:8px;
+}
+
+/* Reveals */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s var(--ease-out),transform .65s var(--ease-out)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+
+@keyframes heroFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hero-mark{animation:heroFadeUp .6s .05s var(--ease-out) both}
+.hero-eyebrow{animation:heroFadeUp .6s .15s var(--ease-out) both}
+.hero h1{animation:heroFadeUp .6s .25s var(--ease-out) both}
+.hero-lead{animation:heroFadeUp .6s .35s var(--ease-out) both}
+.hero-tagline{animation:heroFadeUp .6s .42s var(--ease-out) both}
+.summary-card{animation:heroFadeUp .7s .5s var(--ease-out) both}
+
+/* Responsive */
+@media (max-width:1024px){
+  .hero-inner,.quote-grid,.followup-card{grid-template-columns:1fr;gap:40px}
+  .nav-links{display:none}
+  .timeline{grid-template-columns:1fr;gap:32px}
+  .timeline::before{display:none}
+  .tl-step{padding:0;flex-direction:row;align-items:flex-start;gap:22px}
+  .tl-step .dot{width:48px;height:48px;font-size:18px;flex-shrink:0}
+  .tl-step .body{display:flex;flex-direction:column;gap:8px}
+  .res-grid{grid-template-columns:1fr}
+  .followup-right{min-height:220px}
+  .footer-inner,.footer-meta{align-items:flex-start}
+}
+@media (max-width:720px){
+  .quote-stats{grid-template-columns:1fr}
+  .qs{border-right:none}
+  .qs:nth-child(n+1){border-right:none}
+  .qs:not(:last-child){border-bottom:1px solid rgba(255,255,255,.10)}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="WTM home">
+      <img src="assets/wtm_color.svg" alt="WTM">
+    </a>
+    <div class="nav-links">
+      <a href="index.html#tax">Tax reform</a>
+      <a href="index.html#solution">Solution</a>
+      <a href="index.html#benefits">Benefits</a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html" class="btn btn-ghost" style="padding:10px 20px;font-size:13px">
+        <i data-lucide="arrow-left"></i> Back to overview
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     HERO — confirmation
+     ═══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-photo"></div>
+  <div class="hero-scrim"></div>
+
+  <div class="hero-inner">
+    <div>
+      <div class="hero-mark">
+        <i data-lucide="check"></i>
+      </div>
+
+      <div class="hero-eyebrow">Request received &middot; Reference #BR-2025-0421</div>
+
+      <h1 class="h-display">
+        Thank you. We're <span class="accent">on it.</span>
+      </h1>
+
+      <p class="hero-lead">
+        Your request has been routed to our Brazil tax &amp; expansion team. A specialist will reach out within one business day with an initial assessment of your exposure and a recommended path forward.
+      </p>
+
+      <p class="hero-tagline versatylo">
+        empowering expansion. <em>starting now.</em>
+      </p>
+    </div>
+
+    <aside class="summary-card" aria-label="Submission summary">
+      <div class="summary-head">
+        <span class="summary-title">Submission summary</span>
+        <span class="status-pill">Confirmed</span>
+      </div>
+
+      <div class="summary-row">
+        <span class="summary-label">Submitted</span>
+        <span class="summary-value">Today &middot; just now</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Reference</span>
+        <span class="summary-value">#BR-2025-0421</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Topic</span>
+        <span class="summary-value">Merchant of Record &middot; Brazil</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Routing</span>
+        <span class="summary-value">Brazil tax &amp; expansion team</span>
+      </div>
+      <div class="summary-row">
+        <span class="summary-label">Response time</span>
+        <span class="summary-value">Within 1 business day</span>
+      </div>
+
+      <div class="summary-foot">
+        <i data-lucide="mail"></i>
+        A confirmation has been sent to your inbox.
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TIMELINE — what happens next
+     ═══════════════════════════════════════════════ -->
+<section class="section s-timeline">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow">What happens next</div>
+      <h2 class="h-section" style="margin-top:18px">A clear path from inquiry to compliant local billing.</h2>
+      <p class="lead">No back-and-forth, no generic discovery loops. The first conversation is already focused on your customers, your contracts and your timeline.</p>
+    </div>
+
+    <div class="timeline reveal d2">
+      <div class="tl-step done">
+        <div class="dot"><i data-lucide="check"></i></div>
+        <div class="body">
+          <span class="num">01.</span>
+          <span class="when">Complete</span>
+          <h4>Request submitted</h4>
+          <p>Your inquiry is in our queue and routed to the right specialist based on your industry and Brazil footprint.</p>
+        </div>
+      </div>
+      <div class="tl-step now">
+        <div class="dot"><i data-lucide="user-round"></i></div>
+        <div class="body">
+          <span class="num">02.</span>
+          <span class="when">Within 1 business day</span>
+          <h4>Specialist reaches out</h4>
+          <p>A WTM expert contacts you to schedule a 30-minute call and confirm scope: customers in Brazil, contract types, current invoicing model.</p>
+        </div>
+      </div>
+      <div class="tl-step">
+        <div class="dot"><i data-lucide="file-text"></i></div>
+        <div class="body">
+          <span class="num">03.</span>
+          <span class="when">Within 1 week</span>
+          <h4>Exposure &amp; readiness map</h4>
+          <p>You receive a tailored exposure assessment with concrete recommendations for the 2027–2033 transition, including local billing structure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     WHILE-YOU-WAIT
+     ═══════════════════════════════════════════════ -->
+<section class="section s-resources">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow">While you wait</div>
+      <h2 class="h-section" style="margin-top:18px">Get a head start on your Brazil readiness.</h2>
+      <p class="lead">Three short, focused resources prepared by the WTM team — useful before our first call so you can come in with a sharper picture of your own exposure.</p>
+    </div>
+
+    <div class="res-grid">
+      <a class="res-card reveal d1">
+        <span class="num">01.</span>
+        <span class="ic teal"><i data-lucide="file-down"></i></span>
+        <h3 class="h-card">Brazil tax reform brief (PDF)</h3>
+        <p>A 12-page primer on CBS, IBS, IRRF, IOF and CIDE — the layers your customers will be paying through 2033.</p>
+        <span class="res-link">Download brief <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="res-card reveal d2">
+        <span class="num">02.</span>
+        <span class="ic violet"><i data-lucide="calculator"></i></span>
+        <h3 class="h-card">Customer exposure worksheet</h3>
+        <p>A simple template to map your top 20 Brazilian accounts, current invoicing model and renewal timing — useful to bring to the first call.</p>
+        <span class="res-link">Open worksheet <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="res-card reveal d3">
+        <span class="num">03.</span>
+        <span class="ic deep"><i data-lucide="play-circle"></i></span>
+        <h3 class="h-card">CFO briefing — 14 min</h3>
+        <p>A short executive-level walk-through of the reform, designed to align finance, legal and revenue leadership before any change to your GTM.</p>
+        <span class="res-link">Watch briefing <i data-lucide="arrow-right"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     QUOTE / SOCIAL PROOF
+     ═══════════════════════════════════════════════ -->
+<section class="section s-quote">
+  <div class="section-inner">
+    <div class="quote-grid">
+      <div class="quote-meta reveal">
+        <div class="eyebrow eyebrow-light">Why teams choose WTM</div>
+        <p class="versatylo">
+          <span class="high">a partner that understands</span><br>
+          <span class="accent">both sides of the transaction.</span>
+        </p>
+        <p class="lead" style="color:rgba(236,236,238,.78);max-width:48ch">
+          Twenty years of cross-border expertise, applied to the specific moment your Brazilian customers are entering — with the documentation, billing and tax handling enterprise procurement actually expects.
+        </p>
+      </div>
+      <div class="quote-stats reveal d2">
+        <div class="qs">
+          <span class="qs-num">4,000<span>+</span></span>
+          <span class="qs-label">Companies expanded through WTM</span>
+        </div>
+        <div class="qs">
+          <span class="qs-num">20<span>+</span></span>
+          <span class="qs-label">Years of cross-border expertise</span>
+        </div>
+        <div class="qs">
+          <span class="qs-num">8</span>
+          <span class="qs-label">Countries with on-the-ground presence</span>
+        </div>
+        <div class="qs">
+          <span class="qs-num">2027<span>—</span><span>2033</span></span>
+          <span class="qs-label">Brazil reform transition fully covered</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOLLOW-UP CTA
+     ═══════════════════════════════════════════════ -->
+<section class="section s-followup">
+  <div class="section-inner">
+    <div class="followup-card reveal">
+      <div class="followup-left">
+        <div class="eyebrow">Need to talk sooner?</div>
+        <h3>Reach the WTM team directly while your request is being routed.</h3>
+        <p>If your renewal cycle, RFP or board update can't wait — there are two ways to fast-track the conversation today.</p>
+        <div class="followup-actions">
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn btn-accent">Message on LinkedIn <i data-lucide="arrow-up-right"></i></a>
+          <a href="mailto:hello@wtm.com" class="btn btn-ghost">Email a specialist <i data-lucide="mail"></i></a>
+        </div>
+      </div>
+      <div class="followup-right">
+        <span class="badge">Brasil &middot; SP / RJ</span>
+        <div class="stamp">
+          <p class="versatylo">empowering expansion.<br><span class="accent">without the tax surprise.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/wtm_branco.svg" alt="WTM">
+      <p class="versatylo">empowering expansion.</p>
+    </div>
+    <div class="footer-meta">
+      <div class="footer-links">
+        <a href="#">Privacy policy</a>
+        <a href="#">Terms of use</a>
+        <a href="#">Contact</a>
+      </div>
+      <span>© 2025 WTM. All rights reserved.</span>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span>Brazil &middot; USA &middot; Canada &middot; México &middot; Peru &middot; Uruguay &middot; Portugal &middot; UAE</span>
+    <span>Empowering global business expansion since 2003.</span>
+  </div>
+</footer>
+
+<script>
+  // reveals
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // lucide icons
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+/* =============================================================
+   WTM Design System — colors_and_type.css
+   Source-of-truth tokens for color, type, spacing, radius, shadow.
+   Use the @semantic vars; keep brand vars stable.
+   ============================================================= */
+
+/* ---------- 1. FONTS ---------- */
+
+@font-face {
+  font-family: "Versatylo Rounded";
+  src: url("./fonts/VersatyloRounded.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Versatylo Rounded Outline";
+  src: url("./fonts/VersatyloRounded-Outline.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("./fonts/WorkSans-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("./fonts/WorkSans-Italic-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 2. BRAND COLOR TOKENS ----------
+   Pulled from AdobeColor-WTM_cores_principais & ..._cores_apoio JPEGs
+   (the canonical, most-recent palette — matches the actual logo PNGs).
+   Older PDF v2 listed an alternate purple-leaning set; kept under
+   --wtm-legacy-* for reference only.
+*/
+:root {
+  /* — primary (cores principais) — */
+  --wtm-deep-teal:  #16465D;   /* the logo color */
+  --wtm-ocean:      #0B6C8A;
+  --wtm-violet:     #863EF3;
+  --wtm-indigo:     #451F77;
+  --wtm-ink:        #050505;
+
+  /* — support (cores de apoio) — */
+  --wtm-white:      #FFFFFF;
+  --wtm-pearl:      #ECECEE;
+  --wtm-mist:       #BFC5CD;
+  --wtm-graphite:   #6B6B6B;
+  --wtm-black:      #000000;
+
+  /* — extended scales (derived, OKLCH-mixed) — */
+  --wtm-teal-50:   oklch(from var(--wtm-deep-teal) 0.97 0.01 h);
+  --wtm-teal-100:  oklch(from var(--wtm-deep-teal) 0.93 0.03 h);
+  --wtm-teal-200:  oklch(from var(--wtm-deep-teal) 0.85 0.05 h);
+  --wtm-teal-300:  oklch(from var(--wtm-deep-teal) 0.72 0.08 h);
+  --wtm-teal-400:  oklch(from var(--wtm-deep-teal) 0.55 0.10 h);
+  --wtm-teal-500:  var(--wtm-deep-teal);
+  --wtm-teal-600:  oklch(from var(--wtm-deep-teal) 0.30 0.07 h);
+  --wtm-teal-700:  oklch(from var(--wtm-deep-teal) 0.22 0.05 h);
+
+  --wtm-violet-100: oklch(from var(--wtm-violet) 0.95 0.04 h);
+  --wtm-violet-200: oklch(from var(--wtm-violet) 0.85 0.10 h);
+  --wtm-violet-400: oklch(from var(--wtm-violet) 0.70 0.20 h);
+  --wtm-violet-500: var(--wtm-violet);
+  --wtm-violet-700: var(--wtm-indigo);
+
+  /* — legacy (PDF v2; do not use unless asked) — */
+  --wtm-legacy-violet: #6526f0;
+  --wtm-legacy-indigo: #321861;
+  --wtm-legacy-deep:   #143549;
+  --wtm-legacy-ocean:  #065573;
+
+  /* — semantic surfaces (light theme default) — */
+  --bg:        var(--wtm-white);
+  --bg-soft:   var(--wtm-pearl);
+  --bg-muted:  #F5F6F8;
+  --surface:   #FFFFFF;
+  --surface-2: var(--wtm-pearl);
+
+  --fg:        var(--wtm-ink);
+  --fg-muted:  var(--wtm-graphite);
+  --fg-soft:   #8C8F95;
+  --fg-on-brand: var(--wtm-white);
+
+  --border:        var(--wtm-mist);
+  --border-soft:   var(--wtm-pearl);
+  --border-strong: var(--wtm-graphite);
+
+  --brand:         var(--wtm-deep-teal);
+  --brand-hover:   var(--wtm-teal-600);
+  --brand-press:   var(--wtm-teal-700);
+  --accent:        var(--wtm-violet);
+  --accent-hover:  oklch(from var(--wtm-violet) 0.62 0.20 h);
+
+  /* — semantic state — */
+  --success: #2A8C5A;
+  --warning: #C98B1B;
+  --danger:  #C2403A;
+  --info:    var(--wtm-ocean);
+
+  /* — typography role-vars — */
+  --font-display: "Versatylo Rounded", "Work Sans", system-ui, sans-serif;
+  --font-display-outline: "Versatylo Rounded Outline", "Versatylo Rounded", system-ui, sans-serif;
+  --font-heading: "Work Sans", system-ui, sans-serif;
+  --font-body:    "Roboto", system-ui, sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;
+  --tracking-wider:  0.12em;       /* ALL-CAPS labels */
+
+  --leading-tight: 1.05;
+  --leading-snug:  1.2;
+  --leading-normal: 1.5;
+  --leading-loose: 1.7;
+
+  /* type scale (rem) */
+  --fs-xs:  0.75rem;     /* 12 */
+  --fs-sm:  0.875rem;    /* 14 */
+  --fs-md:  1rem;        /* 16 */
+  --fs-lg:  1.125rem;    /* 18 */
+  --fs-xl:  1.375rem;    /* 22 */
+  --fs-2xl: 1.75rem;     /* 28 */
+  --fs-3xl: 2.25rem;     /* 36 */
+  --fs-4xl: 3rem;        /* 48 */
+  --fs-5xl: 4rem;        /* 64 */
+  --fs-6xl: 5.5rem;      /* 88 */
+  --fs-display: 7.5rem;  /* 120 — Versatylo hero */
+
+  /* — spacing (4px base) — */
+  --sp-0: 0;
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-20: 5rem;
+  --sp-24: 6rem;
+  --sp-32: 8rem;
+
+  /* — radius — */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 40px;
+  --r-pill: 9999px;
+  --r-logo: 9999px;     /* WTM letterforms are stadium-rounded — match that DNA */
+
+  /* — shadow — */
+  --shadow-xs: 0 1px 2px rgba(5,5,5,0.04);
+  --shadow-sm: 0 1px 2px rgba(5,5,5,0.06), 0 1px 3px rgba(5,5,5,0.04);
+  --shadow-md: 0 4px 12px rgba(5,5,5,0.08), 0 1px 2px rgba(5,5,5,0.04);
+  --shadow-lg: 0 16px 40px rgba(22,70,93,0.14), 0 2px 6px rgba(5,5,5,0.04);
+  --shadow-xl: 0 30px 80px rgba(22,70,93,0.22), 0 4px 12px rgba(5,5,5,0.06);
+  --shadow-brand: 0 16px 40px rgba(22,70,93,0.30);
+  --shadow-accent: 0 16px 40px rgba(134,62,243,0.28);
+
+  /* — motion — */
+  --ease-out: cubic-bezier(.2,.7,.2,1);
+  --ease-in-out: cubic-bezier(.6,.05,.3,.95);
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+}
+
+/* ---------- 3. DARK THEME ---------- */
+:root[data-theme="dark"], .wtm-dark {
+  --bg:        var(--wtm-ink);
+  --bg-soft:   #0E1418;
+  --bg-muted:  #131B21;
+  --surface:   #131B21;
+  --surface-2: #1A242C;
+
+  --fg:        var(--wtm-pearl);
+  --fg-muted:  var(--wtm-mist);
+  --fg-soft:   var(--wtm-graphite);
+
+  --border:        #243038;
+  --border-soft:   #1A242C;
+  --border-strong: var(--wtm-mist);
+
+  --brand:         var(--wtm-ocean);
+  --brand-hover:   oklch(from var(--wtm-ocean) 0.58 0.10 h);
+  --brand-press:   var(--wtm-deep-teal);
+
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-lg: 0 16px 40px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* ---------- 4. SEMANTIC TYPE STYLES ---------- */
+/* Use as classes (.h1, .body) or copy declarations into role selectors. */
+
+.wtm-display, .wtm-h0 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-display);
+  line-height: 0.92;
+  letter-spacing: var(--tracking-tight);
+  color: var(--brand);
+  text-transform: lowercase;
+}
+
+.wtm-h1, h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-4xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.wtm-h2, h2 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-3xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.wtm-h3, h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-2xl);
+  line-height: var(--leading-snug);
+  color: var(--fg);
+}
+
+.wtm-h4, h4 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: var(--fs-xl);
+  line-height: var(--leading-snug);
+  color: var(--fg);
+}
+
+.wtm-eyebrow {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.wtm-lead {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-xl);
+  line-height: var(--leading-normal);
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+
+.wtm-body, p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-md);
+  line-height: var(--leading-normal);
+  color: var(--fg);
+  text-wrap: pretty;
+}
+
+.wtm-small, small {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-sm);
+  line-height: var(--leading-normal);
+  color: var(--fg-muted);
+}
+
+.wtm-caption {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--fg-soft);
+}
+
+.wtm-mono, code, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  background: var(--bg-soft);
+  padding: 0.1em 0.35em;
+  border-radius: var(--r-xs);
+  color: var(--fg);
+}
+
+/* WTM-signature treatment: lowercase, tight, brand-tinted lockup */
+.wtm-tagline {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-3xl);
+  line-height: 0.95;
+  text-transform: lowercase;
+  color: var(--brand);
+  letter-spacing: -0.01em;
+}
