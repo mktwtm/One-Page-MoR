@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WTM — Merchant of Record for Brazil</title>
-<link rel="icon" href="assets/submark_color.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="colors_and_type.css">
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
@@ -1894,8 +1894,9 @@ a{color:inherit;text-decoration:none}
     });
   });
 
-  // lucide icons
+  // lucide icons + initialize i18n on load
   if (window.lucide) lucide.createIcons();
+  applyLang('en');
 </script>
 </body>
 </html>
