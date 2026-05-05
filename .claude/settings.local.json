@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(magick --version)",
+      "Bash(cwebp -version)",
+      "Bash(where ffmpeg *)",
+      "Bash(python3 -c \"from PIL import Image; print\\('pillow ok'\\)\")",
+      "Bash(python -c \"from PIL import Image; print\\('pillow ok'\\)\")",
+      "Bash(python3)",
+      "PowerShell(python \"C:\\\\Users\\\\mtboh\\\\OneDrive\\\\My Documents\\\\Antigravity\\\\WTM\\\\One Page MoR\\\\convert_webp.py\")"
+    ]
+  }
+}
