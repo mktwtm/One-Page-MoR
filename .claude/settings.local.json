@@ -7,7 +7,12 @@
       "Bash(python3 -c \"from PIL import Image; print\\('pillow ok'\\)\")",
       "Bash(python -c \"from PIL import Image; print\\('pillow ok'\\)\")",
       "Bash(python3)",
-      "PowerShell(python \"C:\\\\Users\\\\mtboh\\\\OneDrive\\\\My Documents\\\\Antigravity\\\\WTM\\\\One Page MoR\\\\convert_webp.py\")"
+      "PowerShell(python \"C:\\\\Users\\\\mtboh\\\\OneDrive\\\\My Documents\\\\Antigravity\\\\WTM\\\\One Page MoR\\\\convert_webp.py\")",
+      "mcp__ab8653e8-28f2-4262-b236-f98fb83dd166__list_projects",
+      "mcp__ab8653e8-28f2-4262-b236-f98fb83dd166__list_tables",
+      "mcp__ab8653e8-28f2-4262-b236-f98fb83dd166__apply_migration",
+      "mcp__ab8653e8-28f2-4262-b236-f98fb83dd166__get_project_url",
+      "mcp__ab8653e8-28f2-4262-b236-f98fb83dd166__get_publishable_keys"
     ]
   }
 }

@@ -7,6 +7,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="colors_and_type.css">
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ─────────────────────────────────────────────
    Page-level resets + layout
@@ -108,6 +109,7 @@ a{color:inherit;text-decoration:none}
 .section-dark{background:var(--wtm-ink);color:#fff}
 .section-dark .h-section,.section-dark h3,.section-dark h4{color:#fff}
 .section-dark .lead{color:rgba(236,236,238,.78)}
+.s-tax .lead,.s-action .lead{color:rgba(236,236,238,.82)}
 
 .section-deep{
   background:linear-gradient(180deg,#0F2D3D 0%,var(--wtm-deep-teal) 100%);
@@ -270,6 +272,19 @@ a{color:inherit;text-decoration:none}
 }
 .tax-rate.warn{color:#E5C27A}
 .tax-foot{margin-top:24px;font-size:13px;color:rgba(236,236,238,.55);line-height:1.6;max-width:50ch}
+.tax-callout{
+  margin-top:48px;
+  padding:28px 32px;
+  border-radius:var(--r-lg);
+  background:linear-gradient(135deg,rgba(229,154,142,.10),rgba(134,62,243,.10));
+  border:1px solid rgba(229,154,142,.25);
+  color:rgba(236,236,238,.92);
+  font-family:var(--font-heading);
+  font-weight:500;
+  font-size:clamp(16px,1.6vw,20px);
+  line-height:1.55;
+  text-align:left;
+}
 
 .vat-card{
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
@@ -311,7 +326,7 @@ a{color:inherit;text-decoration:none}
    S3 — Commercial impact
    ───────────────────────────────────────────── */
 .s-commercial{background:#fff}
-.commercial-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.commercial-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:stretch}
 
 .kpi-list{margin-top:32px;display:flex;flex-direction:column}
 .kpi-row{
@@ -326,7 +341,7 @@ a{color:inherit;text-decoration:none}
 .kpi-row p{font-size:15px;line-height:1.6;color:var(--fg-muted)}
 .kpi-row p strong{color:var(--fg);font-weight:600}
 
-.consequence-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.consequence-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:100%;grid-auto-rows:1fr;align-content:stretch}
 .consequence-card{
   border-radius:var(--r-md);
   padding:28px 24px;
@@ -431,7 +446,7 @@ a{color:inherit;text-decoration:none}
   display:grid;place-items:center;
   background:rgba(134,62,243,.14);border:1px solid rgba(134,62,243,.32);
 }
-.s-quote-mark img{width:32px;height:32px;filter:brightness(1.4)}
+.s-quote-mark img{width:32px;height:32px;filter:invert(1) brightness(2)}
 .s-quote .versatylo{
   font-size:clamp(2rem,5vw,4.5rem);
   color:rgba(255,255,255,.6);
@@ -528,10 +543,10 @@ a{color:inherit;text-decoration:none}
   font-family:var(--font-heading);font-weight:600;font-size:14.5px;color:var(--fg);
   display:flex;align-items:center;
 }
-.cr-without{color:var(--fg-muted);background:#fff;border-left:1px solid var(--border-soft)}
-.cr-with{color:var(--fg);background:#F1F8FB;border-left:1px solid var(--border-soft)}
-.cr-without [data-lucide]{color:var(--danger);font-size:16px;margin-right:8px;vertical-align:-3px}
-.cr-with [data-lucide]{color:var(--success);font-size:16px;margin-right:8px;vertical-align:-3px}
+.cr-without{color:var(--fg-muted);background:#fff;border-left:1px solid var(--border-soft);display:flex;align-items:flex-start;gap:10px}
+.cr-with{color:var(--fg);background:#F1F8FB;border-left:1px solid var(--border-soft);display:flex;align-items:flex-start;gap:10px}
+.cr-without [data-lucide]{color:var(--danger);font-size:16px;margin-right:0;flex:0 0 auto;margin-top:2px}
+.cr-with [data-lucide]{color:var(--success);font-size:16px;margin-right:0;flex:0 0 auto;margin-top:2px}
 
 /* ─────────────────────────────────────────────
    S8 — Benefits
@@ -595,6 +610,8 @@ a{color:inherit;text-decoration:none}
 }
 .s-globe .section-inner{position:relative}
 .globe-head{max-width:660px;margin-bottom:48px}
+.globe-head .eyebrow{margin-bottom:18px}
+.globe-head .lead{margin-top:18px;color:rgba(236,236,238,.72)}
 
 .globe-frame{
   border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);
@@ -634,9 +651,8 @@ a{color:inherit;text-decoration:none}
   letter-spacing:.14em;text-transform:uppercase;
   background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
   color:rgba(236,236,238,.78);
-  transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out);
+  cursor:default;user-select:none;
 }
-.g-pill:hover{background:rgba(255,255,255,.08);color:#fff}
 .g-pill.active{
   background:rgba(134,62,243,.18);border-color:rgba(134,62,243,.4);color:#D4BAFF;
 }
@@ -760,7 +776,111 @@ a{color:inherit;text-decoration:none}
   .cta-stats{grid-template-columns:1fr}
   .cta-stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.18)}
   .cta-stat:last-child{border-bottom:none}
-  .footer-inner,.footer-meta{align-items:flex-start}
+  .tax-callout{padding:22px 20px;font-size:15px;margin-top:32px}
+  .globe-head{margin-bottom:28px}
+  .globe-pills{padding:14px 14px;gap:6px;justify-content:center}
+  .g-pill{padding:6px 10px;font-size:10px;letter-spacing:.10em}
+  .globe-frame{border-radius:var(--r-md)}
+  .footer-inner{flex-direction:column;align-items:center;text-align:center;gap:28px}
+  .footer-brand{align-items:center;max-width:none}
+  .footer-meta{align-items:center}
+  .footer-links{justify-content:center;flex-wrap:wrap}
+  .footer-base{flex-direction:column;align-items:center;text-align:center;gap:6px}
+  .modal-card{padding:28px 22px}
+}
+
+/* ─────────────────────────────────────────────
+   Modal — Talk to a specialist
+   ───────────────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(15,28,42,0);
+  -webkit-backdrop-filter:blur(0px);backdrop-filter:blur(0px);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+  transition:background .42s cubic-bezier(.22,.61,.36,1),
+             backdrop-filter .42s cubic-bezier(.22,.61,.36,1),
+             -webkit-backdrop-filter .42s cubic-bezier(.22,.61,.36,1);
+}
+.modal-overlay.show{display:flex}
+.modal-overlay.open{
+  background:rgba(15,28,42,.72);
+  -webkit-backdrop-filter:blur(8px) saturate(1.2);
+  backdrop-filter:blur(8px) saturate(1.2);
+}
+.modal-card{
+  background:#fff;border-radius:var(--r-lg);max-width:480px;width:100%;
+  padding:36px 36px 32px;position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,.45),
+             0 0 0 1px rgba(255,255,255,.04);
+  opacity:0;
+  transform:translateY(24px) scale(.96);
+  transform-origin:50% 60%;
+  transition:opacity .38s cubic-bezier(.22,.61,.36,1),
+             transform .48s cubic-bezier(.22,.61,.36,1);
+  will-change:transform,opacity;
+}
+.modal-card::before{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;
+  background:linear-gradient(135deg,rgba(134,62,243,.18),rgba(11,108,138,.10) 60%,transparent 90%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  padding:1px;pointer-events:none;opacity:0;
+  transition:opacity .5s ease .1s;
+}
+.modal-overlay.open .modal-card{opacity:1;transform:translateY(0) scale(1)}
+.modal-overlay.open .modal-card::before{opacity:1}
+.modal-overlay.open .modal-form > *{
+  animation:modalFieldIn .5s cubic-bezier(.22,.61,.36,1) both;
+}
+.modal-overlay.open .modal-form > *:nth-child(1){animation-delay:.12s}
+.modal-overlay.open .modal-form > *:nth-child(2){animation-delay:.18s}
+.modal-overlay.open .modal-form > *:nth-child(3){animation-delay:.24s}
+.modal-overlay.open .modal-form > *:nth-child(4){animation-delay:.30s}
+@keyframes modalFieldIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media (prefers-reduced-motion:reduce){
+  .modal-overlay,.modal-card,.modal-card::before{transition:opacity .12s linear}
+  .modal-card{transform:none}
+  .modal-overlay.open .modal-form > *{animation:none}
+}
+.modal-close{
+  position:absolute;top:14px;right:14px;
+  width:32px;height:32px;border-radius:9999px;
+  display:grid;place-items:center;cursor:pointer;
+  border:none;background:transparent;color:var(--fg-muted);
+  transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out);
+}
+.modal-close:hover{background:var(--bg-soft);color:var(--fg)}
+.modal-title{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:1.5rem;letter-spacing:-.012em;color:var(--fg);
+  margin-bottom:6px;
+}
+.modal-sub{
+  font-family:var(--font-body);font-size:14px;color:var(--fg-muted);
+  line-height:1.55;margin-bottom:24px;
+}
+.modal-form{display:flex;flex-direction:column;gap:14px}
+.modal-field{display:flex;flex-direction:column;gap:6px}
+.modal-field label{
+  font-family:var(--font-heading);font-weight:600;font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted);
+}
+.modal-field input{
+  font-family:var(--font-body);font-size:15px;color:var(--fg);
+  padding:12px 14px;border-radius:var(--r-sm,10px);
+  border:1px solid var(--border);background:#fff;
+  transition:border-color var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
+}
+.modal-field input:focus{
+  outline:none;border-color:var(--brand);
+  box-shadow:0 0 0 3px rgba(11,108,138,.15);
+}
+.modal-submit{
+  margin-top:8px;justify-content:center;width:100%;
 }
 </style>
 </head>
@@ -784,7 +904,7 @@ a{color:inherit;text-decoration:none}
       <div class="lang-toggle" role="group" aria-label="Language">
         <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
       </div>
-      <a href="#cta" class="btn btn-brand" style="padding:10px 20px;font-size:13px" data-i18n="nav.cta">Talk to a specialist</a>
+      <a href="#" class="btn btn-brand js-open-modal" style="padding:10px 20px;font-size:13px" data-i18n="nav.cta">Talk to a specialist</a>
     </div>
   </div>
 </nav>
@@ -812,7 +932,7 @@ a{color:inherit;text-decoration:none}
     </p>
 
     <div class="hero-actions">
-      <a href="#cta" class="btn btn-accent" data-i18n-html="hero.cta1">Talk to a specialist <i data-lucide="arrow-right"></i></a>
+      <a href="#" class="btn btn-accent js-open-modal" data-i18n-html="hero.cta1">Talk to a specialist <i data-lucide="arrow-right"></i></a>
       <a href="#tax" class="btn btn-ghost-light" data-i18n="hero.cta2">Understand your exposure</a>
     </div>
 
@@ -848,7 +968,7 @@ a{color:inherit;text-decoration:none}
     <div class="section-head reveal">
       <div class="eyebrow eyebrow-light" style="color:#E59A8E" data-i18n="tax.eyebrow">The tax reality</div>
       <h2 class="h-section" style="color:#fff;margin-top:18px" data-i18n="tax.h2">
-        Brazil's tax layer is larger than your customers realize — and it's about to grow.
+        Brazil's tax layer is larger than your customers realize. And it's about to grow.
       </h2>
       <p class="lead" data-i18n="tax.lead">
         When a Brazilian company buys SaaS from a foreign supplier, it typically sees only the subscription price, the exchange rate, and an IOF charge. The full picture is far more complex.
@@ -909,9 +1029,6 @@ a{color:inherit;text-decoration:none}
             <span class="tax-rate warn">Monthly</span>
           </div>
         </div>
-        <p class="tax-foot" data-i18n="tax.foot">
-          Many buyers do not handle these obligations correctly, creating a market distortion: foreign SaaS looked cheaper than it really was because customers were not internalizing the full tax burden.
-        </p>
       </div>
 
       <div class="reveal d2">
@@ -948,6 +1065,10 @@ a{color:inherit;text-decoration:none}
           </ul>
         </div>
       </div>
+    </div>
+
+    <div class="tax-callout reveal" data-i18n="tax.foot">
+      Many buyers do not handle these obligations correctly, creating a market distortion: foreign SaaS looked cheaper than it really was because customers were not internalizing the full tax burden.
     </div>
   </div>
 </section>
@@ -1463,8 +1584,7 @@ a{color:inherit;text-decoration:none}
     </p>
 
     <div class="cta-actions">
-      <a href="#" class="btn btn-light" data-i18n-html="cta.btn1">Talk to a specialist <i data-lucide="arrow-right"></i></a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn btn-ghost-light" data-i18n="cta.btn2">Contact on LinkedIn</a>
+      <a href="#" class="btn btn-light js-open-modal" data-i18n-html="cta.btn1">Talk to a specialist <i data-lucide="arrow-right"></i></a>
     </div>
   </div>
 </section>
@@ -1492,6 +1612,34 @@ a{color:inherit;text-decoration:none}
     <span data-i18n="footer.since">Empowering global business expansion since 2003.</span>
   </div>
 </footer>
+
+<!-- ═══════════════════════════════════════════════
+     MODAL — Talk to a specialist
+     ═══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="specialistModal" role="dialog" aria-modal="true" aria-labelledby="specialistModalTitle" hidden>
+  <div class="modal-card">
+    <button type="button" class="modal-close" aria-label="Close" data-modal-close>
+      <i data-lucide="x"></i>
+    </button>
+    <h3 class="modal-title" id="specialistModalTitle" data-i18n="modal.title">Talk to a specialist</h3>
+    <p class="modal-sub" data-i18n="modal.sub">Tell us a bit about you and we'll be in touch shortly.</p>
+    <form class="modal-form" id="specialistForm" novalidate>
+      <div class="modal-field">
+        <label for="mf-name" data-i18n="modal.name">Your Name</label>
+        <input type="text" id="mf-name" name="name" required autocomplete="name">
+      </div>
+      <div class="modal-field">
+        <label for="mf-company" data-i18n="modal.company">Company Name</label>
+        <input type="text" id="mf-company" name="company" required autocomplete="organization">
+      </div>
+      <div class="modal-field">
+        <label for="mf-email" data-i18n="modal.email">Corporate Email</label>
+        <input type="email" id="mf-email" name="email" required autocomplete="email">
+      </div>
+      <button type="submit" class="btn btn-brand modal-submit" data-i18n="modal.submit">Send</button>
+    </form>
+  </div>
+</div>
 
 <script>
   // nav scroll state
@@ -1523,7 +1671,7 @@ a{color:inherit;text-decoration:none}
       'hero.cta2':'Understand your exposure',
       /* TAX */
       'tax.eyebrow':'The tax reality',
-      'tax.h2':"Brazil’s tax layer is larger than your customers realize — and it’s about to grow.",
+      'tax.h2':"Brazil’s tax layer is larger than your customers realize. And it’s about to grow.",
       'tax.lead':"When a Brazilian company buys SaaS from a foreign supplier, it typically sees only the subscription price, the exchange rate, and an IOF charge. The full picture is far more complex.",
       'tax.block-title':'Current obligations on your Brazilian customers',
       'tax.iof.name':'IOF — Foreign exchange tax','tax.iof.note':'Automatically charged by bank or card issuer',
@@ -1620,12 +1768,17 @@ a{color:inherit;text-decoration:none}
       'cta.leadtext':'Chosen by over 4,000 companies that have expanded into new markets in a reliable and simplified way, with full compliance across their operations.',
       'cta.stat1':'Companies expanded','cta.stat2':'Years of expertise','cta.stat3':'Prepare now',
       'cta.body':'Brazil is professionalizing how foreign digital services are bought, taxed, documented and reported. The winners will be the companies that treat compliance as a competitive advantage.',
-      'cta.btn1':'Talk to a specialist <i data-lucide="arrow-right"></i>','cta.btn2':'Contact on LinkedIn',
+      'cta.btn1':'Talk to a specialist <i data-lucide="arrow-right"></i>',
       /* FOOTER */
       'footer.tagline':'empowering expansion.','footer.privacy':'Privacy policy','footer.terms':'Terms of use','footer.contact':'Contact',
       'footer.copy':'© YEAR WTM. All rights reserved.',
       'footer.places':'Brazil · USA · Canada · México · Peru · Uruguay · Portugal · UAE',
       'footer.since':'Empowering global business expansion since 2003.',
+      /* MODAL */
+      'modal.title':'Talk to a specialist',
+      'modal.sub':"Tell us a bit about you and we'll be in touch shortly.",
+      'modal.name':'Your Name','modal.company':'Company Name','modal.email':'Corporate Email',
+      'modal.submit':'Send',
     },
 
     pt: {
@@ -1641,7 +1794,7 @@ a{color:inherit;text-decoration:none}
       'hero.cta2':'Entenda sua exposição',
       /* TAX */
       'tax.eyebrow':'A realidade tributária',
-      'tax.h2':'A camada tributária do Brasil é maior do que seus clientes percebem — e está prestes a crescer.',
+      'tax.h2':'A camada tributária do Brasil é maior do que seus clientes percebem. E está prestes a crescer.',
       'tax.lead':'Quando uma empresa brasileira compra SaaS de um fornecedor estrangeiro, normalmente vê apenas o preço da assinatura, a taxa de câmbio e a cobrança de IOF. O quadro completo é muito mais complexo.',
       'tax.block-title':'Obrigações atuais sobre seus clientes brasileiros',
       'tax.iof.name':'IOF — Imposto sobre Operações Financeiras','tax.iof.note':'Cobrado automaticamente pelo banco ou emissor do cartão',
@@ -1738,12 +1891,17 @@ a{color:inherit;text-decoration:none}
       'cta.leadtext':'Escolhida por mais de 4.000 empresas que se expandiram para novos mercados de forma confiável e simplificada, com total conformidade em suas operações.',
       'cta.stat1':'Empresas expandidas','cta.stat2':'Anos de expertise','cta.stat3':'Prepare-se agora',
       'cta.body':'O Brasil está profissionalizando como os serviços digitais estrangeiros são comprados, tributados, documentados e reportados. Os vencedores serão as empresas que tratarem a conformidade como uma vantagem competitiva.',
-      'cta.btn1':'Falar com especialista <i data-lucide="arrow-right"></i>','cta.btn2':'Contato no LinkedIn',
+      'cta.btn1':'Falar com especialista <i data-lucide="arrow-right"></i>',
       /* FOOTER */
       'footer.tagline':'expansão com poder.','footer.privacy':'Política de privacidade','footer.terms':'Termos de uso','footer.contact':'Contato',
       'footer.copy':'© YEAR WTM. Todos os direitos reservados.',
       'footer.places':'Brasil · EUA · Canadá · México · Peru · Uruguai · Portugal · EAU',
       'footer.since':'Impulsionando a expansão global de negócios desde 2003.',
+      /* MODAL */
+      'modal.title':'Falar com especialista',
+      'modal.sub':'Conte um pouco sobre você e entraremos em contato em breve.',
+      'modal.name':'Seu Nome','modal.company':'Nome da Empresa','modal.email':'E-mail Corporativo',
+      'modal.submit':'Enviar',
     },
 
     es: {
@@ -1759,7 +1917,7 @@ a{color:inherit;text-decoration:none}
       'hero.cta2':'Entienda su exposición',
       /* TAX */
       'tax.eyebrow':'La realidad tributaria',
-      'tax.h2':'La capa tributaria de Brasil es mayor de lo que sus clientes perciben — y está a punto de crecer.',
+      'tax.h2':'La capa tributaria de Brasil es mayor de lo que sus clientes perciben. Y está a punto de crecer.',
       'tax.lead':'Cuando una empresa brasileña compra SaaS de un proveedor extranjero, normalmente solo ve el precio de la suscripción, el tipo de cambio y un cargo de IOF. El cuadro completo es mucho más complejo.',
       'tax.block-title':'Obligaciones actuales sobre sus clientes brasileños',
       'tax.iof.name':'IOF — Impuesto sobre Operaciones Financieras','tax.iof.note':'Cobrado automáticamente por el banco o emisor de la tarjeta',
@@ -1856,12 +2014,17 @@ a{color:inherit;text-decoration:none}
       'cta.leadtext':'Elegida por más de 4.000 empresas que se han expandido a nuevos mercados de manera confiable y simplificada, con total cumplimiento en sus operaciones.',
       'cta.stat1':'Empresas expandidas','cta.stat2':'Años de experiencia','cta.stat3':'Prepárese ahora',
       'cta.body':'Brasil está profesionalizando cómo se compran, gravan, documentan y reportan los servicios digitales extranjeros. Los ganadores serán las empresas que traten el cumplimiento como una ventaja competitiva.',
-      'cta.btn1':'Hablar con especialista <i data-lucide="arrow-right"></i>','cta.btn2':'Contacto en LinkedIn',
+      'cta.btn1':'Hablar con especialista <i data-lucide="arrow-right"></i>',
       /* FOOTER */
       'footer.tagline':'expansión con poder.','footer.privacy':'Política de privacidad','footer.terms':'Términos de uso','footer.contact':'Contacto',
       'footer.copy':'© YEAR WTM. Todos los derechos reservados.',
       'footer.places':'Brasil · EE.UU. · Canadá · México · Perú · Uruguay · Portugal · EAU',
       'footer.since':'Impulsando la expansión global de negocios desde 2003.',
+      /* MODAL */
+      'modal.title':'Hablar con especialista',
+      'modal.sub':'Cuéntenos un poco sobre usted y nos pondremos en contacto pronto.',
+      'modal.name':'Su Nombre','modal.company':'Nombre de la Empresa','modal.email':'Correo Corporativo',
+      'modal.submit':'Enviar',
     }
   };
 
@@ -1892,6 +2055,77 @@ a{color:inherit;text-decoration:none}
       btn.classList.add('on');
       applyLang(btn.getAttribute('data-lang'));
     });
+  });
+
+  // ── Supabase client ───────────────────────────────────────────────────────
+  const SUPABASE_URL = 'https://mpamdvrvswwumgpfoskd.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_GsAWP-wJaQ-IDQjWgGI8Qg_ol_-RdM5';
+  const sb = (window.supabase && window.supabase.createClient)
+    ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } })
+    : null;
+
+  // ── modal: Talk to a specialist ───────────────────────────────────────────
+  const modal = document.getElementById('specialistModal');
+  const modalForm = document.getElementById('specialistForm');
+  function openModal(){
+    modal.hidden = false;
+    modal.classList.add('show');
+    // Force a layout flush so the browser commits the initial state
+    // before transitioning to .open — guarantees the entrance animation plays.
+    void modal.offsetWidth;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => modal.classList.add('open'));
+    });
+    document.body.style.overflow = 'hidden';
+    const first = modal.querySelector('input');
+    if (first) setTimeout(() => first.focus(), 320);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      modal.classList.remove('show');
+      modal.hidden = true;
+    }, 380);
+  }
+  document.querySelectorAll('.js-open-modal').forEach(el => {
+    el.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+  });
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal || e.target.closest('[data-modal-close]')) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+  modalForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!modalForm.checkValidity()) { modalForm.reportValidity(); return; }
+    const submitBtn = modalForm.querySelector('button[type="submit"]');
+    const originalLabel = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '.7'; }
+    const payload = {
+      name: modalForm.name.value.trim(),
+      company: modalForm.company.value.trim(),
+      email: modalForm.email.value.trim(),
+      language: currentLang || document.documentElement.lang || 'en',
+      source: 'mor_landing_modal',
+      user_agent: navigator.userAgent.slice(0, 500),
+      referrer: document.referrer ? document.referrer.slice(0, 500) : null,
+    };
+    try {
+      if (sb) {
+        const { error } = await sb.from('mor_landing_leads').insert(payload);
+        if (error) console.error('[supabase] insert failed:', error);
+      } else {
+        console.warn('[supabase] client not loaded; skipping insert');
+      }
+    } catch (err) {
+      console.error('[supabase] unexpected error:', err);
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.style.opacity = ''; submitBtn.textContent = originalLabel; }
+      const lang = encodeURIComponent(payload.language || 'en');
+      window.location.href = 'thankyou.html?lang=' + lang;
+    }
   });
 
   // lucide icons + initialize i18n on load

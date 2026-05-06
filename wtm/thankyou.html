@@ -101,6 +101,13 @@ a{color:inherit;text-decoration:none}
 .nav-links a{font-family:var(--font-heading);font-weight:500;font-size:14px;color:var(--fg);transition:color var(--dur-base) var(--ease-out)}
 .nav-links a:hover{color:var(--wtm-ocean)}
 .nav-right{display:flex;align-items:center;gap:14px}
+.lang-toggle{
+  display:inline-flex;align-items:center;
+  border:1px solid var(--border);border-radius:9999px;padding:4px;
+  font-family:var(--font-heading);font-weight:600;font-size:11px;letter-spacing:.12em;
+}
+.lang-toggle span{padding:4px 10px;border-radius:9999px;color:var(--fg-muted);cursor:pointer}
+.lang-toggle span.on{background:var(--brand);color:#fff}
 
 /* ─────────────────────────────────────────────
    HERO — confirmation
@@ -438,12 +445,15 @@ a{color:inherit;text-decoration:none}
       <img src="assets/wtm_color.svg" alt="WTM">
     </a>
     <div class="nav-links">
-      <a href="index.html#tax">Tax reform</a>
-      <a href="index.html#solution">Solution</a>
-      <a href="index.html#benefits">Benefits</a>
+      <a href="index.html#tax" data-i18n="nav.tax">Tax reform</a>
+      <a href="index.html#solution" data-i18n="nav.solution">Solution</a>
+      <a href="index.html#benefits" data-i18n="nav.benefits">Benefits</a>
     </div>
     <div class="nav-right">
-      <a href="index.html" class="btn btn-ghost" style="padding:10px 20px;font-size:13px">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+      </div>
+      <a href="index.html" class="btn btn-ghost" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back">
         <i data-lucide="arrow-left"></i> Back to overview
       </a>
     </div>
@@ -463,49 +473,49 @@ a{color:inherit;text-decoration:none}
         <i data-lucide="check"></i>
       </div>
 
-      <div class="hero-eyebrow">Request received &middot; Reference #BR-2025-0421</div>
+      <div class="hero-eyebrow" data-i18n="hero.eyebrow">Request received &middot; Reference #BR-2025-0421</div>
 
-      <h1 class="h-display">
+      <h1 class="h-display" data-i18n-html="hero.h1">
         Thank you. We're <span class="accent">on it.</span>
       </h1>
 
-      <p class="hero-lead">
+      <p class="hero-lead" data-i18n="hero.lead">
         Your request has been routed to our Brazil tax &amp; expansion team. A specialist will reach out within one business day with an initial assessment of your exposure and a recommended path forward.
       </p>
 
-      <p class="hero-tagline versatylo">
+      <p class="hero-tagline versatylo" data-i18n-html="hero.tagline">
         empowering expansion. <em>starting now.</em>
       </p>
     </div>
 
     <aside class="summary-card" aria-label="Submission summary">
       <div class="summary-head">
-        <span class="summary-title">Submission summary</span>
-        <span class="status-pill">Confirmed</span>
+        <span class="summary-title" data-i18n="sum.title">Submission summary</span>
+        <span class="status-pill" data-i18n="sum.status">Confirmed</span>
       </div>
 
       <div class="summary-row">
-        <span class="summary-label">Submitted</span>
-        <span class="summary-value">Today &middot; just now</span>
+        <span class="summary-label" data-i18n="sum.submitted">Submitted</span>
+        <span class="summary-value" data-i18n="sum.submitted.v">Today &middot; just now</span>
       </div>
       <div class="summary-row">
-        <span class="summary-label">Reference</span>
+        <span class="summary-label" data-i18n="sum.ref">Reference</span>
         <span class="summary-value">#BR-2025-0421</span>
       </div>
       <div class="summary-row">
-        <span class="summary-label">Topic</span>
-        <span class="summary-value">Merchant of Record &middot; Brazil</span>
+        <span class="summary-label" data-i18n="sum.topic">Topic</span>
+        <span class="summary-value" data-i18n="sum.topic.v">Merchant of Record &middot; Brazil</span>
       </div>
       <div class="summary-row">
-        <span class="summary-label">Routing</span>
-        <span class="summary-value">Brazil tax &amp; expansion team</span>
+        <span class="summary-label" data-i18n="sum.routing">Routing</span>
+        <span class="summary-value" data-i18n="sum.routing.v">Brazil tax &amp; expansion team</span>
       </div>
       <div class="summary-row">
-        <span class="summary-label">Response time</span>
-        <span class="summary-value">Within 1 business day</span>
+        <span class="summary-label" data-i18n="sum.resp">Response time</span>
+        <span class="summary-value" data-i18n="sum.resp.v">Within 1 business day</span>
       </div>
 
-      <div class="summary-foot">
+      <div class="summary-foot" data-i18n-html="sum.foot">
         <i data-lucide="mail"></i>
         A confirmation has been sent to your inbox.
       </div>
@@ -519,9 +529,9 @@ a{color:inherit;text-decoration:none}
 <section class="section s-timeline">
   <div class="section-inner">
     <div class="section-head reveal">
-      <div class="eyebrow">What happens next</div>
-      <h2 class="h-section" style="margin-top:18px">A clear path from inquiry to compliant local billing.</h2>
-      <p class="lead">No back-and-forth, no generic discovery loops. The first conversation is already focused on your customers, your contracts and your timeline.</p>
+      <div class="eyebrow" data-i18n="tl.eyebrow">What happens next</div>
+      <h2 class="h-section" style="margin-top:18px" data-i18n="tl.h2">A clear path from inquiry to compliant local billing.</h2>
+      <p class="lead" data-i18n="tl.lead">No back-and-forth, no generic discovery loops. The first conversation is already focused on your customers, your contracts and your timeline.</p>
     </div>
 
     <div class="timeline reveal d2">
@@ -529,27 +539,27 @@ a{color:inherit;text-decoration:none}
         <div class="dot"><i data-lucide="check"></i></div>
         <div class="body">
           <span class="num">01.</span>
-          <span class="when">Complete</span>
-          <h4>Request submitted</h4>
-          <p>Your inquiry is in our queue and routed to the right specialist based on your industry and Brazil footprint.</p>
+          <span class="when" data-i18n="tl.s1.when">Complete</span>
+          <h4 data-i18n="tl.s1.title">Request submitted</h4>
+          <p data-i18n="tl.s1.body">Your inquiry is in our queue and routed to the right specialist based on your industry and Brazil footprint.</p>
         </div>
       </div>
       <div class="tl-step now">
         <div class="dot"><i data-lucide="user-round"></i></div>
         <div class="body">
           <span class="num">02.</span>
-          <span class="when">Within 1 business day</span>
-          <h4>Specialist reaches out</h4>
-          <p>A WTM expert contacts you to schedule a 30-minute call and confirm scope: customers in Brazil, contract types, current invoicing model.</p>
+          <span class="when" data-i18n="tl.s2.when">Within 1 business day</span>
+          <h4 data-i18n="tl.s2.title">Specialist reaches out</h4>
+          <p data-i18n="tl.s2.body">A WTM expert contacts you to schedule a 30-minute call and confirm scope: customers in Brazil, contract types, current invoicing model.</p>
         </div>
       </div>
       <div class="tl-step">
         <div class="dot"><i data-lucide="file-text"></i></div>
         <div class="body">
           <span class="num">03.</span>
-          <span class="when">Within 1 week</span>
-          <h4>Exposure &amp; readiness map</h4>
-          <p>You receive a tailored exposure assessment with concrete recommendations for the 2027–2033 transition, including local billing structure.</p>
+          <span class="when" data-i18n="tl.s3.when">Within 1 week</span>
+          <h4 data-i18n="tl.s3.title">Exposure &amp; readiness map</h4>
+          <p data-i18n="tl.s3.body">You receive a tailored exposure assessment with concrete recommendations for the 2027–2033 transition, including local billing structure.</p>
         </div>
       </div>
     </div>
@@ -562,32 +572,32 @@ a{color:inherit;text-decoration:none}
 <section class="section s-resources">
   <div class="section-inner">
     <div class="section-head reveal">
-      <div class="eyebrow">While you wait</div>
-      <h2 class="h-section" style="margin-top:18px">Get a head start on your Brazil readiness.</h2>
-      <p class="lead">Three short, focused resources prepared by the WTM team — useful before our first call so you can come in with a sharper picture of your own exposure.</p>
+      <div class="eyebrow" data-i18n="res.eyebrow">While you wait</div>
+      <h2 class="h-section" style="margin-top:18px" data-i18n="res.h2">Get a head start on your Brazil readiness.</h2>
+      <p class="lead" data-i18n="res.lead">Three short, focused resources prepared by the WTM team — useful before our first call so you can come in with a sharper picture of your own exposure.</p>
     </div>
 
     <div class="res-grid">
       <a class="res-card reveal d1">
         <span class="num">01.</span>
         <span class="ic teal"><i data-lucide="file-down"></i></span>
-        <h3 class="h-card">Brazil tax reform brief (PDF)</h3>
-        <p>A 12-page primer on CBS, IBS, IRRF, IOF and CIDE — the layers your customers will be paying through 2033.</p>
-        <span class="res-link">Download brief <i data-lucide="arrow-right"></i></span>
+        <h3 class="h-card" data-i18n="res.c1.title">Brazil tax reform brief (PDF)</h3>
+        <p data-i18n="res.c1.body">A 12-page primer on CBS, IBS, IRRF, IOF and CIDE — the layers your customers will be paying through 2033.</p>
+        <span class="res-link" data-i18n-html="res.c1.link">Download brief <i data-lucide="arrow-right"></i></span>
       </a>
       <a class="res-card reveal d2">
         <span class="num">02.</span>
         <span class="ic violet"><i data-lucide="calculator"></i></span>
-        <h3 class="h-card">Customer exposure worksheet</h3>
-        <p>A simple template to map your top 20 Brazilian accounts, current invoicing model and renewal timing — useful to bring to the first call.</p>
-        <span class="res-link">Open worksheet <i data-lucide="arrow-right"></i></span>
+        <h3 class="h-card" data-i18n="res.c2.title">Customer exposure worksheet</h3>
+        <p data-i18n="res.c2.body">A simple template to map your top 20 Brazilian accounts, current invoicing model and renewal timing — useful to bring to the first call.</p>
+        <span class="res-link" data-i18n-html="res.c2.link">Open worksheet <i data-lucide="arrow-right"></i></span>
       </a>
       <a class="res-card reveal d3">
         <span class="num">03.</span>
         <span class="ic deep"><i data-lucide="play-circle"></i></span>
-        <h3 class="h-card">CFO briefing — 14 min</h3>
-        <p>A short executive-level walk-through of the reform, designed to align finance, legal and revenue leadership before any change to your GTM.</p>
-        <span class="res-link">Watch briefing <i data-lucide="arrow-right"></i></span>
+        <h3 class="h-card" data-i18n="res.c3.title">CFO briefing — 14 min</h3>
+        <p data-i18n="res.c3.body">A short executive-level walk-through of the reform, designed to align finance, legal and revenue leadership before any change to your GTM.</p>
+        <span class="res-link" data-i18n-html="res.c3.link">Watch briefing <i data-lucide="arrow-right"></i></span>
       </a>
     </div>
   </div>
@@ -600,31 +610,31 @@ a{color:inherit;text-decoration:none}
   <div class="section-inner">
     <div class="quote-grid">
       <div class="quote-meta reveal">
-        <div class="eyebrow eyebrow-light">Why teams choose WTM</div>
-        <p class="versatylo">
+        <div class="eyebrow eyebrow-light" data-i18n="q.eyebrow">Why teams choose WTM</div>
+        <p class="versatylo" data-i18n-html="q.tagline">
           <span class="high">a partner that understands</span><br>
           <span class="accent">both sides of the transaction.</span>
         </p>
-        <p class="lead" style="color:rgba(236,236,238,.78);max-width:48ch">
+        <p class="lead" style="color:rgba(236,236,238,.78);max-width:48ch" data-i18n="q.lead">
           Twenty years of cross-border expertise, applied to the specific moment your Brazilian customers are entering — with the documentation, billing and tax handling enterprise procurement actually expects.
         </p>
       </div>
       <div class="quote-stats reveal d2">
         <div class="qs">
           <span class="qs-num">4,000<span>+</span></span>
-          <span class="qs-label">Companies expanded through WTM</span>
+          <span class="qs-label" data-i18n="q.s1">Companies expanded through WTM</span>
         </div>
         <div class="qs">
           <span class="qs-num">20<span>+</span></span>
-          <span class="qs-label">Years of cross-border expertise</span>
+          <span class="qs-label" data-i18n="q.s2">Years of cross-border expertise</span>
         </div>
         <div class="qs">
           <span class="qs-num">8</span>
-          <span class="qs-label">Countries with on-the-ground presence</span>
+          <span class="qs-label" data-i18n="q.s3">Countries with on-the-ground presence</span>
         </div>
         <div class="qs">
           <span class="qs-num">2027<span>—</span><span>2033</span></span>
-          <span class="qs-label">Brazil reform transition fully covered</span>
+          <span class="qs-label" data-i18n="q.s4">Brazil reform transition fully covered</span>
         </div>
       </div>
     </div>
@@ -638,18 +648,18 @@ a{color:inherit;text-decoration:none}
   <div class="section-inner">
     <div class="followup-card reveal">
       <div class="followup-left">
-        <div class="eyebrow">Need to talk sooner?</div>
-        <h3>Reach the WTM team directly while your request is being routed.</h3>
-        <p>If your renewal cycle, RFP or board update can't wait — there are two ways to fast-track the conversation today.</p>
+        <div class="eyebrow" data-i18n="fu.eyebrow">Need to talk sooner?</div>
+        <h3 data-i18n="fu.h3">Reach the WTM team directly while your request is being routed.</h3>
+        <p data-i18n="fu.body">If your renewal cycle, RFP or board update can't wait — there are two ways to fast-track the conversation today.</p>
         <div class="followup-actions">
-          <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn btn-accent">Message on LinkedIn <i data-lucide="arrow-up-right"></i></a>
-          <a href="mailto:hello@wtm.com" class="btn btn-ghost">Email a specialist <i data-lucide="mail"></i></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="btn btn-accent" data-i18n-html="fu.btn1">Message on LinkedIn <i data-lucide="arrow-up-right"></i></a>
+          <a href="mailto:hello@wtm.com" class="btn btn-ghost" data-i18n-html="fu.btn2">Email a specialist <i data-lucide="mail"></i></a>
         </div>
       </div>
       <div class="followup-right">
-        <span class="badge">Brasil &middot; SP / RJ</span>
+        <span class="badge" data-i18n="fu.badge">Brasil &middot; SP / RJ</span>
         <div class="stamp">
-          <p class="versatylo">empowering expansion.<br><span class="accent">without the tax surprise.</span></p>
+          <p class="versatylo" data-i18n-html="fu.stamp">empowering expansion.<br><span class="accent">without the tax surprise.</span></p>
         </div>
       </div>
     </div>
@@ -663,20 +673,20 @@ a{color:inherit;text-decoration:none}
   <div class="footer-inner">
     <div class="footer-brand">
       <img src="assets/wtm_branco.svg" alt="WTM">
-      <p class="versatylo">empowering expansion.</p>
+      <p class="versatylo" data-i18n="footer.tagline">empowering expansion.</p>
     </div>
     <div class="footer-meta">
       <div class="footer-links">
-        <a href="#">Privacy policy</a>
-        <a href="#">Terms of use</a>
-        <a href="#">Contact</a>
+        <a href="#" data-i18n="footer.privacy">Privacy policy</a>
+        <a href="#" data-i18n="footer.terms">Terms of use</a>
+        <a href="#" data-i18n="footer.contact">Contact</a>
       </div>
-      <span>© 2025 WTM. All rights reserved.</span>
+      <span data-i18n="footer.copy">© 2025 WTM. All rights reserved.</span>
     </div>
   </div>
   <div class="footer-base">
-    <span>Brazil &middot; USA &middot; Canada &middot; México &middot; Peru &middot; Uruguay &middot; Portugal &middot; UAE</span>
-    <span>Empowering global business expansion since 2003.</span>
+    <span data-i18n="footer.places">Brazil &middot; USA &middot; Canada &middot; México &middot; Peru &middot; Uruguay &middot; Portugal &middot; UAE</span>
+    <span data-i18n="footer.since">Empowering global business expansion since 2003.</span>
   </div>
 </footer>
 
@@ -689,8 +699,199 @@ a{color:inherit;text-decoration:none}
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+  // ── i18n ──────────────────────────────────────────────────────────────────
+  const T = {
+    en: {
+      'nav.tax':'Tax reform','nav.solution':'Solution','nav.benefits':'Benefits',
+      'nav.back':'<i data-lucide="arrow-left"></i> Back to overview',
+      'hero.eyebrow':'Request received · Reference #BR-2025-0421',
+      'hero.h1':'Thank you. We\'re <span class="accent">on it.</span>',
+      'hero.lead':'Your request has been routed to our Brazil tax & expansion team. A specialist will reach out within one business day with an initial assessment of your exposure and a recommended path forward.',
+      'hero.tagline':'empowering expansion. <em>starting now.</em>',
+      'sum.title':'Submission summary','sum.status':'Confirmed',
+      'sum.submitted':'Submitted','sum.submitted.v':'Today · just now',
+      'sum.ref':'Reference',
+      'sum.topic':'Topic','sum.topic.v':'Merchant of Record · Brazil',
+      'sum.routing':'Routing','sum.routing.v':'Brazil tax & expansion team',
+      'sum.resp':'Response time','sum.resp.v':'Within 1 business day',
+      'sum.foot':'<i data-lucide="mail"></i> A confirmation has been sent to your inbox.',
+      'tl.eyebrow':'What happens next',
+      'tl.h2':'A clear path from inquiry to compliant local billing.',
+      'tl.lead':'No back-and-forth, no generic discovery loops. The first conversation is already focused on your customers, your contracts and your timeline.',
+      'tl.s1.when':'Complete','tl.s1.title':'Request submitted',
+      'tl.s1.body':'Your inquiry is in our queue and routed to the right specialist based on your industry and Brazil footprint.',
+      'tl.s2.when':'Within 1 business day','tl.s2.title':'Specialist reaches out',
+      'tl.s2.body':'A WTM expert contacts you to schedule a 30-minute call and confirm scope: customers in Brazil, contract types, current invoicing model.',
+      'tl.s3.when':'Within 1 week','tl.s3.title':'Exposure & readiness map',
+      'tl.s3.body':'You receive a tailored exposure assessment with concrete recommendations for the 2027–2033 transition, including local billing structure.',
+      'res.eyebrow':'While you wait','res.h2':'Get a head start on your Brazil readiness.',
+      'res.lead':'Three short, focused resources prepared by the WTM team — useful before our first call so you can come in with a sharper picture of your own exposure.',
+      'res.c1.title':'Brazil tax reform brief (PDF)',
+      'res.c1.body':'A 12-page primer on CBS, IBS, IRRF, IOF and CIDE — the layers your customers will be paying through 2033.',
+      'res.c1.link':'Download brief <i data-lucide="arrow-right"></i>',
+      'res.c2.title':'Customer exposure worksheet',
+      'res.c2.body':'A simple template to map your top 20 Brazilian accounts, current invoicing model and renewal timing — useful to bring to the first call.',
+      'res.c2.link':'Open worksheet <i data-lucide="arrow-right"></i>',
+      'res.c3.title':'CFO briefing — 14 min',
+      'res.c3.body':'A short executive-level walk-through of the reform, designed to align finance, legal and revenue leadership before any change to your GTM.',
+      'res.c3.link':'Watch briefing <i data-lucide="arrow-right"></i>',
+      'q.eyebrow':'Why teams choose WTM',
+      'q.tagline':'<span class="high">a partner that understands</span><br><span class="accent">both sides of the transaction.</span>',
+      'q.lead':'Twenty years of cross-border expertise, applied to the specific moment your Brazilian customers are entering — with the documentation, billing and tax handling enterprise procurement actually expects.',
+      'q.s1':'Companies expanded through WTM','q.s2':'Years of cross-border expertise',
+      'q.s3':'Countries with on-the-ground presence','q.s4':'Brazil reform transition fully covered',
+      'fu.eyebrow':'Need to talk sooner?',
+      'fu.h3':'Reach the WTM team directly while your request is being routed.',
+      'fu.body':"If your renewal cycle, RFP or board update can't wait — there are two ways to fast-track the conversation today.",
+      'fu.btn1':'Message on LinkedIn <i data-lucide="arrow-up-right"></i>',
+      'fu.btn2':'Email a specialist <i data-lucide="mail"></i>',
+      'fu.badge':'Brasil · SP / RJ',
+      'fu.stamp':'empowering expansion.<br><span class="accent">without the tax surprise.</span>',
+      'footer.tagline':'empowering expansion.',
+      'footer.privacy':'Privacy policy','footer.terms':'Terms of use','footer.contact':'Contact',
+      'footer.copy':'© 2025 WTM. All rights reserved.',
+      'footer.places':'Brazil · USA · Canada · México · Peru · Uruguay · Portugal · UAE',
+      'footer.since':'Empowering global business expansion since 2003.',
+    },
+    pt: {
+      'nav.tax':'Reforma tributária','nav.solution':'Solução','nav.benefits':'Benefícios',
+      'nav.back':'<i data-lucide="arrow-left"></i> Voltar ao site',
+      'hero.eyebrow':'Solicitação recebida · Referência #BR-2025-0421',
+      'hero.h1':'Obrigado. Já estamos <span class="accent">cuidando.</span>',
+      'hero.lead':'Sua solicitação foi encaminhada para nossa equipe de tributação e expansão no Brasil. Um especialista entrará em contato em até um dia útil com uma avaliação inicial da sua exposição e um caminho recomendado.',
+      'hero.tagline':'impulsionando expansão. <em>começando agora.</em>',
+      'sum.title':'Resumo do envio','sum.status':'Confirmado',
+      'sum.submitted':'Enviado','sum.submitted.v':'Hoje · agora mesmo',
+      'sum.ref':'Referência',
+      'sum.topic':'Tópico','sum.topic.v':'Merchant of Record · Brasil',
+      'sum.routing':'Encaminhamento','sum.routing.v':'Equipe Brasil — tributos e expansão',
+      'sum.resp':'Tempo de resposta','sum.resp.v':'Até 1 dia útil',
+      'sum.foot':'<i data-lucide="mail"></i> Uma confirmação foi enviada para o seu e-mail.',
+      'tl.eyebrow':'O que acontece agora',
+      'tl.h2':'Um caminho claro do contato inicial até o billing local em conformidade.',
+      'tl.lead':'Sem idas e vindas, sem discovery genérico. A primeira conversa já é focada nos seus clientes, contratos e prazos.',
+      'tl.s1.when':'Concluído','tl.s1.title':'Solicitação enviada',
+      'tl.s1.body':'Sua solicitação está na fila e foi encaminhada ao especialista certo com base no seu setor e operação no Brasil.',
+      'tl.s2.when':'Em até 1 dia útil','tl.s2.title':'Especialista entra em contato',
+      'tl.s2.body':'Um especialista WTM entra em contato para agendar uma call de 30 minutos e confirmar escopo: clientes no Brasil, tipos de contrato e modelo atual de faturamento.',
+      'tl.s3.when':'Em até 1 semana','tl.s3.title':'Mapa de exposição e prontidão',
+      'tl.s3.body':'Você recebe uma avaliação personalizada com recomendações concretas para a transição 2027–2033, incluindo a estrutura de billing local.',
+      'res.eyebrow':'Enquanto você espera','res.h2':'Antecipe-se na sua prontidão para o Brasil.',
+      'res.lead':'Três recursos curtos e focados preparados pela equipe WTM — úteis antes da nossa primeira call para você chegar com um panorama mais preciso da sua própria exposição.',
+      'res.c1.title':'Briefing da reforma tributária no Brasil (PDF)',
+      'res.c1.body':'Um material de 12 páginas sobre CBS, IBS, IRRF, IOF e CIDE — as camadas que seus clientes pagarão até 2033.',
+      'res.c1.link':'Baixar briefing <i data-lucide="arrow-right"></i>',
+      'res.c2.title':'Planilha de exposição de clientes',
+      'res.c2.body':'Um modelo simples para mapear suas 20 maiores contas no Brasil, modelo atual de faturamento e timing de renovação — útil para a primeira call.',
+      'res.c2.link':'Abrir planilha <i data-lucide="arrow-right"></i>',
+      'res.c3.title':'Briefing para CFO — 14 min',
+      'res.c3.body':'Um walkthrough executivo da reforma, pensado para alinhar finanças, jurídico e receita antes de qualquer mudança no GTM.',
+      'res.c3.link':'Assistir briefing <i data-lucide="arrow-right"></i>',
+      'q.eyebrow':'Por que escolhem a WTM',
+      'q.tagline':'<span class="high">um parceiro que entende</span><br><span class="accent">os dois lados da transação.</span>',
+      'q.lead':'Vinte anos de expertise cross-border aplicados ao momento exato em que seus clientes brasileiros estão entrando — com a documentação, billing e tratamento tributário que procurement enterprise realmente exige.',
+      'q.s1':'Empresas expandidas com a WTM','q.s2':'Anos de expertise cross-border',
+      'q.s3':'Países com presença local','q.s4':'Transição da reforma 2027–2033 totalmente coberta',
+      'fu.eyebrow':'Precisa falar antes?',
+      'fu.h3':'Fale diretamente com a equipe WTM enquanto sua solicitação é encaminhada.',
+      'fu.body':'Se o seu ciclo de renovação, RFP ou update para o board não pode esperar — há duas formas de acelerar a conversa hoje.',
+      'fu.btn1':'Mensagem no LinkedIn <i data-lucide="arrow-up-right"></i>',
+      'fu.btn2':'E-mail para um especialista <i data-lucide="mail"></i>',
+      'fu.badge':'Brasil · SP / RJ',
+      'fu.stamp':'impulsionando expansão.<br><span class="accent">sem surpresa tributária.</span>',
+      'footer.tagline':'impulsionando expansão.',
+      'footer.privacy':'Política de privacidade','footer.terms':'Termos de uso','footer.contact':'Contato',
+      'footer.copy':'© 2025 WTM. Todos os direitos reservados.',
+      'footer.places':'Brasil · EUA · Canadá · México · Peru · Uruguai · Portugal · EAU',
+      'footer.since':'Impulsionando a expansão global de negócios desde 2003.',
+    },
+    es: {
+      'nav.tax':'Reforma tributaria','nav.solution':'Solución','nav.benefits':'Beneficios',
+      'nav.back':'<i data-lucide="arrow-left"></i> Volver al sitio',
+      'hero.eyebrow':'Solicitud recibida · Referencia #BR-2025-0421',
+      'hero.h1':'Gracias. Ya estamos <span class="accent">en ello.</span>',
+      'hero.lead':'Su solicitud fue enviada a nuestro equipo de tributación y expansión en Brasil. Un especialista lo contactará en un día hábil con una evaluación inicial de su exposición y un camino recomendado.',
+      'hero.tagline':'impulsando expansión. <em>comenzando ahora.</em>',
+      'sum.title':'Resumen del envío','sum.status':'Confirmado',
+      'sum.submitted':'Enviado','sum.submitted.v':'Hoy · ahora mismo',
+      'sum.ref':'Referencia',
+      'sum.topic':'Tema','sum.topic.v':'Merchant of Record · Brasil',
+      'sum.routing':'Asignación','sum.routing.v':'Equipo Brasil — tributos y expansión',
+      'sum.resp':'Tiempo de respuesta','sum.resp.v':'En 1 día hábil',
+      'sum.foot':'<i data-lucide="mail"></i> Se envió una confirmación a su correo.',
+      'tl.eyebrow':'Qué sigue',
+      'tl.h2':'Un camino claro desde la consulta hasta el billing local en cumplimiento.',
+      'tl.lead':'Sin idas y vueltas, sin discovery genérico. La primera conversación ya está enfocada en sus clientes, sus contratos y sus plazos.',
+      'tl.s1.when':'Completo','tl.s1.title':'Solicitud enviada',
+      'tl.s1.body':'Su consulta está en la cola y se asignó al especialista correcto según su industria y huella en Brasil.',
+      'tl.s2.when':'En 1 día hábil','tl.s2.title':'Un especialista lo contacta',
+      'tl.s2.body':'Un experto WTM lo contacta para agendar una call de 30 minutos y confirmar el alcance: clientes en Brasil, tipos de contrato y modelo actual de facturación.',
+      'tl.s3.when':'En 1 semana','tl.s3.title':'Mapa de exposición y preparación',
+      'tl.s3.body':'Usted recibe una evaluación personalizada con recomendaciones concretas para la transición 2027–2033, incluyendo la estructura de billing local.',
+      'res.eyebrow':'Mientras espera','res.h2':'Adelántese en su preparación para Brasil.',
+      'res.lead':'Tres recursos cortos y enfocados preparados por el equipo WTM — útiles antes de nuestra primera call para llegar con un panorama más preciso de su propia exposición.',
+      'res.c1.title':'Brief de la reforma tributaria en Brasil (PDF)',
+      'res.c1.body':'Un material de 12 páginas sobre CBS, IBS, IRRF, IOF y CIDE — las capas que sus clientes pagarán hasta 2033.',
+      'res.c1.link':'Descargar brief <i data-lucide="arrow-right"></i>',
+      'res.c2.title':'Planilla de exposición de clientes',
+      'res.c2.body':'Una plantilla simple para mapear sus 20 cuentas principales en Brasil, modelo actual de facturación y timing de renovación — útil para la primera call.',
+      'res.c2.link':'Abrir planilla <i data-lucide="arrow-right"></i>',
+      'res.c3.title':'Briefing para CFO — 14 min',
+      'res.c3.body':'Un walkthrough ejecutivo de la reforma, pensado para alinear finanzas, legal y revenue antes de cualquier cambio en su GTM.',
+      'res.c3.link':'Ver briefing <i data-lucide="arrow-right"></i>',
+      'q.eyebrow':'Por qué eligen WTM',
+      'q.tagline':'<span class="high">un partner que entiende</span><br><span class="accent">los dos lados de la transacción.</span>',
+      'q.lead':'Veinte años de experiencia cross-border aplicados al momento exacto en que sus clientes brasileños están entrando — con la documentación, billing y manejo tributario que el procurement enterprise realmente exige.',
+      'q.s1':'Empresas expandidas con WTM','q.s2':'Años de experiencia cross-border',
+      'q.s3':'Países con presencia local','q.s4':'Transición de la reforma 2027–2033 totalmente cubierta',
+      'fu.eyebrow':'¿Necesita hablar antes?',
+      'fu.h3':'Hable directamente con el equipo WTM mientras su solicitud se procesa.',
+      'fu.body':'Si su ciclo de renovación, RFP o update para el board no puede esperar — hay dos formas de acelerar la conversación hoy.',
+      'fu.btn1':'Mensaje en LinkedIn <i data-lucide="arrow-up-right"></i>',
+      'fu.btn2':'Correo a un especialista <i data-lucide="mail"></i>',
+      'fu.badge':'Brasil · SP / RJ',
+      'fu.stamp':'impulsando expansión.<br><span class="accent">sin sorpresas tributarias.</span>',
+      'footer.tagline':'impulsando expansión.',
+      'footer.privacy':'Política de privacidad','footer.terms':'Términos de uso','footer.contact':'Contacto',
+      'footer.copy':'© 2025 WTM. Todos los derechos reservados.',
+      'footer.places':'Brasil · EE. UU. · Canadá · México · Perú · Uruguay · Portugal · EAU',
+      'footer.since':'Impulsando la expansión global de negocios desde 2003.',
+    },
+  };
+
+  let currentLang = 'en';
+  function applyLang(lang){
+    const t = T[lang] || T.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (t[k] != null) el.textContent = t[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const k = el.getAttribute('data-i18n-html');
+      if (t[k] != null) {
+        el.innerHTML = t[k];
+        if (window.lucide) lucide.createIcons({ nodes: [el] });
+      }
+    });
+    document.documentElement.lang = lang;
+    currentLang = lang;
+    document.querySelectorAll('.lang-toggle [data-lang]').forEach(x => {
+      x.classList.toggle('on', x.getAttribute('data-lang') === lang);
+    });
+  }
+
+  document.querySelectorAll('.lang-toggle [data-lang]').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
+  });
+
+  // initial language: ?lang= param overrides default
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get('lang');
+  const initial = (urlLang && T[urlLang]) ? urlLang : 'en';
+
   // lucide icons
   if (window.lucide) lucide.createIcons();
+  applyLang(initial);
 </script>
 </body>
 </html>
