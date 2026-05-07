@@ -190,8 +190,10 @@ a{color:inherit;text-decoration:none}
    ───────────────────────────────────────────── */
 .hero{
   position:relative;overflow:hidden;
-  min-height:88svh;display:flex;align-items:center;
-  padding:clamp(80px,10vw,140px) var(--pad) clamp(80px,8vw,120px);
+  min-height:100svh;display:flex;align-items:center;
+  /* symmetric vertical padding so flex centering produces equal whitespace
+     above and below the content; nav sits in flow above this section. */
+  padding:clamp(56px,6vw,88px) var(--pad);
   color:#fff;isolation:isolate;
 }
 .hero-photo{
