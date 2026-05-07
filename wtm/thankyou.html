@@ -463,19 +463,19 @@ a{color:inherit;text-decoration:none}
      ═══════════════════════════════════════════════ -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="WTM home">
+    <a href="index.html" class="nav-logo" aria-label="WTM home" data-keep-lang>
       <img src="assets/wtm_color.svg" alt="WTM">
     </a>
     <div class="nav-links">
-      <a href="index.html#tax" data-i18n="nav.tax">Tax reform</a>
-      <a href="index.html#solution" data-i18n="nav.solution">Solution</a>
-      <a href="index.html#benefits" data-i18n="nav.benefits">Benefits</a>
+      <a href="index.html#tax" data-i18n="nav.tax" data-keep-lang>Tax reform</a>
+      <a href="index.html#solution" data-i18n="nav.solution" data-keep-lang>Solution</a>
+      <a href="index.html#benefits" data-i18n="nav.benefits" data-keep-lang>Benefits</a>
     </div>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Language">
         <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
       </div>
-      <a href="index.html" class="btn btn-ghost" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back">
+      <a href="index.html" class="btn btn-ghost" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back" data-keep-lang>
         <i data-lucide="arrow-left"></i> Back to overview
       </a>
     </div>
@@ -899,6 +899,21 @@ a{color:inherit;text-decoration:none}
     currentLang = lang;
     document.querySelectorAll('.lang-toggle [data-lang]').forEach(x => {
       x.classList.toggle('on', x.getAttribute('data-lang') === lang);
+    });
+    syncInternalLangLinks(lang);
+  }
+
+  function syncInternalLangLinks(lang){
+    document.querySelectorAll('a[data-keep-lang]').forEach(a => {
+      const raw = a.getAttribute('data-keep-lang-href') || a.getAttribute('href');
+      if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:')) return;
+      try {
+        if (!a.getAttribute('data-keep-lang-href')) a.setAttribute('data-keep-lang-href', raw);
+        const url = new URL(raw, window.location.href);
+        if (url.origin !== window.location.origin) return;
+        url.searchParams.set('lang', lang);
+        a.setAttribute('href', url.pathname + url.search + url.hash);
+      } catch (e) {}
     });
   }
 

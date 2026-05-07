@@ -2309,9 +2309,34 @@ a{color:inherit;text-decoration:none}
     setTimeout(() => navigateWithVeil(url), 1100);
   });
 
+  // ── Keep selected language across internal navigation ────────────────────
+  function syncInternalLangLinks(lang){
+    document.querySelectorAll('a[data-keep-lang]').forEach(a => {
+      const raw = a.getAttribute('data-keep-lang-href') || a.getAttribute('href');
+      if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:')) return;
+      try {
+        if (!a.getAttribute('data-keep-lang-href')) a.setAttribute('data-keep-lang-href', raw);
+        const url = new URL(raw, window.location.href);
+        // Only same-origin internal links
+        if (url.origin !== window.location.origin) return;
+        url.searchParams.set('lang', lang);
+        a.setAttribute('href', url.pathname + url.search + url.hash);
+      } catch (e) {}
+    });
+  }
+  // Patch applyLang to also sync internal links
+  const _applyLang = applyLang;
+  applyLang = function(lang){
+    _applyLang(lang);
+    syncInternalLangLinks(lang);
+  };
+
   // lucide icons + initialize i18n on load
   if (window.lucide) lucide.createIcons();
-  applyLang('en');
+  // Honor ?lang= in URL on initial load (e.g. arriving from /report?lang=pt)
+  const _params = new URLSearchParams(window.location.search);
+  const _urlLang = _params.get('lang');
+  applyLang((_urlLang && T[_urlLang]) ? _urlLang : 'en');
 </script>
 </body>
 </html>

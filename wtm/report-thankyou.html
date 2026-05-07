@@ -297,14 +297,14 @@ h1.h-display{animation:fadeUp .55s .18s var(--ease-out) both}
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="WTM home">
+    <a href="index.html" class="nav-logo" aria-label="WTM home" data-keep-lang>
       <img src="assets/wtm_branco.svg" alt="WTM">
     </a>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Language">
         <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
       </div>
-      <a href="index.html" class="btn btn-ghost-light" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back">
+      <a href="index.html" class="btn btn-ghost-light" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back" data-keep-lang>
         <i data-lucide="arrow-left"></i> Back to overview
       </a>
     </div>
@@ -356,7 +356,7 @@ h1.h-display{animation:fadeUp .55s .18s var(--ease-out) both}
     <div class="specialist-block">
       <span class="specialist-label" data-i18n="rt.next">Next step</span>
       <p data-i18n="rt.next.body">Want to understand more about the Brazilian tax reform and how it affects your business? Talk to a WTM specialist.</p>
-      <a href="index.html#cta" class="btn btn-accent" data-i18n-html="rt.next.cta">Learn more <i data-lucide="arrow-right"></i></a>
+      <a href="index.html#cta" class="btn btn-accent" data-i18n-html="rt.next.cta" data-keep-lang>Learn more <i data-lucide="arrow-right"></i></a>
     </div>
 
   </div>
@@ -365,7 +365,7 @@ h1.h-display{animation:fadeUp .55s .18s var(--ease-out) both}
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <a href="index.html" class="footer-logo"><img src="assets/wtm_branco.svg" alt="WTM"></a>
+    <a href="index.html" class="footer-logo" data-keep-lang><img src="assets/wtm_branco.svg" alt="WTM"></a>
     <p data-i18n="footer.copy">© 2026 WTM. All rights reserved.</p>
   </div>
 </footer>
@@ -457,9 +457,25 @@ h1.h-display{animation:fadeUp .55s .18s var(--ease-out) both}
     document.querySelectorAll('.lang-toggle [data-lang]').forEach(x => {
       x.classList.toggle('on', x.getAttribute('data-lang') === lang);
     });
+    syncInternalLangLinks(lang);
     // Re-personalize greeting if name in URL
     applyGreeting();
   }
+
+  function syncInternalLangLinks(lang){
+    document.querySelectorAll('a[data-keep-lang]').forEach(a => {
+      const raw = a.getAttribute('data-keep-lang-href') || a.getAttribute('href');
+      if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:')) return;
+      try {
+        if (!a.getAttribute('data-keep-lang-href')) a.setAttribute('data-keep-lang-href', raw);
+        const url = new URL(raw, window.location.href);
+        if (url.origin !== window.location.origin) return;
+        url.searchParams.set('lang', lang);
+        a.setAttribute('href', url.pathname + url.search + url.hash);
+      } catch (e) {}
+    });
+  }
+
   document.querySelectorAll('.lang-toggle [data-lang]').forEach(btn => {
     btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
   });

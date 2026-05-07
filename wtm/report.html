@@ -124,7 +124,7 @@ main{
 }
 .content-wrap{
   width:100%;max-width:var(--maxw);
-  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;
 }
 
 /* Left column */
@@ -174,6 +174,10 @@ main{
 .kp .warn{color:#fbbf24}
 
 /* Right column — form */
+.right-col{
+  /* Pushes the form-card top down to align with the H1 title (below the eyebrow row) */
+  margin-top:calc(12px + 24px + 18px); /* eyebrow line + flex gap + h1 margin-top */
+}
 .form-card{
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.10);
@@ -356,7 +360,17 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
 }
 
 @media (max-width:900px){
-  .content-wrap{grid-template-columns:1fr;gap:48px;max-width:560px}
+  /* Stack to one column AND reorder so the form sits right after the subtitle.
+     `display:contents` lifts .left-col's children into .content-wrap so we can
+     interleave them with .right-col via `order`. */
+  .content-wrap{display:flex;flex-direction:column;gap:28px;max-width:560px}
+  .left-col{display:contents}
+  .left-col > .eyebrow{order:1}
+  .left-col > h1{order:2;margin-top:0}
+  .left-col > .lead{order:3}
+  .right-col{order:4;margin-top:0}
+  .left-col > .report-preview{order:5}
+  .left-col > .key-points{order:6}
 }
 @media (max-width:540px){
   .form-card{padding:28px 24px}
@@ -370,14 +384,14 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="WTM home">
+    <a href="index.html" class="nav-logo" aria-label="WTM home" data-keep-lang>
       <img src="assets/wtm_branco.svg" alt="WTM">
     </a>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Language">
         <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
       </div>
-      <a href="index.html" class="btn btn-ghost-light" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back">
+      <a href="index.html" class="btn btn-ghost-light" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back" data-keep-lang>
         <i data-lucide="arrow-left"></i> Back to overview
       </a>
     </div>
@@ -473,7 +487,7 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <a href="index.html" class="footer-logo"><img src="assets/wtm_branco.svg" alt="WTM"></a>
+    <a href="index.html" class="footer-logo" data-keep-lang><img src="assets/wtm_branco.svg" alt="WTM"></a>
     <p data-i18n="footer.copy">© 2026 WTM. All rights reserved.</p>
   </div>
 </footer>
@@ -599,7 +613,23 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
     document.querySelectorAll('.lang-toggle [data-lang]').forEach(x => {
       x.classList.toggle('on', x.getAttribute('data-lang') === lang);
     });
+    syncInternalLangLinks(lang);
   }
+
+  function syncInternalLangLinks(lang){
+    document.querySelectorAll('a[data-keep-lang]').forEach(a => {
+      const raw = a.getAttribute('data-keep-lang-href') || a.getAttribute('href');
+      if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:')) return;
+      try {
+        if (!a.getAttribute('data-keep-lang-href')) a.setAttribute('data-keep-lang-href', raw);
+        const url = new URL(raw, window.location.href);
+        if (url.origin !== window.location.origin) return;
+        url.searchParams.set('lang', lang);
+        a.setAttribute('href', url.pathname + url.search + url.hash);
+      } catch (e) {}
+    });
+  }
+
   document.querySelectorAll('.lang-toggle [data-lang]').forEach(btn => {
     btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
   });
