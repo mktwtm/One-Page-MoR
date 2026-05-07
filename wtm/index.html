@@ -173,9 +173,19 @@ a{color:inherit;text-decoration:none}
 .nav-links a{
   font-family:var(--font-heading);font-weight:500;font-size:14px;
   color:var(--fg);letter-spacing:.01em;
+  position:relative;padding:6px 0;
   transition:color var(--dur-base) var(--ease-out);
 }
+.nav-links a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;
+  background:linear-gradient(90deg,var(--wtm-ocean),var(--accent));
+  border-radius:2px;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform .35s var(--ease-out);
+}
 .nav-links a:hover{color:var(--wtm-ocean)}
+.nav-links a.active{color:var(--brand);font-weight:600}
+.nav-links a.active::after{transform:scaleX(1)}
 .nav-right{display:flex;align-items:center;gap:14px}
 .lang-toggle{
   display:inline-flex;align-items:center;
@@ -1783,6 +1793,36 @@ a{color:inherit;text-decoration:none}
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── scrollspy: highlight nav link for the section currently in viewport ───
+  (function initScrollspy(){
+    const sections = ['tax','solution','benefits','next-steps']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+    const linkFor = id =>
+      document.querySelector('.nav-links a[href="#' + id + '"]');
+    if (!sections.length) return;
+
+    function setActive(id){
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      if (id) {
+        const link = linkFor(id);
+        if (link) link.classList.add('active');
+      }
+    }
+
+    // Use a rootMargin that places the activation line ~30% from the top of
+    // the viewport — feels natural as the user scrolls a section into view.
+    const spy = new IntersectionObserver((entries) => {
+      // Pick the visible entry whose top is closest to the activation line.
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length) setActive(visible[0].target.id);
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(s => spy.observe(s));
+  })();
 
   // ── i18n ──────────────────────────────────────────────────────────────────
   const T = {
