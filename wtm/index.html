@@ -2282,7 +2282,9 @@ a{color:inherit;text-decoration:none}
       utm_content: utms.utm_content || null,
       gclid: utms.gclid || null,
       fbclid: utms.fbclid || null,
-      landing_url: utms._landing_url || (window.location.origin + window.location.pathname).slice(0, 1000),
+      // landing_url = page where the form was submitted (conversion page).
+      // Original entry URL is preserved in utm_* columns.
+      landing_url: (window.location.origin + window.location.pathname + window.location.search).slice(0, 1000),
     };
     try {
       if (sb) {
@@ -2337,6 +2339,22 @@ a{color:inherit;text-decoration:none}
   const _params = new URLSearchParams(window.location.search);
   const _urlLang = _params.get('lang');
   applyLang((_urlLang && T[_urlLang]) ? _urlLang : 'en');
+
+  // ── bfcache reset: when user navigates back, ensure modal/veil are clean ──
+  window.addEventListener('pageshow', () => {
+    if (modal) {
+      modal.classList.remove('open');
+      modal.classList.remove('show');
+      modal.hidden = true;
+      const _card = modal.querySelector('.modal-card');
+      if (_card) _card.classList.remove('is-success');
+      const _btn = modal.querySelector('.modal-submit');
+      if (_btn) _btn.classList.remove('is-loading');
+      if (modalForm) modalForm.reset();
+    }
+    if (pageVeil) pageVeil.classList.remove('show');
+    document.body.style.overflow = '';
+  });
 </script>
 </body>
 </html>

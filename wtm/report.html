@@ -671,7 +671,10 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
       utm_content: utms.utm_content || null,
       gclid: utms.gclid || null,
       fbclid: utms.fbclid || null,
-      landing_url: utms._landing_url || (window.location.origin + window.location.pathname).slice(0,1000),
+      // landing_url = page where the form was submitted (conversion page).
+      // The user's original entry URL (first session page) is captured via
+      // utm_source / utm_campaign / etc., so it's not lost.
+      landing_url: (window.location.origin + window.location.pathname + window.location.search).slice(0,1000),
     };
     try {
       if (sb) {
@@ -696,6 +699,16 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
   const initial = (urlLang && T[urlLang]) ? urlLang : 'en';
   if (window.lucide) lucide.createIcons();
   applyLang(initial);
+
+  // ── bfcache reset: when user navigates back, ensure UI is interactive ─────
+  window.addEventListener('pageshow', (e) => {
+    // Always reset — bfcache restoration (e.persisted=true) leaves the form
+    // in the success state and the veil overlay covering the page.
+    card.classList.remove('is-success');
+    submitBtn.classList.remove('is-loading');
+    pageVeil.classList.remove('show');
+    if (form) form.reset();
+  });
 </script>
 
 </body>
