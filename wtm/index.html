@@ -6,6 +6,14 @@
 <title>WTM — Merchant of Record for Brazil</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="colors_and_type.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMQ4F0DBTR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FMQ4F0DBTR', { anonymize_ip: true });
+</script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -2064,6 +2072,33 @@ a{color:inherit;text-decoration:none}
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } })
     : null;
 
+  // ── UTM capture (persisted across navigation) ─────────────────────────────
+  const UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
+  const UTM_STORAGE_KEY = 'wtm_utm_v1';
+  function captureUtmsFromUrl() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const found = {};
+      let any = false;
+      UTM_KEYS.forEach(k => {
+        const v = params.get(k);
+        if (v) { found[k] = v.slice(0, 300); any = true; }
+      });
+      if (any) {
+        found._captured_at = new Date().toISOString();
+        found._landing_url = (window.location.origin + window.location.pathname + window.location.search).slice(0, 1000);
+        sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(found));
+      }
+    } catch (e) { /* sessionStorage may be unavailable */ }
+  }
+  function readStoredUtms() {
+    try {
+      const raw = sessionStorage.getItem(UTM_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  captureUtmsFromUrl();
+
   // ── modal: Talk to a specialist ───────────────────────────────────────────
   const modal = document.getElementById('specialistModal');
   const modalForm = document.getElementById('specialistForm');
@@ -2103,6 +2138,7 @@ a{color:inherit;text-decoration:none}
     const submitBtn = modalForm.querySelector('button[type="submit"]');
     const originalLabel = submitBtn ? submitBtn.textContent : '';
     if (submitBtn) { submitBtn.disabled = true; submitBtn.style.opacity = '.7'; }
+    const utms = readStoredUtms() || {};
     const payload = {
       name: modalForm.name.value.trim(),
       company: modalForm.company.value.trim(),
@@ -2111,6 +2147,14 @@ a{color:inherit;text-decoration:none}
       source: 'mor_landing_modal',
       user_agent: navigator.userAgent.slice(0, 500),
       referrer: document.referrer ? document.referrer.slice(0, 500) : null,
+      utm_source: utms.utm_source || null,
+      utm_medium: utms.utm_medium || null,
+      utm_campaign: utms.utm_campaign || null,
+      utm_term: utms.utm_term || null,
+      utm_content: utms.utm_content || null,
+      gclid: utms.gclid || null,
+      fbclid: utms.fbclid || null,
+      landing_url: utms._landing_url || (window.location.origin + window.location.pathname).slice(0, 1000),
     };
     try {
       if (sb) {
