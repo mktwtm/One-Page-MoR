@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WTM — Your Report is Ready</title>
+<link rel="icon" href="assets/favicon.svg">
+<link rel="stylesheet" href="colors_and_type.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMQ4F0DBTR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FMQ4F0DBTR', { anonymize_ip: true });
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--wtm-ink);color:var(--wtm-pearl);
+  font-family:var(--font-body);font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+  position:relative;overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+[data-lucide]{width:1em;height:1em;stroke-width:2;flex-shrink:0}
+
+:root{--maxw:1100px;--pad:clamp(24px,5vw,72px)}
+
+/* Background */
+.page-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+.page-bg::before{
+  content:"";position:absolute;inset:0;
+  background:url("assets/photo_pattern_03.webp") center/cover no-repeat;
+  opacity:.30;
+}
+.page-bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(135deg,rgba(5,5,5,.85) 0%,rgba(22,70,93,.55) 50%,rgba(69,31,119,.45) 100%),
+    radial-gradient(ellipse 60% 60% at 30% 20%,rgba(134,62,243,.30) 0%,transparent 60%),
+    radial-gradient(ellipse 55% 50% at 80% 80%,rgba(11,108,138,.40) 0%,transparent 60%);
+}
+
+/* Type primitives */
+.eyebrow{
+  font-family:var(--font-heading);font-weight:600;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(168,220,232,.85);
+  display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;display:block}
+.h-display{
+  font-family:var(--font-heading);font-weight:700;
+  font-size:clamp(2rem,4.4vw,3.4rem);
+  line-height:1.06;letter-spacing:-.025em;text-wrap:balance;color:#fff;
+}
+.h-display .accent{
+  background:linear-gradient(90deg,#A8DCE8 0%,#A77BFF 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lead{
+  font-family:var(--font-body);font-weight:300;
+  font-size:clamp(1rem,1.3vw,1.12rem);
+  line-height:1.65;color:rgba(236,236,238,.78);
+  text-wrap:pretty;max-width:54ch;
+}
+.versatylo{
+  font-family:var(--font-display);font-weight:400;
+  text-transform:lowercase;letter-spacing:-.01em;line-height:.95;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-heading);font-weight:600;font-size:14px;
+  padding:13px 24px;border-radius:9999px;
+  border:1px solid transparent;cursor:pointer;
+  transition:transform var(--dur-base) var(--ease-out),
+             background var(--dur-base) var(--ease-out),
+             border-color var(--dur-base) var(--ease-out),
+             box-shadow var(--dur-base) var(--ease-out),
+             color var(--dur-base) var(--ease-out);
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:#fff;box-shadow:var(--shadow-accent)}
+.btn-accent:hover{background:var(--accent-hover)}
+.btn-ghost-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost-light:hover{background:rgba(255,255,255,.08);border-color:#fff}
+.btn [data-lucide]{font-size:16px;stroke-width:2.2}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px var(--pad);
+  background:rgba(5,5,5,.55);
+  backdrop-filter:blur(14px) saturate(1.3);
+  -webkit-backdrop-filter:blur(14px) saturate(1.3);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:var(--maxw);margin:0 auto;gap:32px}
+.nav-logo img{height:30px;width:auto}
+.nav-right{display:flex;align-items:center;gap:14px}
+.lang-toggle{
+  display:inline-flex;align-items:center;
+  border:1px solid rgba(255,255,255,.18);border-radius:9999px;padding:4px;
+  font-family:var(--font-heading);font-weight:600;font-size:11px;letter-spacing:.12em;
+}
+.lang-toggle span{padding:4px 10px;border-radius:9999px;color:rgba(236,236,238,.6);cursor:pointer}
+.lang-toggle span.on{background:var(--accent);color:#fff}
+
+/* MAIN */
+main{
+  position:relative;z-index:1;flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(56px,7vw,96px) var(--pad);
+}
+.content-wrap{
+  width:100%;max-width:760px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:0;
+}
+
+/* Confirm badge */
+.confirm-badge{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:7px 16px;border-radius:9999px;
+  background:rgba(74,138,84,.16);border:1px solid rgba(74,138,84,.42);
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:#9CC9A4;
+  margin-bottom:32px;
+}
+.badge-dot{
+  width:6px;height:6px;background:#9CC9A4;border-radius:50%;
+  box-shadow:0 0 0 4px rgba(156,201,164,.22);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+h1.h-display{margin-bottom:16px}
+.subtitle{margin-bottom:44px}
+
+/* Download card */
+.download-card{
+  width:100%;max-width:560px;
+  background:linear-gradient(145deg,rgba(15,45,61,.85) 0%,rgba(22,70,93,.85) 100%);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--r-lg);
+  padding:36px 32px;
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+  position:relative;overflow:hidden;
+  margin-bottom:40px;
+  backdrop-filter:blur(8px);
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+}
+.download-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--wtm-ocean),var(--wtm-violet));
+}
+.download-card::after{
+  content:"";position:absolute;right:-60px;bottom:-60px;
+  width:200px;height:200px;
+  background:radial-gradient(circle,rgba(134,62,243,.18) 0%,transparent 65%);
+  pointer-events:none;
+}
+.dl-icon-wrap{
+  width:72px;height:72px;border-radius:16px;
+  background:rgba(11,108,138,.22);border:1px solid rgba(167,123,255,.32);
+  display:grid;place-items:center;color:#A77BFF;font-size:30px;
+  position:relative;z-index:1;
+}
+.dl-icon-wrap::before,.dl-icon-wrap::after{
+  content:"";position:absolute;inset:-6px;border-radius:16px;
+  border:1px solid rgba(167,123,255,.4);
+  animation:successPulse 2s ease-out infinite;
+}
+.dl-icon-wrap::after{inset:-14px;animation-delay:.6s;border-color:rgba(167,123,255,.22)}
+@keyframes successPulse{
+  0%{opacity:.7;transform:scale(.9)}
+  70%{opacity:0;transform:scale(1.05)}
+  100%{opacity:0;transform:scale(1.05)}
+}
+.dl-text{position:relative;z-index:1;text-align:center}
+.dl-label{
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(168,220,232,.72);
+  display:block;margin-bottom:8px;
+}
+.dl-title{
+  font-family:var(--font-heading);font-weight:700;font-size:1.2rem;
+  color:#fff;line-height:1.25;margin-bottom:6px;
+}
+.dl-meta{font-size:13px;color:rgba(236,236,238,.55);line-height:1.5}
+
+.download-btn{
+  position:relative;z-index:1;width:100%;justify-content:center;
+  padding:14px 26px;
+  background:linear-gradient(135deg,var(--wtm-violet) 0%,var(--wtm-ocean) 100%);
+  color:#fff;
+  box-shadow:0 1px 2px rgba(0,0,0,.3),0 0 0 1px rgba(134,62,243,.4),0 0 28px rgba(134,62,243,.22);
+}
+.download-btn:hover{box-shadow:0 14px 36px rgba(134,62,243,.4)}
+
+/* What's inside */
+.inside-title{
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(236,236,238,.45);margin-bottom:16px;
+}
+.inside-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;width:100%;max-width:560px;margin-bottom:44px;
+  text-align:left;
+}
+.inside-item{
+  display:flex;align-items:flex-start;gap:10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:14px 16px;
+  font-size:13.5px;color:rgba(236,236,238,.72);line-height:1.5;
+}
+.inside-item [data-lucide]{color:#A77BFF;font-size:14px;margin-top:3px}
+
+/* Specialist CTA */
+.divider-line{
+  width:100%;max-width:400px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+  margin-bottom:36px;
+}
+.specialist-block{display:flex;flex-direction:column;align-items:center;gap:14px}
+.specialist-label{
+  font-family:var(--font-heading);font-weight:600;font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(236,236,238,.45);
+}
+.specialist-block p{
+  font-size:14px;color:rgba(236,236,238,.65);line-height:1.6;
+  max-width:46ch;margin:0 auto;
+}
+
+/* Smooth entrance — pairs with report.html veil */
+body.page-enter{animation:pageFadeIn .7s cubic-bezier(.22,.61,.36,1) both}
+@keyframes pageFadeIn{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@view-transition{ navigation: auto; }
+::view-transition-old(root){animation:vt-fade-out .35s cubic-bezier(.22,.61,.36,1) both}
+::view-transition-new(root){animation:vt-fade-in .45s cubic-bezier(.22,.61,.36,1) both}
+@keyframes vt-fade-out{to{opacity:0;transform:scale(.985)}}
+@keyframes vt-fade-in{from{opacity:0;transform:scale(1.012)}}
+
+/* Reveals */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.confirm-badge{animation:fadeUp .55s .08s var(--ease-out) both}
+h1.h-display{animation:fadeUp .55s .18s var(--ease-out) both}
+.subtitle{animation:fadeUp .55s .28s var(--ease-out) both}
+.download-card{animation:fadeUp .55s .38s var(--ease-out) both}
+.inside-title,.inside-grid{animation:fadeUp .55s .48s var(--ease-out) both}
+.divider-line,.specialist-block{animation:fadeUp .55s .58s var(--ease-out) both}
+
+@media (prefers-reduced-motion:reduce){
+  body.page-enter,
+  .confirm-badge,h1.h-display,.subtitle,.download-card,.inside-title,.inside-grid,.divider-line,.specialist-block,
+  .dl-icon-wrap::before,.dl-icon-wrap::after,.badge-dot{animation:none}
+}
+
+/* FOOTER */
+.footer{
+  position:relative;z-index:1;
+  background:rgba(5,5,5,.6);
+  backdrop-filter:blur(8px);
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:24px var(--pad);margin-top:auto;
+}
+.footer-inner{
+  max-width:var(--maxw);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.footer-logo img{height:24px;opacity:.8}
+.footer-inner p{font-size:12px;color:rgba(236,236,238,.4)}
+
+@media (max-width:600px){
+  .inside-grid{grid-template-columns:1fr}
+  .download-card{padding:28px 22px}
+}
+</style>
+</head>
+<body>
+
+<div class="page-bg"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="WTM home">
+      <img src="assets/wtm_branco.svg" alt="WTM">
+    </a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+      </div>
+      <a href="index.html" class="btn btn-ghost-light" style="padding:10px 20px;font-size:13px" data-i18n-html="nav.back">
+        <i data-lucide="arrow-left"></i> Back to overview
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="content-wrap">
+
+    <div class="confirm-badge">
+      <span class="badge-dot"></span>
+      <span data-i18n="rt.badge">Your report is ready</span>
+    </div>
+
+    <h1 class="h-display" data-i18n-html="rt.h1">Here's your report, <span class="accent" id="greetingName">ready to read.</span></h1>
+
+    <p class="lead subtitle" data-i18n="rt.sub">The Brazil Tax Reform Survival Report is ready for download. Prepared by WTM for U.S. SaaS, AI and Cloud companies navigating Brazil's 2027 tax transition.</p>
+
+    <!-- Download card -->
+    <div class="download-card">
+      <div class="dl-icon-wrap"><i data-lucide="download"></i></div>
+      <div class="dl-text">
+        <span class="dl-label" data-i18n="rt.dl.label">Executive Report · WTM · 2026</span>
+        <div class="dl-title" data-i18n="rt.dl.title">Brazil Tax Reform Survival Report</div>
+        <div class="dl-meta" data-i18n="rt.dl.meta">For U.S. SaaS, AI, Cloud and digital service companies · 10 slides</div>
+      </div>
+      <a href="WTM_Brazil_Tax_Reform_Survival_Report.pptx"
+         download="WTM_Brazil_Tax_Reform_Survival_Report.pptx"
+         class="btn download-btn" data-i18n-html="rt.dl.btn">
+        <i data-lucide="download"></i> Download the report
+      </a>
+    </div>
+
+    <!-- What's inside -->
+    <p class="inside-title" data-i18n="rt.inside.title">What's inside</p>
+    <div class="inside-grid">
+      <div class="inside-item"><i data-lucide="arrow-right"></i><span data-i18n="rt.in1">Current indirect tax layer: 11.25%–14.25%</span></div>
+      <div class="inside-item"><i data-lucide="arrow-right"></i><span data-i18n="rt.in2">Future dual VAT layer: ~25%–28%</span></div>
+      <div class="inside-item"><i data-lucide="arrow-right"></i><span data-i18n="rt.in3">Impact on churn, CAC and renewal cycles</span></div>
+      <div class="inside-item"><i data-lucide="arrow-right"></i><span data-i18n="rt.in4">IRRF, IOF and CIDE compounding effects</span></div>
+      <div class="inside-item"><i data-lucide="arrow-right"></i><span data-i18n="rt.in5">Why local billing becomes a growth tool</span></div>
+      <div class="inside-item"><i data-lucide="arrow-right"></i><span data-i18n="rt.in6">How WTM operates as your MoR in Brazil</span></div>
+    </div>
+
+    <div class="divider-line"></div>
+
+    <!-- Specialist CTA -->
+    <div class="specialist-block">
+      <span class="specialist-label" data-i18n="rt.next">Next step</span>
+      <p data-i18n="rt.next.body">Want to understand more about the Brazilian tax reform and how it affects your business? Talk to a WTM specialist.</p>
+      <a href="index.html#cta" class="btn btn-accent" data-i18n-html="rt.next.cta">Learn more <i data-lucide="arrow-right"></i></a>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo"><img src="assets/wtm_branco.svg" alt="WTM"></a>
+    <p data-i18n="footer.copy">© 2026 WTM. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ── i18n ──────────────────────────────────────────────────────────────────
+  const T = {
+    en: {
+      'nav.back':'<i data-lucide="arrow-left"></i> Back to overview',
+      'rt.badge':'Your report is ready',
+      'rt.h1':'Here\'s your report, <span class="accent" id="greetingName">ready to read.</span>',
+      'rt.sub':"The Brazil Tax Reform Survival Report is ready for download. Prepared by WTM for U.S. SaaS, AI and Cloud companies navigating Brazil's 2027 tax transition.",
+      'rt.dl.label':'Executive Report · WTM · 2026',
+      'rt.dl.title':'Brazil Tax Reform Survival Report',
+      'rt.dl.meta':'For U.S. SaaS, AI, Cloud and digital service companies · 10 slides',
+      'rt.dl.btn':'<i data-lucide="download"></i> Download the report',
+      'rt.inside.title':"What's inside",
+      'rt.in1':'Current indirect tax layer: 11.25%–14.25%',
+      'rt.in2':'Future dual VAT layer: ~25%–28%',
+      'rt.in3':'Impact on churn, CAC and renewal cycles',
+      'rt.in4':'IRRF, IOF and CIDE compounding effects',
+      'rt.in5':'Why local billing becomes a growth tool',
+      'rt.in6':'How WTM operates as your MoR in Brazil',
+      'rt.next':'Next step',
+      'rt.next.body':'Want to understand more about the Brazilian tax reform and how it affects your business? Talk to a WTM specialist.',
+      'rt.next.cta':'Learn more <i data-lucide="arrow-right"></i>',
+      'footer.copy':'© 2026 WTM. All rights reserved.',
+    },
+    pt: {
+      'nav.back':'<i data-lucide="arrow-left"></i> Voltar ao site',
+      'rt.badge':'Seu relatório está pronto',
+      'rt.h1':'Aqui está o seu relatório, <span class="accent" id="greetingName">pronto para ler.</span>',
+      'rt.sub':'O Brazil Tax Reform Survival Report está pronto para download. Preparado pela WTM para empresas de SaaS, IA e Cloud que navegam a transição tributária de 2027 no Brasil.',
+      'rt.dl.label':'Relatório executivo · WTM · 2026',
+      'rt.dl.title':'Brazil Tax Reform Survival Report',
+      'rt.dl.meta':'Para empresas de SaaS, IA, Cloud e serviços digitais nos EUA · 10 slides',
+      'rt.dl.btn':'<i data-lucide="download"></i> Baixar o relatório',
+      'rt.inside.title':'O que tem dentro',
+      'rt.in1':'Camada indireta atual: 11,25%–14,25%',
+      'rt.in2':'Futura camada dual de VAT: ~25%–28%',
+      'rt.in3':'Impacto em churn, CAC e ciclos de renovação',
+      'rt.in4':'Efeitos compostos de IRRF, IOF e CIDE',
+      'rt.in5':'Por que billing local vira ferramenta de crescimento',
+      'rt.in6':'Como a WTM opera como seu MoR no Brasil',
+      'rt.next':'Próximo passo',
+      'rt.next.body':'Quer entender mais sobre a reforma tributária brasileira e como ela afeta o seu negócio? Fale com um especialista WTM.',
+      'rt.next.cta':'Saiba mais <i data-lucide="arrow-right"></i>',
+      'footer.copy':'© 2026 WTM. Todos os direitos reservados.',
+    },
+    es: {
+      'nav.back':'<i data-lucide="arrow-left"></i> Volver al sitio',
+      'rt.badge':'Su reporte está listo',
+      'rt.h1':'Aquí está su reporte, <span class="accent" id="greetingName">listo para leer.</span>',
+      'rt.sub':'El Brazil Tax Reform Survival Report está listo para descarga. Preparado por WTM para empresas de SaaS, IA y Cloud navegando la transición tributaria de 2027 en Brasil.',
+      'rt.dl.label':'Reporte ejecutivo · WTM · 2026',
+      'rt.dl.title':'Brazil Tax Reform Survival Report',
+      'rt.dl.meta':'Para empresas de SaaS, IA, Cloud y servicios digitales en EE. UU. · 10 slides',
+      'rt.dl.btn':'<i data-lucide="download"></i> Descargar el reporte',
+      'rt.inside.title':'Qué incluye',
+      'rt.in1':'Capa indirecta actual: 11,25%–14,25%',
+      'rt.in2':'Futura capa dual de VAT: ~25%–28%',
+      'rt.in3':'Impacto en churn, CAC y ciclos de renovación',
+      'rt.in4':'Efectos compuestos de IRRF, IOF y CIDE',
+      'rt.in5':'Por qué el billing local se vuelve herramienta de crecimiento',
+      'rt.in6':'Cómo WTM opera como su MoR en Brasil',
+      'rt.next':'Siguiente paso',
+      'rt.next.body':'¿Quiere entender más sobre la reforma tributaria brasileña y cómo afecta su negocio? Hable con un especialista WTM.',
+      'rt.next.cta':'Más información <i data-lucide="arrow-right"></i>',
+      'footer.copy':'© 2026 WTM. Todos los derechos reservados.',
+    },
+  };
+
+  let currentLang = 'en';
+  function applyLang(lang){
+    const t = T[lang] || T.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (t[k] != null) el.textContent = t[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const k = el.getAttribute('data-i18n-html');
+      if (t[k] != null) {
+        el.innerHTML = t[k];
+        if (window.lucide) lucide.createIcons({ nodes: [el] });
+      }
+    });
+    document.documentElement.lang = lang;
+    currentLang = lang;
+    document.querySelectorAll('.lang-toggle [data-lang]').forEach(x => {
+      x.classList.toggle('on', x.getAttribute('data-lang') === lang);
+    });
+    // Re-personalize greeting if name in URL
+    applyGreeting();
+  }
+  document.querySelectorAll('.lang-toggle [data-lang]').forEach(btn => {
+    btn.addEventListener('click', () => applyLang(btn.getAttribute('data-lang')));
+  });
+
+  function applyGreeting(){
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const el = document.getElementById('greetingName');
+    if (!el) return;
+    if (name) {
+      el.textContent = name + '.';
+    }
+  }
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get('lang');
+  const initial = (urlLang && T[urlLang]) ? urlLang : 'en';
+  if (window.lucide) lucide.createIcons();
+  applyLang(initial);
+
+  // Smooth entrance only when arriving from a form submission
+  if (urlLang || params.get('name')) {
+    document.body.classList.add('page-enter');
+  }
+</script>
+
+</body>
+</html>
