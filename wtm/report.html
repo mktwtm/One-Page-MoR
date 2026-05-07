@@ -220,6 +220,12 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
   transition:border-color .2s,background .2s,box-shadow .2s;
 }
 .field input::placeholder{color:rgba(236,236,238,.3)}
+/* Honeypot — visually hidden but in DOM for bots */
+.hp-field{
+  position:absolute!important;left:-9999px!important;top:auto!important;
+  width:1px!important;height:1px!important;overflow:hidden!important;
+  opacity:0!important;pointer-events:none!important;
+}
 .field input:focus{
   border-color:rgba(167,123,255,.6);
   background:rgba(134,62,243,.08);
@@ -446,17 +452,22 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
         </div>
 
         <form id="reportForm" novalidate>
+          <!-- Honeypot — bots fill this; humans never see it -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="rf-website">Website</label>
+            <input type="text" id="rf-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <div class="field">
             <label for="rf-name" data-i18n="r.form.name">Full name</label>
-            <input type="text" id="rf-name" name="name" required autocomplete="name" placeholder="Jane Smith">
+            <input type="text" id="rf-name" name="name" required minlength="2" maxlength="100" autocomplete="name" placeholder="Jane Smith">
           </div>
           <div class="field">
             <label for="rf-email" data-i18n="r.form.email">Work email</label>
-            <input type="email" id="rf-email" name="email" required autocomplete="email" placeholder="jane@company.com">
+            <input type="email" id="rf-email" name="email" required minlength="5" maxlength="160" autocomplete="email" placeholder="jane@company.com">
           </div>
           <div class="field">
             <label for="rf-company" data-i18n="r.form.company">Company name</label>
-            <input type="text" id="rf-company" name="company" required autocomplete="organization" placeholder="Acme Inc.">
+            <input type="text" id="rf-company" name="company" required minlength="2" maxlength="120" autocomplete="organization" placeholder="Acme Inc.">
           </div>
 
           <button type="submit" class="submit-btn">
@@ -639,6 +650,9 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
   const card = document.getElementById('formCard');
   const submitBtn = form.querySelector('.submit-btn');
   const pageVeil = document.getElementById('pageVeil');
+  // Anti-spam: minimum time the form must be visible before a real human submits.
+  const MIN_FILL_MS = 2500;
+  const formLoadedAt = Date.now();
 
   function navigateWithVeil(url){
     if (document.startViewTransition && 'navigation' in document) {
@@ -652,6 +666,17 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
+
+    // Anti-spam — silently accept-and-redirect bots so they don't retry.
+    const honeypot = (form.website && form.website.value) || '';
+    const elapsed = Date.now() - formLoadedAt;
+    if (honeypot.trim() !== '' || elapsed < MIN_FILL_MS) {
+      console.warn('[anti-spam] submission rejected', { honeypot: !!honeypot, elapsed });
+      const lang = encodeURIComponent(currentLang || 'en');
+      navigateWithVeil('report-thankyou.html?lang=' + lang);
+      return;
+    }
+
     submitBtn.classList.add('is-loading');
 
     const utms = readStoredUtms() || {};
