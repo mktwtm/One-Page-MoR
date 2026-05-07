@@ -511,6 +511,50 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } })
     : null;
 
+  // ── Visitor country detection (shared cache key with index.html) ─────────
+  const COUNTRY_STORAGE_KEY = 'wtm_country_v1';
+  async function detectCountry(){
+    try {
+      const cached = sessionStorage.getItem(COUNTRY_STORAGE_KEY);
+      if (cached) return JSON.parse(cached);
+    } catch (e) {}
+    async function fromCloudflare(){
+      try {
+        const res = await fetch('/cdn-cgi/trace', { cache: 'no-store' });
+        if (!res.ok) return null;
+        const text = await res.text();
+        const map = Object.fromEntries(
+          text.trim().split('\n').map(l => l.split('=', 2))
+        );
+        if (map.loc && /^[A-Z]{2}$/.test(map.loc)) {
+          return { country: map.loc, country_region: null, country_source: 'cf' };
+        }
+        return null;
+      } catch (e) { return null; }
+    }
+    async function fromIpapi(){
+      try {
+        const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data && /^[A-Z]{2}$/.test(data.country_code || '')) {
+          return {
+            country: data.country_code,
+            country_region: (data.region || data.region_code || null),
+            country_source: 'ipapi',
+          };
+        }
+        return null;
+      } catch (e) { return null; }
+    }
+    const result = (await fromCloudflare()) || (await fromIpapi()) || null;
+    if (result) {
+      try { sessionStorage.setItem(COUNTRY_STORAGE_KEY, JSON.stringify(result)); } catch (e) {}
+    }
+    return result;
+  }
+  let _countryPromise = detectCountry();
+
   // ── UTM capture (shared key with index.html) ─────────────────────────────
   const UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
   const UTM_STORAGE_KEY = 'wtm_utm_v1';
@@ -680,6 +724,14 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
     submitBtn.classList.add('is-loading');
 
     const utms = readStoredUtms() || {};
+    // Wait briefly for country detection (non-blocking, max 800ms).
+    let geo = null;
+    try {
+      geo = await Promise.race([
+        _countryPromise,
+        new Promise(r => setTimeout(() => r(null), 800))
+      ]);
+    } catch (e) {}
     const fullName = form.name.value.trim();
     const payload = {
       name: fullName,
@@ -700,6 +752,9 @@ form{display:flex;flex-direction:column;gap:14px;position:relative}
       // The user's original entry URL (first session page) is captured via
       // utm_source / utm_campaign / etc., so it's not lost.
       landing_url: (window.location.origin + window.location.pathname + window.location.search).slice(0,1000),
+      country: geo && geo.country ? geo.country : null,
+      country_region: geo && geo.country_region ? String(geo.country_region).slice(0,100) : null,
+      country_source: geo && geo.country_source ? geo.country_source : null,
     };
     try {
       if (sb) {
