@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About WTM — Innovating global business since 2003</title>
+<meta name="description" content="WTM is a cross-border services and software specialist transforming how companies expand internationally. Meet the team behind 20+ years of expertise.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../shared/shared.css">
+<style>
+  .about-hero { min-height: 60svh; }
+  .about-hero .hero-inner { grid-template-columns: 1fr; max-width: 880px; }
+  .about-hero h1 { max-width: 22ch; margin: 0 auto; text-align: center; }
+  .about-hero .hero-eyebrow { justify-content: center; }
+  .about-hero .hero-lead { margin: 24px auto 0; text-align: center; max-width: 60ch; }
+  .about-hero .hero-eyebrow::before { display: none; }
+
+  .who-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+  .who-grid img { border-radius: var(--r-lg); box-shadow: var(--shadow-lg); width: 100%; height: auto; }
+  @media (max-width: 980px) { .who-grid { grid-template-columns: 1fr; gap: 32px; } .who-grid img { order: -1; } }
+
+  .leader-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+  }
+  .leader-card {
+    background: #fff; border: 1px solid var(--border-soft); border-radius: var(--r-lg);
+    padding: 24px 22px 28px; text-align: center;
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .leader-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--border); }
+  .leader-card img {
+    width: 140px; height: 140px; border-radius: 9999px; object-fit: cover;
+    margin: 0 auto 16px;
+    border: 3px solid var(--bg-soft);
+    box-shadow: var(--shadow-sm);
+  }
+  .leader-card h3 {
+    font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem;
+    color: var(--fg); margin-bottom: 6px;
+  }
+  .leader-card .role {
+    font-family: var(--font-heading); font-weight: 500; font-size: 12px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--brand);
+  }
+
+  .ppl-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: center; }
+  .ppl-grid img { border-radius: var(--r-lg); width: 100%; height: auto; box-shadow: var(--shadow-md); }
+  @media (max-width: 980px) { .ppl-grid { grid-template-columns: 1fr; gap: 32px; } }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMQ4F0DBTR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FMQ4F0DBTR', { anonymize_ip: true });
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../home/" class="nav-logo" aria-label="WTM home" data-keep-lang>
+      <img src="../assets/wtm_color.svg" alt="WTM">
+    </a>
+    <div class="nav-links">
+      <a href="../home/" data-page="home" data-i18n="nav.home" data-keep-lang>Home</a>
+      <a href="../about/" data-page="about" data-i18n="nav.about" data-keep-lang>About</a>
+      <a href="../mor/" data-page="mor" data-i18n="nav.mor" data-keep-lang>MoR</a>
+      <a href="../" data-i18n="nav.tax-reform" data-keep-lang>Tax reform</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+      </div>
+      <a href="#" class="btn btn-brand js-open-modal" style="padding:10px 20px;font-size:13px" data-i18n="nav.cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero about-hero" id="top">
+  <div class="hero-photo" data-bg="photo"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow" data-i18n="hero.eyebrow">About WTM</div>
+      <h1 class="h-display" data-i18n-html="hero.h1">Innovating global business <span class="accent">with WTM.</span></h1>
+      <p class="hero-lead" data-i18n="hero.lead">Ahead of the curve, with the courage to face the challenges of the cross-border tax sector — transforming how services and technology cross borders.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WHO WE ARE ─── -->
+<section class="section" id="who">
+  <div class="section-inner">
+    <div class="who-grid">
+      <div class="reveal">
+        <div class="eyebrow" data-i18n="who.eyebrow">Who we are</div>
+        <h2 class="h-section" style="margin-top:18px" data-i18n="who.h2">Twenty years building the cross-border infrastructure others rely on.</h2>
+        <p class="lead" style="margin-top:18px" data-i18n="who.p1">Since 2003, WTM has helped more than 4,200 companies navigate the realities of doing business across multiple jurisdictions — payments, compliance, taxation, and the operational details that determine whether expansion succeeds or stalls.</p>
+        <p class="lead" style="margin-top:18px" data-i18n="who.p2">We see compliance not as a cost center, but as the substrate on which durable international growth is built.</p>
+      </div>
+      <img src="../assets/whoweare.webp" alt="WTM team at work" loading="lazy" class="reveal d1">
+    </div>
+  </div>
+</section>
+
+<!-- ─── PEOPLE PHILOSOPHY ─── -->
+<section class="section section-pearl" id="people">
+  <div class="section-inner">
+    <div class="ppl-grid">
+      <img src="../assets/team-2023.webp" alt="WTM team gathering" loading="lazy" class="reveal">
+      <div class="reveal d1">
+        <div class="eyebrow" data-i18n="ppl.eyebrow">People-first</div>
+        <h2 class="h-section" style="margin-top:18px" data-i18n="ppl.h2">Our edge is the team that builds the work.</h2>
+        <p class="lead" style="margin-top:18px" data-i18n="ppl.p1">We invest in the development of our people. The continuous evolution of WTM as a company is driven by the continuous evolution of the people inside it — that is what allows us to take on harder problems each year.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LEADERSHIP ─── -->
+<section class="section" id="leadership">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;display:flex" data-i18n="lead.eyebrow">Leadership</div>
+      <h2 class="h-section" data-i18n="lead.h2">The people leading WTM.</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto;text-align:center" data-i18n="lead.lead">Executives with decades of experience in tax, compliance, payments and customer success.</p>
+    </div>
+
+    <div class="leader-grid">
+      <article class="leader-card reveal d1">
+        <img src="../assets/leadership/lisandro-vieira.webp" alt="Lisandro Vieira" loading="lazy">
+        <h3 data-i18n="lead.1.name">Lisandro Vieira</h3>
+        <div class="role" data-i18n="lead.1.role">Founder &amp; CEO</div>
+      </article>
+      <article class="leader-card reveal d2">
+        <img src="../assets/leadership/rafael-santiago.webp" alt="Rafael Santiago" loading="lazy">
+        <h3 data-i18n="lead.2.name">Rafael Santiago</h3>
+        <div class="role" data-i18n="lead.2.role">Chief Compliance Officer</div>
+      </article>
+      <article class="leader-card reveal d3">
+        <img src="../assets/leadership/dione-pioner.webp" alt="Dione Pioner" loading="lazy">
+        <h3 data-i18n="lead.3.name">Dione Pioner</h3>
+        <div class="role" data-i18n="lead.3.role">Chief Experience Officer</div>
+      </article>
+      <article class="leader-card reveal d4">
+        <img src="../assets/leadership/henrique-dias.webp" alt="Henrique Dias" loading="lazy">
+        <h3 data-i18n="lead.4.name">Henrique Dias</h3>
+        <div class="role" data-i18n="lead.4.role">Chief Financial Officer</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="section section-dark" id="contact">
+  <div class="section-inner" style="text-align:center;max-width:760px;margin:0 auto;">
+    <div class="eyebrow eyebrow-violet" style="justify-content:center;display:flex" data-i18n="cta.eyebrow">Talk to us</div>
+    <h2 class="h-section" style="margin-top:18px" data-i18n="cta.h2">Want to know how we work?</h2>
+    <p class="lead" style="margin:18px auto 32px" data-i18n="cta.lead">Schedule a 45-minute conversation with one of our specialists — no pitch, just a working session on your specific expansion challenge.</p>
+    <a href="#" class="btn btn-accent js-open-modal" data-i18n-html="cta.btn">Speak to an expert <i data-lucide="arrow-right"></i></a>
+  </div>
+</section>
+
+<!-- ─── FOOTER (shared markup) ─── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="../assets/wtm_branco.svg" alt="WTM">
+      <p class="versatylo" data-i18n="footer.tagline">empowering expansion.</p>
+      <div class="footer-meta-row">
+        <span data-i18n="footer.taxid">Tax ID: 20.711.662/0001-87</span><br>
+        <a href="mailto:we@wtm.international">we@wtm.international</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/wtm-international" aria-label="LinkedIn" target="_blank" rel="noopener"><i data-lucide="linkedin"></i></a>
+        <a href="https://www.instagram.com/wtm.international" aria-label="Instagram" target="_blank" rel="noopener"><i data-lucide="instagram"></i></a>
+        <a href="https://wa.me/" aria-label="WhatsApp" target="_blank" rel="noopener"><i data-lucide="message-circle"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.product">Product</h4>
+      <ul>
+        <li><a href="../mor/" data-i18n="footer.l.mor" data-keep-lang>Merchant of Record</a></li>
+        <li><a href="../home/#value" data-i18n="footer.l.benefits" data-keep-lang>Benefits</a></li>
+        <li><a href="../" data-i18n="footer.l.taxreform" data-keep-lang>Brazil tax reform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.company">Company</h4>
+      <ul>
+        <li><a href="../about/" data-i18n="footer.l.about" data-keep-lang>About</a></li>
+        <li><a href="#contact" data-i18n="footer.l.contact">Get in touch</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.legal">Legal</h4>
+      <ul>
+        <li><a href="../privacy/" data-i18n="footer.l.privacy" data-keep-lang>Privacy policy</a></li>
+        <li><a href="../privacy/#channel" data-i18n="footer.l.channel" data-keep-lang>Privacy channel</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span data-i18n-html="footer.copy">© YEAR WTM International. All rights reserved.</span>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── MODAL ─── -->
+<div class="modal-overlay" id="specialistModal" role="dialog" aria-modal="true" aria-labelledby="specialistModalTitle" hidden>
+  <div class="modal-card">
+    <button type="button" class="modal-close" aria-label="Close" data-modal-close><i data-lucide="x"></i></button>
+    <h3 class="modal-title" id="specialistModalTitle" data-i18n="modal.title">Speak to an expert</h3>
+    <p class="modal-sub" data-i18n="modal.sub">Tell us about your business and we'll come back within one business day.</p>
+    <form class="lead-form" id="modalLeadForm" novalidate data-source="corp_about_modal">
+      <div class="hp-field" aria-hidden="true">
+        <label for="mf-website">Website</label>
+        <input type="text" id="mf-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="mf-name" data-i18n="form.name">Name</label>
+        <input type="text" id="mf-name" name="name" required minlength="2" maxlength="100" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="mf-company" data-i18n="form.company">Company</label>
+        <input type="text" id="mf-company" name="company" required minlength="2" maxlength="120" autocomplete="organization">
+      </div>
+      <div class="field field-full">
+        <label for="mf-email" data-i18n="form.email">Corporate email</label>
+        <input type="email" id="mf-email" name="email" required maxlength="160" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="mf-whatsapp" data-i18n="form.whatsapp">WhatsApp</label>
+        <input type="tel" id="mf-whatsapp" name="whatsapp" maxlength="40" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="mf-sells" data-i18n="form.sells_latam">Sells in LATAM?</label>
+        <select id="mf-sells" name="sells_latam">
+          <option value="" data-i18n="form.select">Select…</option>
+          <option value="yes" data-i18n="form.yes">Yes</option>
+          <option value="no" data-i18n="form.no">No</option>
+        </select>
+      </div>
+      <div class="field field-full">
+        <label for="mf-message" data-i18n="form.message">Message</label>
+        <textarea id="mf-message" name="message" maxlength="500"></textarea>
+      </div>
+      <label class="terms">
+        <input type="checkbox" required>
+        <span data-i18n-html="form.terms">I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
+      </label>
+      <div class="submit-row">
+        <button type="submit" class="btn btn-brand">
+          <span data-i18n="form.submit">Send</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="page-veil" id="pageVeil" aria-hidden="true">
+  <div class="veil-mark"><i data-lucide="check"></i></div>
+</div>
+
+<script>
+window.PAGE_SOURCE = 'corp_about';
+window.I18N = {
+  en: {
+    'nav.home':'Home','nav.about':'About','nav.mor':'MoR','nav.tax-reform':'Tax reform','nav.cta':'Get in touch',
+    'hero.eyebrow':'About WTM',
+    'hero.h1':'Innovating global business <span class="accent">with WTM.</span>',
+    'hero.lead':'Ahead of the curve, with the courage to face the challenges of the cross-border tax sector — transforming how services and technology cross borders.',
+    'who.eyebrow':'Who we are','who.h2':'Twenty years building the cross-border infrastructure others rely on.',
+    'who.p1':'Since 2003, WTM has helped more than 4,200 companies navigate the realities of doing business across multiple jurisdictions — payments, compliance, taxation, and the operational details that determine whether expansion succeeds or stalls.',
+    'who.p2':'We see compliance not as a cost center, but as the substrate on which durable international growth is built.',
+    'ppl.eyebrow':'People-first','ppl.h2':'Our edge is the team that builds the work.',
+    'ppl.p1':'We invest in the development of our people. The continuous evolution of WTM as a company is driven by the continuous evolution of the people inside it — that is what allows us to take on harder problems each year.',
+    'lead.eyebrow':'Leadership','lead.h2':'The people leading WTM.','lead.lead':'Executives with decades of experience in tax, compliance, payments and customer success.',
+    'lead.1.name':'Lisandro Vieira','lead.1.role':'Founder & CEO',
+    'lead.2.name':'Rafael Santiago','lead.2.role':'Chief Compliance Officer',
+    'lead.3.name':'Dione Pioner','lead.3.role':'Chief Experience Officer',
+    'lead.4.name':'Henrique Dias','lead.4.role':'Chief Financial Officer',
+    'cta.eyebrow':'Talk to us','cta.h2':'Want to know how we work?',
+    'cta.lead':'Schedule a 45-minute conversation with one of our specialists — no pitch, just a working session on your specific expansion challenge.',
+    'cta.btn':'Speak to an expert <i data-lucide="arrow-right"></i>',
+    'form.name':'Name','form.company':'Company','form.email':'Corporate email','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'Sells in LATAM?','form.message':'Message','form.select':'Select…','form.yes':'Yes','form.no':'No','form.submit':'Send',
+    'form.terms':'I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.',
+    'modal.title':'Speak to an expert','modal.sub':"Tell us about your business and we'll come back within one business day.",
+    'footer.tagline':'empowering expansion.','footer.taxid':'Tax ID: 20.711.662/0001-87',
+    'footer.h.product':'Product','footer.l.mor':'Merchant of Record','footer.l.benefits':'Benefits','footer.l.taxreform':'Brazil tax reform',
+    'footer.h.company':'Company','footer.l.about':'About','footer.l.contact':'Get in touch',
+    'footer.h.legal':'Legal','footer.l.privacy':'Privacy policy','footer.l.channel':'Privacy channel',
+    'footer.copy':'© YEAR WTM International. All rights reserved.'
+  },
+  pt: {
+    'nav.home':'Início','nav.about':'Sobre','nav.mor':'MoR','nav.tax-reform':'Reforma tributária','nav.cta':'Fale conosco',
+    'hero.eyebrow':'Sobre a WTM',
+    'hero.h1':'Inovando os negócios globais <span class="accent">com a WTM.</span>',
+    'hero.lead':'À frente da curva, com a coragem de enfrentar os desafios do setor tributário cross-border — transformando como serviços e tecnologia atravessam fronteiras.',
+    'who.eyebrow':'Quem somos','who.h2':'Vinte anos construindo a infraestrutura cross-border em que outros se apoiam.',
+    'who.p1':'Desde 2003, a WTM ajudou mais de 4.200 empresas a navegar a realidade de operar em múltiplas jurisdições — pagamentos, compliance, tributação e os detalhes operacionais que determinam se uma expansão decola ou trava.',
+    'who.p2':'Vemos o compliance não como um centro de custo, mas como o substrato sobre o qual se constrói o crescimento internacional duradouro.',
+    'ppl.eyebrow':'Pessoas em primeiro lugar','ppl.h2':'Nossa vantagem é a equipe que constrói o trabalho.',
+    'ppl.p1':'Investimos no desenvolvimento das nossas pessoas. A evolução contínua da WTM como empresa é movida pela evolução contínua das pessoas dentro dela — é isso que nos permite encarar problemas mais difíceis a cada ano.',
+    'lead.eyebrow':'Liderança','lead.h2':'As pessoas que lideram a WTM.','lead.lead':'Executivos com décadas de experiência em tributação, compliance, pagamentos e sucesso do cliente.',
+    'lead.1.name':'Lisandro Vieira','lead.1.role':'Fundador & CEO',
+    'lead.2.name':'Rafael Santiago','lead.2.role':'Chief Compliance Officer',
+    'lead.3.name':'Dione Pioner','lead.3.role':'Chief Experience Officer',
+    'lead.4.name':'Henrique Dias','lead.4.role':'Chief Financial Officer',
+    'cta.eyebrow':'Fale com a gente','cta.h2':'Quer conhecer nosso jeito de trabalhar?',
+    'cta.lead':'Agende uma conversa de 45 minutos com um dos nossos especialistas — sem pitch, apenas uma sessão de trabalho sobre o seu desafio de expansão.',
+    'cta.btn':'Falar com um especialista <i data-lucide="arrow-right"></i>',
+    'form.name':'Nome','form.company':'Empresa','form.email':'E-mail corporativo','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'Vende na LATAM?','form.message':'Mensagem','form.select':'Selecione…','form.yes':'Sim','form.no':'Não','form.submit':'Enviar',
+    'form.terms':'Concordo com a <a href="../privacy/" data-keep-lang>política de privacidade</a> e em ser contatado pela WTM.',
+    'modal.title':'Falar com um especialista','modal.sub':'Conte sobre seu negócio e retornaremos em até um dia útil.',
+    'footer.tagline':'expansão com poder.','footer.taxid':'CNPJ: 20.711.662/0001-87',
+    'footer.h.product':'Produto','footer.l.mor':'Merchant of Record','footer.l.benefits':'Benefícios','footer.l.taxreform':'Reforma tributária BR',
+    'footer.h.company':'Empresa','footer.l.about':'Sobre','footer.l.contact':'Fale conosco',
+    'footer.h.legal':'Legal','footer.l.privacy':'Política de privacidade','footer.l.channel':'Canal de privacidade',
+    'footer.copy':'© YEAR WTM International. Todos os direitos reservados.'
+  },
+  es: {
+    'nav.home':'Inicio','nav.about':'Sobre','nav.mor':'MoR','nav.tax-reform':'Reforma tributaria','nav.cta':'Hablemos',
+    'hero.eyebrow':'Sobre WTM',
+    'hero.h1':'Innovando los negocios globales <span class="accent">con WTM.</span>',
+    'hero.lead':'A la vanguardia, con el coraje de enfrentar los desafíos del sector tributario cross-border — transformando cómo los servicios y la tecnología cruzan fronteras.',
+    'who.eyebrow':'Quiénes somos','who.h2':'Veinte años construyendo la infraestructura cross-border en la que otros confían.',
+    'who.p1':'Desde 2003, WTM ha ayudado a más de 4.200 empresas a navegar la realidad de operar en múltiples jurisdicciones — pagos, compliance, tributación y los detalles operativos que determinan si una expansión despega o se detiene.',
+    'who.p2':'Vemos el compliance no como un centro de costo, sino como el sustrato sobre el cual se construye el crecimiento internacional duradero.',
+    'ppl.eyebrow':'Personas primero','ppl.h2':'Nuestra ventaja es el equipo que construye el trabajo.',
+    'ppl.p1':'Invertimos en el desarrollo de nuestra gente. La evolución continua de WTM como empresa es impulsada por la evolución continua de las personas que están dentro — eso es lo que nos permite asumir problemas más difíciles cada año.',
+    'lead.eyebrow':'Liderazgo','lead.h2':'Las personas que lideran WTM.','lead.lead':'Ejecutivos con décadas de experiencia en tributación, compliance, pagos y éxito del cliente.',
+    'lead.1.name':'Lisandro Vieira','lead.1.role':'Fundador y CEO',
+    'lead.2.name':'Rafael Santiago','lead.2.role':'Chief Compliance Officer',
+    'lead.3.name':'Dione Pioner','lead.3.role':'Chief Experience Officer',
+    'lead.4.name':'Henrique Dias','lead.4.role':'Chief Financial Officer',
+    'cta.eyebrow':'Hablemos','cta.h2':'¿Quiere conocer cómo trabajamos?',
+    'cta.lead':'Agende una conversación de 45 minutos con uno de nuestros especialistas — sin pitch, solo una sesión de trabajo sobre su desafío específico de expansión.',
+    'cta.btn':'Hablar con un especialista <i data-lucide="arrow-right"></i>',
+    'form.name':'Nombre','form.company':'Empresa','form.email':'Correo corporativo','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'¿Vende en LATAM?','form.message':'Mensaje','form.select':'Seleccionar…','form.yes':'Sí','form.no':'No','form.submit':'Enviar',
+    'form.terms':'Acepto la <a href="../privacy/" data-keep-lang>política de privacidad</a> y ser contactado por WTM.',
+    'modal.title':'Hablar con un especialista','modal.sub':'Cuéntenos sobre su negocio y volveremos en un día hábil.',
+    'footer.tagline':'expansión con poder.','footer.taxid':'NIF: 20.711.662/0001-87',
+    'footer.h.product':'Producto','footer.l.mor':'Merchant of Record','footer.l.benefits':'Beneficios','footer.l.taxreform':'Reforma tributaria BR',
+    'footer.h.company':'Empresa','footer.l.about':'Sobre','footer.l.contact':'Hablemos',
+    'footer.h.legal':'Legal','footer.l.privacy':'Política de privacidad','footer.l.channel':'Canal de privacidad',
+    'footer.copy':'© YEAR WTM International. Todos los derechos reservados.'
+  }
+};
+</script>
+<script src="../shared/shared.js"></script>
+</body>
+</html>

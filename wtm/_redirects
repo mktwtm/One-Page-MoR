@@ -1,1 +1,8 @@
+# Pretty URLs for corporate site
+/home      /home/index.html      200
+/about     /about/index.html     200
+/mor       /mor/index.html       200
+/privacy   /privacy/index.html   200
+
+# SPA fallback for the tax-reform landing
 /*  /index.html  404

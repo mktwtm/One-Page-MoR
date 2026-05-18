@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WTM Merchant of Record — Local tax & payment experience for LATAM</title>
+<meta name="description" content="WTM acts as your Merchant of Record in LATAM — handling tax, payments, compliance and billing so SaaS, AI and cloud companies can sell locally without opening entities.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../shared/shared.css">
+<style>
+  .mor-hero .hero-visual img { max-height: 540px; }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  /* Process diagram */
+  .process-wrap { background: var(--bg-soft); }
+  .process-flow {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr 80px 1fr;
+    gap: 0;
+    align-items: stretch;
+    margin-top: 40px;
+  }
+  .process-col {
+    background: #fff; border: 1px solid var(--border-soft); border-radius: var(--r-lg);
+    padding: 28px 24px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .process-col.brand {
+    background: linear-gradient(180deg, var(--wtm-deep-teal), #0F2D3D);
+    color: #fff; border-color: var(--wtm-deep-teal);
+  }
+  .process-col.brand .h-card, .process-col.brand .num { color: #fff; }
+  .process-col .num {
+    font-family: var(--font-heading); font-weight: 600; font-size: 11px;
+    letter-spacing: .18em; text-transform: uppercase; color: var(--fg-soft);
+  }
+  .process-col ul {
+    list-style: none; display: flex; flex-direction: column; gap: 10px;
+    font-size: 14px; color: var(--fg-muted); line-height: 1.5; margin-top: 6px;
+  }
+  .process-col.brand ul { color: rgba(236, 236, 238, .82); }
+  .process-col ul li { display: flex; gap: 10px; }
+  .process-col ul li::before { content: "→"; color: var(--accent); flex-shrink: 0; }
+  .process-col.brand ul li::before { color: #A77BFF; }
+  .process-arrow {
+    display: grid; place-items: center;
+    color: var(--brand); font-size: 24px;
+  }
+  .process-arrow span {
+    display: inline-grid; place-items: center;
+    width: 40px; height: 40px; border-radius: 9999px;
+    background: #fff; border: 1px solid var(--border);
+    box-shadow: var(--shadow-xs);
+  }
+  @media (max-width: 980px) {
+    .process-flow { grid-template-columns: 1fr; }
+    .process-arrow { padding: 16px 0; }
+    .process-arrow span { transform: rotate(90deg); }
+  }
+
+  /* Benefits dark section */
+  .kb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+
+  /* Industries */
+  .industries-section { background: #fff; }
+
+  /* Markets */
+  .markets-section { padding-bottom: clamp(120px, 14vw, 200px); }
+  .globe-wrap { margin-top: 56px; position: relative; }
+  .globe-wrap img { width: 100%; max-width: 900px; margin: 0 auto; opacity: .9; }
+  .globe-stat {
+    position: relative; margin-top: -24px;
+    display: grid; grid-template-columns: repeat(3, 1fr); max-width: 720px; margin-left: auto; margin-right: auto;
+    border: 1px solid rgba(255, 255, 255, .18); border-radius: var(--r-md); overflow: hidden;
+    background: rgba(5, 5, 5, .35); backdrop-filter: blur(8px);
+  }
+  .globe-stat .stat-cell { padding: 22px 18px; }
+
+  .testi-section { background: var(--bg-soft); }
+
+  .cta-section { color: #fff; }
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .cta-section h2 { color: #fff; }
+  @media (max-width: 980px) { .cta-grid { grid-template-columns: 1fr; gap: 40px; } }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMQ4F0DBTR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FMQ4F0DBTR', { anonymize_ip: true });
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../home/" class="nav-logo" aria-label="WTM home" data-keep-lang>
+      <img src="../assets/wtm_color.svg" alt="WTM">
+    </a>
+    <div class="nav-links">
+      <a href="../home/" data-page="home" data-i18n="nav.home" data-keep-lang>Home</a>
+      <a href="../about/" data-page="about" data-i18n="nav.about" data-keep-lang>About</a>
+      <a href="../mor/" data-page="mor" data-i18n="nav.mor" data-keep-lang>MoR</a>
+      <a href="../" data-i18n="nav.tax-reform" data-keep-lang>Tax reform</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+      </div>
+      <a href="#" class="btn btn-brand js-open-modal" style="padding:10px 20px;font-size:13px" data-i18n="nav.cta">Get a consultation</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero mor-hero" id="top">
+  <div class="hero-photo"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow" data-i18n="hero.eyebrow">Merchant of Record · LATAM</div>
+      <h1 class="h-display" data-i18n-html="hero.h1">Local tax and payment experience <span class="accent">for your customers in LATAM.</span></h1>
+      <p class="hero-lead" data-i18n="hero.lead">Reduce CAC and boost LTV by offering a tailored payment experience across Latin America — without opening local entities or carrying tax liability.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-accent js-open-modal" data-i18n-html="hero.cta1">Get a consultation <i data-lucide="arrow-right"></i></a>
+        <a href="#why" class="btn btn-ghost-light" data-i18n="hero.cta2">See how it works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="../assets/mor-hero-glass.webp" alt="WTM MoR product visualization" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- WHY WTM -->
+<section class="section" id="why">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="why.eyebrow">Why WTM</div>
+      <h2 class="h-section" data-i18n="why.h2">Why SaaS, AI, cloud and other online service companies rely on WTM.</h2>
+      <p class="lead" data-i18n="why.lead">Backed by 20+ years of expertise in cross-border payments, compliance, pricing, negotiation, international taxation and local billing.</p>
+    </div>
+    <div class="why-grid">
+      <article class="feature-card reveal d1">
+        <div class="ic"><i data-lucide="zap"></i></div>
+        <h3 class="h-card" data-i18n="why1.title">Sales journey</h3>
+        <p data-i18n="why1.body">Simplify and accelerate the sales journey — remove tax friction from procurement and finance reviews.</p>
+      </article>
+      <article class="feature-card reveal d1">
+        <div class="ic"><i data-lucide="receipt"></i></div>
+        <h3 class="h-card" data-i18n="why2.title">Tax simplification</h3>
+        <p data-i18n="why2.body">Cut tax handling complexity in LATAM — local invoices, withholding management and proper credit allocation.</p>
+      </article>
+      <article class="feature-card reveal d2">
+        <div class="ic"><i data-lucide="user-x"></i></div>
+        <h3 class="h-card" data-i18n="why3.title">Churn reduction</h3>
+        <p data-i18n="why3.body">Reduce churn by offering clients their preferred local payment methods and billing in their currency.</p>
+      </article>
+      <article class="feature-card reveal d2">
+        <div class="ic"><i data-lucide="tag"></i></div>
+        <h3 class="h-card" data-i18n="why4.title">Pricing personalization</h3>
+        <p data-i18n="why4.body">Strategic pricing with local tax considerations baked in — protect margins without surprising customers.</p>
+      </article>
+      <article class="feature-card reveal d3">
+        <div class="ic"><i data-lucide="layers"></i></div>
+        <h3 class="h-card" data-i18n="why5.title">Easier reconciliation</h3>
+        <p data-i18n="why5.body">Consolidate multiple payments centrally — one reconciliation flow for the entire LATAM operation.</p>
+      </article>
+      <article class="feature-card reveal d3">
+        <div class="ic"><i data-lucide="network"></i></div>
+        <h3 class="h-card" data-i18n="why6.title">Local distribution</h3>
+        <p data-i18n="why6.body">Reach local channels and resellers without setting up legal entities country by country.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section process-wrap" id="process">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="proc.eyebrow">How it works</div>
+      <h2 class="h-section" data-i18n="proc.h2">Meet our process.</h2>
+      <p class="lead" data-i18n="proc.lead">WTM serves as your Merchant of Record — managing all the complexities of local tax regulations so you stay focused on product and growth.</p>
+    </div>
+
+    <div class="process-flow reveal">
+      <div class="process-col">
+        <span class="num" data-i18n="proc.buyer.label">01 · Buyer</span>
+        <h3 class="h-card" data-i18n="proc.buyer.title">Local customer</h3>
+        <ul>
+          <li data-i18n="proc.buyer.l1">Cost-effective tax management</li>
+          <li data-i18n="proc.buyer.l2">Wider range of local payment options</li>
+          <li data-i18n="proc.buyer.l3">Pays in local currency</li>
+          <li data-i18n="proc.buyer.l4">Less bureaucracy at purchase</li>
+          <li data-i18n="proc.buyer.l5">Compliance assurance built in</li>
+        </ul>
+      </div>
+      <div class="process-arrow"><span><i data-lucide="arrow-right"></i></span></div>
+      <div class="process-col brand">
+        <span class="num" data-i18n="proc.wtm.label">02 · Merchant of Record</span>
+        <h3 class="h-card" data-i18n="proc.wtm.title">WTM</h3>
+        <ul>
+          <li data-i18n="proc.wtm.l1">Local billing &amp; invoice issuance</li>
+          <li data-i18n="proc.wtm.l2">Payment processing in BRL/local FX</li>
+          <li data-i18n="proc.wtm.l3">Tax collection &amp; remittance</li>
+          <li data-i18n="proc.wtm.l4">Full reporting &amp; reconciliation</li>
+          <li data-i18n="proc.wtm.l5">Financial and tax risk mitigation</li>
+        </ul>
+      </div>
+      <div class="process-arrow"><span><i data-lucide="arrow-right"></i></span></div>
+      <div class="process-col">
+        <span class="num" data-i18n="proc.seller.label">03 · Seller</span>
+        <h3 class="h-card" data-i18n="proc.seller.title">Your business</h3>
+        <ul>
+          <li data-i18n="proc.seller.l1">Receives clean payment</li>
+          <li data-i18n="proc.seller.l2">Zero local tax liability</li>
+          <li data-i18n="proc.seller.l3">No local entity required</li>
+          <li data-i18n="proc.seller.l4">Lower churn from LATAM</li>
+          <li data-i18n="proc.seller.l5">Scales across the region</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY BENEFITS -->
+<section class="section section-dark" id="benefits">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow eyebrow-violet" data-i18n="kb.eyebrow">Key benefits</div>
+      <h2 class="h-section" data-i18n="kb.h2">Unlock growth for your company over a transparent transaction fee.</h2>
+    </div>
+    <div class="kb-grid">
+      <article class="feature-card reveal d1">
+        <div class="ic"><i data-lucide="trending-up"></i></div>
+        <h3 class="h-card" data-i18n="kb1.title">Sales &amp; ticket size up</h3>
+        <p data-i18n="kb1.body">A local buying experience increases conversion and ARPU.</p>
+      </article>
+      <article class="feature-card reveal d2">
+        <div class="ic"><i data-lucide="heart"></i></div>
+        <h3 class="h-card" data-i18n="kb2.title">Customer loyalty</h3>
+        <p data-i18n="kb2.body">Compliant invoices, predictable costs and local support build trust.</p>
+      </article>
+      <article class="feature-card reveal d3">
+        <div class="ic"><i data-lucide="rocket"></i></div>
+        <h3 class="h-card" data-i18n="kb3.title">Sustained growth</h3>
+        <p data-i18n="kb3.body">Scale across LATAM without adding entities, headcount or tax risk.</p>
+      </article>
+      <article class="feature-card reveal d4">
+        <div class="ic"><i data-lucide="shield-check"></i></div>
+        <h3 class="h-card" data-i18n="kb4.title">Full compliance</h3>
+        <p data-i18n="kb4.body">Solid operations with audit-ready reporting in every market.</p>
+      </article>
+    </div>
+    <div style="text-align:center;margin-top:48px" class="reveal">
+      <a href="#contact" class="btn btn-accent" data-i18n-html="kb.btn">Get a consultation <i data-lucide="arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="section industries-section" id="industries">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="eyebrow" style="justify-content:center;display:flex" data-i18n="ind.eyebrow">Industries</div>
+      <h2 class="h-section" data-i18n="ind.h2">Industries we are transforming.</h2>
+    </div>
+    <div class="chip-row reveal" style="justify-content:center">
+      <span class="chip" data-i18n="ind.1">Securitytech</span>
+      <span class="chip" data-i18n="ind.2">Edtech</span>
+      <span class="chip" data-i18n="ind.3">ERP software</span>
+      <span class="chip" data-i18n="ind.4">Fintech</span>
+      <span class="chip" data-i18n="ind.5">Legaltech</span>
+      <span class="chip" data-i18n="ind.6">IT services</span>
+      <span class="chip chip-accent" data-i18n="ind.7">Your industry</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETS -->
+<section class="section section-deep markets-section" id="markets">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="eyebrow eyebrow-light" style="justify-content:center;display:flex" data-i18n="mk.eyebrow">Global presence</div>
+      <h2 class="h-section" data-i18n="mk.h2">Our presence across key markets.</h2>
+      <p class="lead" style="margin:14px auto 0;text-align:center" data-i18n="mk.lead">Operating where your customers need you — Americas, Europe and the Middle East.</p>
+    </div>
+    <div class="globe-wrap reveal">
+      <img src="../assets/world-map.webp" alt="WTM global presence map">
+      <div class="globe-stat">
+        <div class="stat-cell">
+          <span class="stat-num">4,200<span>+</span></span>
+          <span class="stat-label" data-i18n="mk.s1">Companies served</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">$1B<span>+</span></span>
+          <span class="stat-label" data-i18n="mk.s2">USD processed</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">2,000<span>h</span></span>
+          <span class="stat-label" data-i18n="mk.s3">Saved/client/year</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGO WALL -->
+<section class="section" id="trust">
+  <div class="section-inner">
+    <div class="eyebrow" style="justify-content:center;display:flex" data-i18n="trust.eyebrow">Trusted globally</div>
+    <h2 class="h-section" style="text-align:center" data-i18n="trust.h2">Connecting global clients.</h2>
+    <div class="logo-wall reveal" style="margin-top:48px">
+      <div class="logo-cell">Deel</div>
+      <div class="logo-cell">Omie</div>
+      <div class="logo-cell">Veriff</div>
+      <div class="logo-cell">Involves</div>
+      <div class="logo-cell">Quiron</div>
+      <div class="logo-cell">AHK</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testi-section" id="testimonials">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="testi.eyebrow">Voices from our clients</div>
+      <h2 class="h-section" data-i18n="testi.h2">Our clients say about us.</h2>
+    </div>
+    <div class="testimonial-grid">
+      <article class="testimonial reveal d1">
+        <p class="testimonial-quote" data-i18n="testi1.quote">The amounts saved are very significant — even a simple recommendation about which step to take makes a big difference for our operation.</p>
+        <div class="testimonial-author">
+          <img src="../assets/gil-pletsch.webp" alt="Gil Pletsch">
+          <div class="who"><b data-i18n="testi1.name">Gil Pletsch</b><span data-i18n="testi1.role">CEO, Quiron</span></div>
+        </div>
+      </article>
+      <article class="testimonial reveal d2">
+        <p class="testimonial-quote" data-i18n="testi2.quote">Partnering with WTM gave us access to expertise that would have taken us years to build internally — and a structure ready to scale from day one.</p>
+        <div class="testimonial-author">
+          <img src="../assets/thiago-schutz.webp" alt="Thiago Schutz">
+          <div class="who"><b data-i18n="testi2.name">Thiago Schutz</b><span data-i18n="testi2.role">CEO, Silva Schutz Advogados</span></div>
+        </div>
+      </article>
+      <article class="testimonial reveal d3">
+        <p class="testimonial-quote" data-i18n="testi3.quote">I recommend WTM whenever the conversation turns to international expansion — the depth of knowledge and willingness to share it stands out.</p>
+        <div class="testimonial-author">
+          <img src="../assets/valmor-kerber.webp" alt="Valmor Kerber">
+          <div class="who"><b data-i18n="testi3.name">Valmor Kerber</b><span data-i18n="testi3.role">Executive Director, AHK Brazil–Germany</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-dark cta-section" id="contact">
+  <div class="section-inner">
+    <div class="cta-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-violet" data-i18n="cta.eyebrow">Schedule a session</div>
+        <h2 class="h-section" style="margin-top:18px" data-i18n="cta.h2">Start a conversation with our experts now.</h2>
+        <p class="lead" style="margin-top:18px" data-i18n="cta.lead">A 45-minute session covering challenge identification, expert guidance and personalized recommendations.</p>
+        <ul style="margin-top:28px;list-style:none;display:flex;flex-direction:column;gap:14px;color:rgba(236,236,238,.78);font-size:14px;line-height:1.6">
+          <li style="display:flex;gap:10px"><i data-lucide="check-circle-2" style="color:#A77BFF;margin-top:3px"></i><span data-i18n="cta.b1">Challenge identification</span></li>
+          <li style="display:flex;gap:10px"><i data-lucide="check-circle-2" style="color:#A77BFF;margin-top:3px"></i><span data-i18n="cta.b2">Expert guidance from cross-border specialists</span></li>
+          <li style="display:flex;gap:10px"><i data-lucide="check-circle-2" style="color:#A77BFF;margin-top:3px"></i><span data-i18n="cta.b3">Personalized recommendations</span></li>
+        </ul>
+      </div>
+
+      <form class="lead-form reveal d1" id="morLeadForm" novalidate data-source="corp_mor">
+        <div class="hp-field" aria-hidden="true">
+          <label for="hf-website">Website</label>
+          <input type="text" id="hf-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="hf-name" data-i18n="form.name">Name</label>
+          <input type="text" id="hf-name" name="name" required minlength="2" maxlength="100" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="hf-company" data-i18n="form.company">Company</label>
+          <input type="text" id="hf-company" name="company" required minlength="2" maxlength="120" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="hf-email" data-i18n="form.email">Corporate email</label>
+          <input type="email" id="hf-email" name="email" required maxlength="160" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="hf-whatsapp" data-i18n="form.whatsapp">WhatsApp</label>
+          <input type="tel" id="hf-whatsapp" name="whatsapp" maxlength="40" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="hf-sells" data-i18n="form.sells_latam">Sells in LATAM?</label>
+          <select id="hf-sells" name="sells_latam">
+            <option value="" data-i18n="form.select">Select…</option>
+            <option value="yes" data-i18n="form.yes">Yes</option>
+            <option value="no" data-i18n="form.no">No</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="hf-entity" data-i18n="form.has_br_entity">Entity in Brazil?</label>
+          <select id="hf-entity" name="has_br_entity">
+            <option value="" data-i18n="form.select">Select…</option>
+            <option value="yes" data-i18n="form.yes">Yes</option>
+            <option value="no" data-i18n="form.no">No</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label for="hf-message" data-i18n="form.message">Message</label>
+          <textarea id="hf-message" name="message" maxlength="500"></textarea>
+        </div>
+        <label class="terms">
+          <input type="checkbox" required>
+          <span data-i18n-html="form.terms">I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
+        </label>
+        <div class="submit-row">
+          <button type="submit" class="btn btn-accent">
+            <span data-i18n="form.submit">Send</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+      <div class="form-success" role="status" aria-live="polite">
+        <div class="check-ring"><i data-lucide="check"></i></div>
+        <div class="form-success-title" data-i18n="form.success.title">Got it. We're on it.</div>
+        <div class="form-success-sub" data-i18n="form.success.sub">An expert will reach out within one business day.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="../assets/wtm_branco.svg" alt="WTM">
+      <p class="versatylo" data-i18n="footer.tagline">empowering expansion.</p>
+      <div class="footer-meta-row">
+        <span data-i18n="footer.taxid">Tax ID: 20.711.662/0001-87</span><br>
+        <a href="mailto:we@wtm.international">we@wtm.international</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/wtm-international" aria-label="LinkedIn" target="_blank" rel="noopener"><i data-lucide="linkedin"></i></a>
+        <a href="https://www.instagram.com/wtm.international" aria-label="Instagram" target="_blank" rel="noopener"><i data-lucide="instagram"></i></a>
+        <a href="https://wa.me/" aria-label="WhatsApp" target="_blank" rel="noopener"><i data-lucide="message-circle"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.product">Product</h4>
+      <ul>
+        <li><a href="../mor/" data-i18n="footer.l.mor" data-keep-lang>Merchant of Record</a></li>
+        <li><a href="../home/#value" data-i18n="footer.l.benefits" data-keep-lang>Benefits</a></li>
+        <li><a href="../" data-i18n="footer.l.taxreform" data-keep-lang>Brazil tax reform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.company">Company</h4>
+      <ul>
+        <li><a href="../about/" data-i18n="footer.l.about" data-keep-lang>About</a></li>
+        <li><a href="#contact" data-i18n="footer.l.contact">Get in touch</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.legal">Legal</h4>
+      <ul>
+        <li><a href="../privacy/" data-i18n="footer.l.privacy" data-keep-lang>Privacy policy</a></li>
+        <li><a href="../privacy/#channel" data-i18n="footer.l.channel" data-keep-lang>Privacy channel</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span data-i18n-html="footer.copy">© YEAR WTM International. All rights reserved.</span>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="specialistModal" role="dialog" aria-modal="true" aria-labelledby="specialistModalTitle" hidden>
+  <div class="modal-card">
+    <button type="button" class="modal-close" aria-label="Close" data-modal-close><i data-lucide="x"></i></button>
+    <h3 class="modal-title" id="specialistModalTitle" data-i18n="modal.title">Get a consultation</h3>
+    <p class="modal-sub" data-i18n="modal.sub">Tell us about your LATAM operation and we'll come back within one business day.</p>
+    <form class="lead-form" id="modalLeadForm" novalidate data-source="corp_mor_modal">
+      <div class="hp-field" aria-hidden="true">
+        <label for="mf-website">Website</label>
+        <input type="text" id="mf-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="mf-name" data-i18n="form.name">Name</label>
+        <input type="text" id="mf-name" name="name" required minlength="2" maxlength="100" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="mf-company" data-i18n="form.company">Company</label>
+        <input type="text" id="mf-company" name="company" required minlength="2" maxlength="120" autocomplete="organization">
+      </div>
+      <div class="field field-full">
+        <label for="mf-email" data-i18n="form.email">Corporate email</label>
+        <input type="email" id="mf-email" name="email" required maxlength="160" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="mf-whatsapp" data-i18n="form.whatsapp">WhatsApp</label>
+        <input type="tel" id="mf-whatsapp" name="whatsapp" maxlength="40" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="mf-sells" data-i18n="form.sells_latam">Sells in LATAM?</label>
+        <select id="mf-sells" name="sells_latam">
+          <option value="" data-i18n="form.select">Select…</option>
+          <option value="yes" data-i18n="form.yes">Yes</option>
+          <option value="no" data-i18n="form.no">No</option>
+        </select>
+      </div>
+      <div class="field field-full">
+        <label for="mf-message" data-i18n="form.message">Message</label>
+        <textarea id="mf-message" name="message" maxlength="500"></textarea>
+      </div>
+      <label class="terms">
+        <input type="checkbox" required>
+        <span data-i18n-html="form.terms">I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
+      </label>
+      <div class="submit-row">
+        <button type="submit" class="btn btn-brand">
+          <span data-i18n="form.submit">Send</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="page-veil" id="pageVeil" aria-hidden="true"><div class="veil-mark"><i data-lucide="check"></i></div></div>
+
+<script>
+window.PAGE_SOURCE = 'corp_mor';
+window.I18N = {
+  en: {
+    'nav.home':'Home','nav.about':'About','nav.mor':'MoR','nav.tax-reform':'Tax reform','nav.cta':'Get a consultation',
+    'hero.eyebrow':'Merchant of Record · LATAM',
+    'hero.h1':'Local tax and payment experience <span class="accent">for your customers in LATAM.</span>',
+    'hero.lead':'Reduce CAC and boost LTV by offering a tailored payment experience across Latin America — without opening local entities or carrying tax liability.',
+    'hero.cta1':'Get a consultation <i data-lucide="arrow-right"></i>','hero.cta2':'See how it works',
+    'why.eyebrow':'Why WTM','why.h2':'Why SaaS, AI, cloud and other online service companies rely on WTM.',
+    'why.lead':'Backed by 20+ years of expertise in cross-border payments, compliance, pricing, negotiation, international taxation and local billing.',
+    'why1.title':'Sales journey','why1.body':'Simplify and accelerate the sales journey — remove tax friction from procurement and finance reviews.',
+    'why2.title':'Tax simplification','why2.body':'Cut tax handling complexity in LATAM — local invoices, withholding management and proper credit allocation.',
+    'why3.title':'Churn reduction','why3.body':'Reduce churn by offering clients their preferred local payment methods and billing in their currency.',
+    'why4.title':'Pricing personalization','why4.body':'Strategic pricing with local tax considerations baked in — protect margins without surprising customers.',
+    'why5.title':'Easier reconciliation','why5.body':'Consolidate multiple payments centrally — one reconciliation flow for the entire LATAM operation.',
+    'why6.title':'Local distribution','why6.body':'Reach local channels and resellers without setting up legal entities country by country.',
+    'proc.eyebrow':'How it works','proc.h2':'Meet our process.','proc.lead':'WTM serves as your Merchant of Record — managing all the complexities of local tax regulations so you stay focused on product and growth.',
+    'proc.buyer.label':'01 · Buyer','proc.buyer.title':'Local customer',
+    'proc.buyer.l1':'Cost-effective tax management','proc.buyer.l2':'Wider range of local payment options','proc.buyer.l3':'Pays in local currency','proc.buyer.l4':'Less bureaucracy at purchase','proc.buyer.l5':'Compliance assurance built in',
+    'proc.wtm.label':'02 · Merchant of Record','proc.wtm.title':'WTM',
+    'proc.wtm.l1':'Local billing & invoice issuance','proc.wtm.l2':'Payment processing in BRL/local FX','proc.wtm.l3':'Tax collection & remittance','proc.wtm.l4':'Full reporting & reconciliation','proc.wtm.l5':'Financial and tax risk mitigation',
+    'proc.seller.label':'03 · Seller','proc.seller.title':'Your business',
+    'proc.seller.l1':'Receives clean payment','proc.seller.l2':'Zero local tax liability','proc.seller.l3':'No local entity required','proc.seller.l4':'Lower churn from LATAM','proc.seller.l5':'Scales across the region',
+    'kb.eyebrow':'Key benefits','kb.h2':'Unlock growth for your company over a transparent transaction fee.',
+    'kb1.title':'Sales & ticket size up','kb1.body':'A local buying experience increases conversion and ARPU.',
+    'kb2.title':'Customer loyalty','kb2.body':'Compliant invoices, predictable costs and local support build trust.',
+    'kb3.title':'Sustained growth','kb3.body':'Scale across LATAM without adding entities, headcount or tax risk.',
+    'kb4.title':'Full compliance','kb4.body':'Solid operations with audit-ready reporting in every market.',
+    'kb.btn':'Get a consultation <i data-lucide="arrow-right"></i>',
+    'ind.eyebrow':'Industries','ind.h2':'Industries we are transforming.',
+    'ind.1':'Securitytech','ind.2':'Edtech','ind.3':'ERP software','ind.4':'Fintech','ind.5':'Legaltech','ind.6':'IT services','ind.7':'Your industry',
+    'mk.eyebrow':'Global presence','mk.h2':'Our presence across key markets.','mk.lead':'Operating where your customers need you — Americas, Europe and the Middle East.',
+    'mk.s1':'Companies served','mk.s2':'USD processed','mk.s3':'Saved/client/year',
+    'trust.eyebrow':'Trusted globally','trust.h2':'Connecting global clients.',
+    'testi.eyebrow':'Voices from our clients','testi.h2':'Our clients say about us.',
+    'testi1.quote':'The amounts saved are very significant — even a simple recommendation about which step to take makes a big difference for our operation.',
+    'testi1.name':'Gil Pletsch','testi1.role':'CEO, Quiron',
+    'testi2.quote':'Partnering with WTM gave us access to expertise that would have taken us years to build internally — and a structure ready to scale from day one.',
+    'testi2.name':'Thiago Schutz','testi2.role':'CEO, Silva Schutz Advogados',
+    'testi3.quote':'I recommend WTM whenever the conversation turns to international expansion — the depth of knowledge and willingness to share it stands out.',
+    'testi3.name':'Valmor Kerber','testi3.role':'Executive Director, AHK Brazil–Germany',
+    'cta.eyebrow':'Schedule a session','cta.h2':'Start a conversation with our experts now.',
+    'cta.lead':'A 45-minute session covering challenge identification, expert guidance and personalized recommendations.',
+    'cta.b1':'Challenge identification','cta.b2':'Expert guidance from cross-border specialists','cta.b3':'Personalized recommendations',
+    'form.name':'Name','form.company':'Company','form.email':'Corporate email','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'Sells in LATAM?','form.has_br_entity':'Entity in Brazil?','form.message':'Message',
+    'form.select':'Select…','form.yes':'Yes','form.no':'No','form.submit':'Send',
+    'form.terms':'I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.',
+    'form.success.title':"Got it. We're on it.",'form.success.sub':'An expert will reach out within one business day.',
+    'modal.title':'Get a consultation','modal.sub':"Tell us about your LATAM operation and we'll come back within one business day.",
+    'footer.tagline':'empowering expansion.','footer.taxid':'Tax ID: 20.711.662/0001-87',
+    'footer.h.product':'Product','footer.l.mor':'Merchant of Record','footer.l.benefits':'Benefits','footer.l.taxreform':'Brazil tax reform',
+    'footer.h.company':'Company','footer.l.about':'About','footer.l.contact':'Get in touch',
+    'footer.h.legal':'Legal','footer.l.privacy':'Privacy policy','footer.l.channel':'Privacy channel',
+    'footer.copy':'© YEAR WTM International. All rights reserved.'
+  },
+  pt: {
+    'nav.home':'Início','nav.about':'Sobre','nav.mor':'MoR','nav.tax-reform':'Reforma tributária','nav.cta':'Agende consultoria',
+    'hero.eyebrow':'Merchant of Record · LATAM',
+    'hero.h1':'Experiência local de tributação e pagamento <span class="accent">para seus clientes na LATAM.</span>',
+    'hero.lead':'Reduza o CAC e aumente o LTV oferecendo uma experiência de pagamento sob medida em toda a América Latina — sem abrir entidades locais nem carregar passivo tributário.',
+    'hero.cta1':'Agendar consultoria <i data-lucide="arrow-right"></i>','hero.cta2':'Como funciona',
+    'why.eyebrow':'Por que WTM','why.h2':'Por que empresas de SaaS, IA, cloud e outros serviços online confiam na WTM.',
+    'why.lead':'20+ anos de expertise em pagamentos cross-border, compliance, pricing, negociação, tributação internacional e faturamento local.',
+    'why1.title':'Jornada de vendas','why1.body':'Simplifique e acelere a jornada de vendas — tire a fricção tributária do crivo de procurement e finanças.',
+    'why2.title':'Simplificação tributária','why2.body':'Reduza a complexidade tributária na LATAM — faturas locais, retenções e alocação correta de créditos.',
+    'why3.title':'Redução de churn','why3.body':'Reduza o churn oferecendo aos clientes os meios de pagamento locais que eles preferem.',
+    'why4.title':'Pricing personalizado','why4.body':'Pricing estratégico já considerando os tributos locais — proteja margem sem surpreender o cliente.',
+    'why5.title':'Conciliação simples','why5.body':'Consolide múltiplos pagamentos em um único fluxo central de conciliação para toda a LATAM.',
+    'why6.title':'Distribuição local','why6.body':'Chegue a canais e revendas locais sem abrir entidades país por país.',
+    'proc.eyebrow':'Como funciona','proc.h2':'Conheça nosso processo.','proc.lead':'A WTM atua como seu Merchant of Record — gerenciando toda a complexidade tributária local para você focar em produto e crescimento.',
+    'proc.buyer.label':'01 · Comprador','proc.buyer.title':'Cliente local',
+    'proc.buyer.l1':'Gestão tributária mais eficiente','proc.buyer.l2':'Maior leque de meios de pagamento locais','proc.buyer.l3':'Paga em moeda local','proc.buyer.l4':'Menos burocracia na compra','proc.buyer.l5':'Garantia de compliance embutida',
+    'proc.wtm.label':'02 · Merchant of Record','proc.wtm.title':'WTM',
+    'proc.wtm.l1':'Faturamento e nota fiscal local','proc.wtm.l2':'Processamento em BRL / câmbio local','proc.wtm.l3':'Coleta e remessa de tributos','proc.wtm.l4':'Relatórios e conciliação completos','proc.wtm.l5':'Mitigação de riscos financeiros e fiscais',
+    'proc.seller.label':'03 · Vendedor','proc.seller.title':'Seu negócio',
+    'proc.seller.l1':'Recebe pagamento limpo','proc.seller.l2':'Zero passivo tributário local','proc.seller.l3':'Sem entidade local','proc.seller.l4':'Menor churn da LATAM','proc.seller.l5':'Escala por toda a região',
+    'kb.eyebrow':'Principais benefícios','kb.h2':'Desbloqueie crescimento com uma taxa de transação transparente.',
+    'kb1.title':'Mais vendas, ticket maior','kb1.body':'Uma experiência de compra local aumenta a conversão e o ARPU.',
+    'kb2.title':'Fidelização','kb2.body':'Notas conformes, custos previsíveis e suporte local geram confiança.',
+    'kb3.title':'Crescimento sustentado','kb3.body':'Escala na LATAM sem entidades, headcount nem risco tributário.',
+    'kb4.title':'Compliance total','kb4.body':'Operação sólida com relatórios prontos para auditoria em cada mercado.',
+    'kb.btn':'Agendar consultoria <i data-lucide="arrow-right"></i>',
+    'ind.eyebrow':'Setores','ind.h2':'Setores que estamos transformando.',
+    'ind.1':'Securitytech','ind.2':'Edtech','ind.3':'ERP','ind.4':'Fintech','ind.5':'Legaltech','ind.6':'Serviços de TI','ind.7':'Seu setor',
+    'mk.eyebrow':'Presença global','mk.h2':'Nossa presença nos principais mercados.','mk.lead':'Operando onde seus clientes precisam de você — Américas, Europa e Oriente Médio.',
+    'mk.s1':'Empresas atendidas','mk.s2':'USD processados','mk.s3':'Economizadas/cliente/ano',
+    'trust.eyebrow':'Confiança global','trust.h2':'Conectando clientes globais.',
+    'testi.eyebrow':'Vozes dos clientes','testi.h2':'O que dizem sobre a gente.',
+    'testi1.quote':'Os valores economizados são muito significativos — só indicar por qual caminho seguir já faz uma grande diferença para a operação.',
+    'testi1.name':'Gil Pletsch','testi1.role':'CEO, Quiron',
+    'testi2.quote':'A parceria com a WTM nos deu acesso a uma expertise que levaríamos anos para construir internamente — e a uma estrutura pronta para escalar desde o primeiro dia.',
+    'testi2.name':'Thiago Schutz','testi2.role':'CEO, Silva Schutz Advogados',
+    'testi3.quote':'Recomendo a WTM sempre que o assunto é expansão internacional — a profundidade do conhecimento e a vontade de compartilhar se destacam.',
+    'testi3.name':'Valmor Kerber','testi3.role':'Diretor Executivo, AHK Brasil–Alemanha',
+    'cta.eyebrow':'Agende uma sessão','cta.h2':'Inicie uma conversa com nossos especialistas agora.',
+    'cta.lead':'Uma sessão de 45 minutos cobrindo diagnóstico, orientação especializada e recomendações personalizadas.',
+    'cta.b1':'Diagnóstico do desafio','cta.b2':'Orientação de especialistas em cross-border','cta.b3':'Recomendações personalizadas',
+    'form.name':'Nome','form.company':'Empresa','form.email':'E-mail corporativo','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'Vende na LATAM?','form.has_br_entity':'Tem empresa no Brasil?','form.message':'Mensagem',
+    'form.select':'Selecione…','form.yes':'Sim','form.no':'Não','form.submit':'Enviar',
+    'form.terms':'Concordo com a <a href="../privacy/" data-keep-lang>política de privacidade</a> e em ser contatado pela WTM.',
+    'form.success.title':'Recebido. Já estamos cuidando.','form.success.sub':'Um especialista entrará em contato em até um dia útil.',
+    'modal.title':'Agendar consultoria','modal.sub':'Conte sobre sua operação na LATAM e retornaremos em até um dia útil.',
+    'footer.tagline':'expansão com poder.','footer.taxid':'CNPJ: 20.711.662/0001-87',
+    'footer.h.product':'Produto','footer.l.mor':'Merchant of Record','footer.l.benefits':'Benefícios','footer.l.taxreform':'Reforma tributária BR',
+    'footer.h.company':'Empresa','footer.l.about':'Sobre','footer.l.contact':'Fale conosco',
+    'footer.h.legal':'Legal','footer.l.privacy':'Política de privacidade','footer.l.channel':'Canal de privacidade',
+    'footer.copy':'© YEAR WTM International. Todos os direitos reservados.'
+  },
+  es: {
+    'nav.home':'Inicio','nav.about':'Sobre','nav.mor':'MoR','nav.tax-reform':'Reforma tributaria','nav.cta':'Agendar consultoría',
+    'hero.eyebrow':'Merchant of Record · LATAM',
+    'hero.h1':'Experiencia local de tributación y pago <span class="accent">para sus clientes en LATAM.</span>',
+    'hero.lead':'Reduzca el CAC y aumente el LTV ofreciendo una experiencia de pago a medida en toda América Latina — sin abrir entidades locales ni cargar pasivo tributario.',
+    'hero.cta1':'Agendar consultoría <i data-lucide="arrow-right"></i>','hero.cta2':'Cómo funciona',
+    'why.eyebrow':'Por qué WTM','why.h2':'Por qué empresas de SaaS, IA, cloud y otros servicios online confían en WTM.',
+    'why.lead':'20+ años de experiencia en pagos cross-border, compliance, pricing, negociación, tributación internacional y facturación local.',
+    'why1.title':'Recorrido de ventas','why1.body':'Simplifique y acelere el recorrido de ventas — quite la fricción tributaria de procurement y finanzas.',
+    'why2.title':'Simplificación tributaria','why2.body':'Reduzca la complejidad tributaria en LATAM — facturas locales, retenciones y asignación correcta de créditos.',
+    'why3.title':'Reducción de churn','why3.body':'Reduzca el churn ofreciendo a los clientes sus medios de pago locales preferidos.',
+    'why4.title':'Pricing personalizado','why4.body':'Pricing estratégico con consideraciones tributarias locales — proteja márgenes sin sorprender al cliente.',
+    'why5.title':'Conciliación más fácil','why5.body':'Consolide múltiples pagos en un único flujo central de conciliación para toda LATAM.',
+    'why6.title':'Distribución local','why6.body':'Llegue a canales y revendedores locales sin abrir entidades país por país.',
+    'proc.eyebrow':'Cómo funciona','proc.h2':'Conozca nuestro proceso.','proc.lead':'WTM actúa como su Merchant of Record — gestionando toda la complejidad tributaria local para que usted enfoque en producto y crecimiento.',
+    'proc.buyer.label':'01 · Comprador','proc.buyer.title':'Cliente local',
+    'proc.buyer.l1':'Gestión tributaria más eficiente','proc.buyer.l2':'Más medios de pago locales','proc.buyer.l3':'Paga en moneda local','proc.buyer.l4':'Menos burocracia en la compra','proc.buyer.l5':'Garantía de compliance incluida',
+    'proc.wtm.label':'02 · Merchant of Record','proc.wtm.title':'WTM',
+    'proc.wtm.l1':'Facturación y nota local','proc.wtm.l2':'Procesamiento en BRL / FX local','proc.wtm.l3':'Recaudación y remesa de impuestos','proc.wtm.l4':'Reportes y conciliación completos','proc.wtm.l5':'Mitigación de riesgo financiero y fiscal',
+    'proc.seller.label':'03 · Vendedor','proc.seller.title':'Su negocio',
+    'proc.seller.l1':'Recibe pago limpio','proc.seller.l2':'Cero pasivo tributario local','proc.seller.l3':'Sin entidad local','proc.seller.l4':'Menor churn de LATAM','proc.seller.l5':'Escala en toda la región',
+    'kb.eyebrow':'Beneficios clave','kb.h2':'Desbloquee crecimiento con una tarifa de transacción transparente.',
+    'kb1.title':'Más ventas y ticket','kb1.body':'Una experiencia de compra local aumenta la conversión y el ARPU.',
+    'kb2.title':'Fidelización','kb2.body':'Facturas conformes, costos predecibles y soporte local generan confianza.',
+    'kb3.title':'Crecimiento sostenido','kb3.body':'Escale en LATAM sin entidades, headcount ni riesgo tributario.',
+    'kb4.title':'Cumplimiento total','kb4.body':'Operación sólida con reportes listos para auditoría en cada mercado.',
+    'kb.btn':'Agendar consultoría <i data-lucide="arrow-right"></i>',
+    'ind.eyebrow':'Sectores','ind.h2':'Sectores que estamos transformando.',
+    'ind.1':'Securitytech','ind.2':'Edtech','ind.3':'ERP','ind.4':'Fintech','ind.5':'Legaltech','ind.6':'Servicios TI','ind.7':'Su sector',
+    'mk.eyebrow':'Presencia global','mk.h2':'Nuestra presencia en mercados clave.','mk.lead':'Operando donde sus clientes lo necesitan — Américas, Europa y Oriente Medio.',
+    'mk.s1':'Empresas atendidas','mk.s2':'USD procesados','mk.s3':'Ahorradas/cliente/año',
+    'trust.eyebrow':'Confianza global','trust.h2':'Conectando clientes globales.',
+    'testi.eyebrow':'Voces de los clientes','testi.h2':'Lo que dicen de nosotros.',
+    'testi1.quote':'Los montos ahorrados son muy significativos — incluso indicar por qué camino ir hace una gran diferencia para nuestra operación.',
+    'testi1.name':'Gil Pletsch','testi1.role':'CEO, Quiron',
+    'testi2.quote':'Asociarnos con WTM nos dio acceso a una experiencia que nos tomaría años construir internamente — y una estructura lista para escalar desde el primer día.',
+    'testi2.name':'Thiago Schutz','testi2.role':'CEO, Silva Schutz Advogados',
+    'testi3.quote':'Recomiendo a WTM cada vez que se habla de expansión internacional — su profundidad de conocimiento y disposición a compartir se destacan.',
+    'testi3.name':'Valmor Kerber','testi3.role':'Director Ejecutivo, AHK Brasil–Alemania',
+    'cta.eyebrow':'Agende una sesión','cta.h2':'Inicie una conversación con nuestros expertos ahora.',
+    'cta.lead':'Una sesión de 45 minutos sobre diagnóstico, orientación experta y recomendaciones personalizadas.',
+    'cta.b1':'Diagnóstico del desafío','cta.b2':'Orientación experta en cross-border','cta.b3':'Recomendaciones personalizadas',
+    'form.name':'Nombre','form.company':'Empresa','form.email':'Correo corporativo','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'¿Vende en LATAM?','form.has_br_entity':'¿Empresa en Brasil?','form.message':'Mensaje',
+    'form.select':'Seleccionar…','form.yes':'Sí','form.no':'No','form.submit':'Enviar',
+    'form.terms':'Acepto la <a href="../privacy/" data-keep-lang>política de privacidad</a> y ser contactado por WTM.',
+    'form.success.title':'Recibido. Ya estamos en ello.','form.success.sub':'Un experto se pondrá en contacto en un día hábil.',
+    'modal.title':'Agendar consultoría','modal.sub':'Cuéntenos sobre su operación LATAM y volveremos en un día hábil.',
+    'footer.tagline':'expansión con poder.','footer.taxid':'NIF: 20.711.662/0001-87',
+    'footer.h.product':'Producto','footer.l.mor':'Merchant of Record','footer.l.benefits':'Beneficios','footer.l.taxreform':'Reforma tributaria BR',
+    'footer.h.company':'Empresa','footer.l.about':'Sobre','footer.l.contact':'Hablemos',
+    'footer.h.legal':'Legal','footer.l.privacy':'Política de privacidad','footer.l.channel':'Canal de privacidad',
+    'footer.copy':'© YEAR WTM International. Todos los derechos reservados.'
+  }
+};
+</script>
+<script src="../shared/shared.js"></script>
+</body>
+</html>

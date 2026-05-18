@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WTM — Cross-border payments, compliance & tax for global expansion</title>
+<meta name="description" content="WTM simplifies and consolidates services and software negotiations worldwide — cross-border payments, compliance, pricing, negotiation and international taxation, in local currency.">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../shared/shared.css">
+<style>
+  /* Page-specific accents — keep tokens, only layout overrides here */
+  .home-hero .hero-visual img { max-height: 520px; }
+
+  .vp-section { background: var(--bg-soft); }
+  .vp-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+  .global-section { padding-bottom: clamp(120px, 14vw, 200px); }
+  .globe-wrap { margin-top: 56px; position: relative; }
+  .globe-wrap img { width: 100%; max-width: 900px; margin: 0 auto; opacity: .9; }
+  .globe-stat {
+    position: relative; margin-top: -24px;
+    display: grid; grid-template-columns: repeat(2, 1fr); max-width: 520px; margin-left: auto; margin-right: auto;
+    gap: 0;
+    border: 1px solid rgba(255, 255, 255, .18); border-radius: var(--r-md); overflow: hidden;
+    background: rgba(5, 5, 5, .35); backdrop-filter: blur(8px);
+  }
+  .globe-stat .stat-cell { padding: 22px 18px; }
+
+  .testi-section { background: #fff; }
+  .trust-section { background: var(--bg-soft); }
+  .trust-section .h-section { text-align: center; }
+  .trust-section .lead { margin: 14px auto 56px; text-align: center; }
+
+  .cta-section { color: #fff; }
+  .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .cta-section h2 { color: #fff; }
+  @media (max-width: 980px) { .cta-grid { grid-template-columns: 1fr; gap: 40px; } }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMQ4F0DBTR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-FMQ4F0DBTR', { anonymize_ip: true });
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../home/" class="nav-logo" aria-label="WTM home" data-keep-lang>
+      <img src="../assets/wtm_color.svg" alt="WTM">
+    </a>
+    <div class="nav-links">
+      <a href="../home/" data-page="home" data-i18n="nav.home" data-keep-lang>Home</a>
+      <a href="../about/" data-page="about" data-i18n="nav.about" data-keep-lang>About</a>
+      <a href="../mor/" data-page="mor" data-i18n="nav.mor" data-keep-lang>MoR</a>
+      <a href="../" data-i18n="nav.tax-reform" data-keep-lang>Tax reform</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+      </div>
+      <a href="#" class="btn btn-brand js-open-modal" style="padding:10px 20px;font-size:13px" data-i18n="nav.cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero home-hero" id="top">
+  <div class="hero-photo"></div>
+  <div class="hero-scrim"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow" data-i18n="hero.eyebrow">Cross-border payments &amp; compliance · 20+ years</div>
+      <h1 class="h-display" data-i18n-html="hero.h1">
+        Simplify and consolidate your services and software negotiations <span class="accent">around the world.</span>
+      </h1>
+      <p class="hero-lead" data-i18n="hero.lead">
+        Management of cross-border payments, compliance, pricing, negotiation and international taxation — without the bureaucracy.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-accent js-open-modal" data-i18n-html="hero.cta1">Speak to an expert <i data-lucide="arrow-right"></i></a>
+        <a href="../mor/" class="btn btn-ghost-light" data-i18n="hero.cta2" data-keep-lang>Explore MoR</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="../assets/mor-hero-glass.webp" alt="WTM cross-border product visualization" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- ─── VALUE PROPS ─── -->
+<section class="section vp-section" id="value">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="vp.eyebrow">Why WTM</div>
+      <h2 class="h-section" data-i18n="vp.h2">Local currency payment and receipt experience — without the bureaucracy.</h2>
+      <p class="lead" data-i18n="vp.lead">For service sellers and buyers operating across borders.</p>
+    </div>
+    <div class="vp-grid">
+      <article class="feature-card reveal d1">
+        <div class="ic"><i data-lucide="globe"></i></div>
+        <h3 class="h-card" data-i18n="vp1.title">Local currency</h3>
+        <p data-i18n="vp1.body">Conduct business in national currency, avoiding exchange rate complications and FX friction at every transaction.</p>
+      </article>
+      <article class="feature-card reveal d2">
+        <div class="ic"><i data-lucide="trending-up"></i></div>
+        <h3 class="h-card" data-i18n="vp2.title">Increased sales</h3>
+        <p data-i18n="vp2.body">Grow revenue and reduce customer churn through strengthened, locally compliant payment relationships.</p>
+      </article>
+      <article class="feature-card reveal d3">
+        <div class="ic"><i data-lucide="layers"></i></div>
+        <h3 class="h-card" data-i18n="vp3.title">Easier reconciliation</h3>
+        <p data-i18n="vp3.body">Streamlined procedures and one consolidated billing layer — improving operational clarity across geographies.</p>
+      </article>
+      <article class="feature-card reveal d4">
+        <div class="ic"><i data-lucide="percent"></i></div>
+        <h3 class="h-card" data-i18n="vp4.title">Tax cost reduction</h3>
+        <p data-i18n="vp4.body">Up to 20% tactical tax burden reduction through structured local billing and proper credit allocation.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── THINK GLOBAL ─── -->
+<section class="section section-deep global-section" id="global">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="eyebrow eyebrow-light" style="justify-content:center" data-i18n="globe.eyebrow">Global presence</div>
+      <h2 class="h-section" data-i18n="globe.h2">Think global.</h2>
+      <p class="lead" style="margin-left:auto;margin-right:auto;text-align:center" data-i18n="globe.lead">We are expanding and transforming business around the world.</p>
+    </div>
+    <div class="globe-wrap reveal">
+      <img src="../assets/world-map.webp" alt="WTM global presence map">
+      <div class="globe-stat">
+        <div class="stat-cell">
+          <span class="stat-num">4,200<span>+</span></span>
+          <span class="stat-label" data-i18n="globe.s1">Customers acquired</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">20<span>+</span></span>
+          <span class="stat-label" data-i18n="globe.s2">Years of expertise</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="section testi-section" id="testimonials">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="testi.eyebrow">Voices from our clients</div>
+      <h2 class="h-section" data-i18n="testi.h2">We learn a lot from you.</h2>
+    </div>
+    <div class="testimonial-grid">
+      <article class="testimonial reveal d1">
+        <p class="testimonial-quote" data-i18n="testi1.quote">The amounts saved are very significant — even a simple recommendation about which step to take makes a big difference for our operation.</p>
+        <div class="testimonial-author">
+          <img src="../assets/gil-pletsch.webp" alt="Gil Pletsch">
+          <div class="who"><b data-i18n="testi1.name">Gil Pletsch</b><span data-i18n="testi1.role">CEO, Quiron</span></div>
+        </div>
+      </article>
+      <article class="testimonial reveal d2">
+        <p class="testimonial-quote" data-i18n="testi2.quote">WTM combines real LATAM expertise with a smooth, professional process — they remove the friction we used to face entering new markets.</p>
+        <div class="testimonial-author">
+          <img src="../assets/orlando-mazzotta.webp" alt="Orlando Mazzotta">
+          <div class="who"><b data-i18n="testi2.name">Orlando Mazzotta</b><span data-i18n="testi2.role">VP Sales &amp; Success, Veriff</span></div>
+        </div>
+      </article>
+      <article class="testimonial reveal d3">
+        <p class="testimonial-quote" data-i18n="testi3.quote">I recommend WTM whenever the conversation turns to international expansion — their depth of knowledge and willingness to share it stands out.</p>
+        <div class="testimonial-author">
+          <img src="../assets/valmor-kerber.webp" alt="Valmor Kerber">
+          <div class="who"><b data-i18n="testi3.name">Valmor Kerber</b><span data-i18n="testi3.role">Executive Director, AHK Brazil–Germany</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUSTED GLOBALLY ─── -->
+<section class="section trust-section" id="trusted">
+  <div class="section-inner">
+    <div class="eyebrow" style="justify-content:center;display:flex" data-i18n="trust.eyebrow">Trusted globally</div>
+    <h2 class="h-section" data-i18n="trust.h2">Connecting global clients.</h2>
+    <p class="lead" data-i18n="trust.lead">A growing ecosystem of partners and clients who chose WTM to expand across borders.</p>
+    <div class="logo-wall reveal" style="margin-top:48px">
+      <div class="logo-cell">Veriff</div>
+      <div class="logo-cell">Deel</div>
+      <div class="logo-cell">Omie</div>
+      <div class="logo-cell">Quiron</div>
+      <div class="logo-cell">AHK</div>
+      <div class="logo-cell">Involves</div>
+      <div class="logo-cell">+ 4,200</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA / CONTACT FORM ─── -->
+<section class="section section-dark cta-section" id="contact">
+  <div class="section-inner">
+    <div class="cta-grid">
+      <div class="reveal">
+        <div class="eyebrow eyebrow-violet" data-i18n="cta.eyebrow">Talk to us</div>
+        <h2 class="h-section" style="margin-top:18px" data-i18n="cta.h2">Start a conversation with our experts now.</h2>
+        <p class="lead" data-i18n="cta.lead" style="margin-top:18px">Tell us where you sell and we'll come back within one business day with a tailored expansion plan.</p>
+        <ul style="margin-top:28px;list-style:none;display:flex;flex-direction:column;gap:14px;color:rgba(236,236,238,.78);font-size:14px;line-height:1.6">
+          <li style="display:flex;gap:10px"><i data-lucide="check-circle-2" style="color:#A77BFF;margin-top:3px"></i><span data-i18n="cta.b1">Challenge identification &amp; exposure assessment</span></li>
+          <li style="display:flex;gap:10px"><i data-lucide="check-circle-2" style="color:#A77BFF;margin-top:3px"></i><span data-i18n="cta.b2">Expert guidance from cross-border specialists</span></li>
+          <li style="display:flex;gap:10px"><i data-lucide="check-circle-2" style="color:#A77BFF;margin-top:3px"></i><span data-i18n="cta.b3">Personalized recommendations for your business</span></li>
+        </ul>
+      </div>
+
+      <form class="lead-form reveal d1" id="homeLeadForm" novalidate data-source="corp_home">
+        <div class="hp-field" aria-hidden="true">
+          <label for="hf-website">Website</label>
+          <input type="text" id="hf-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="hf-name" data-i18n="form.name">Name</label>
+          <input type="text" id="hf-name" name="name" required minlength="2" maxlength="100" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="hf-company" data-i18n="form.company">Company</label>
+          <input type="text" id="hf-company" name="company" required minlength="2" maxlength="120" autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="hf-email" data-i18n="form.email">Corporate email</label>
+          <input type="email" id="hf-email" name="email" required maxlength="160" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="hf-whatsapp" data-i18n="form.whatsapp">WhatsApp</label>
+          <input type="tel" id="hf-whatsapp" name="whatsapp" maxlength="40" autocomplete="tel" placeholder="+1 555 000 0000">
+        </div>
+        <div class="field">
+          <label for="hf-sells" data-i18n="form.sells_latam">Does your company sell in LATAM?</label>
+          <select id="hf-sells" name="sells_latam">
+            <option value="" data-i18n="form.select">Select…</option>
+            <option value="yes" data-i18n="form.yes">Yes</option>
+            <option value="no" data-i18n="form.no">No</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="hf-entity" data-i18n="form.has_br_entity">Do you have a company in Brazil?</label>
+          <select id="hf-entity" name="has_br_entity">
+            <option value="" data-i18n="form.select">Select…</option>
+            <option value="yes" data-i18n="form.yes">Yes</option>
+            <option value="no" data-i18n="form.no">No</option>
+          </select>
+        </div>
+        <div class="field field-full">
+          <label for="hf-message" data-i18n="form.message">Message</label>
+          <textarea id="hf-message" name="message" maxlength="500"></textarea>
+        </div>
+        <label class="terms">
+          <input type="checkbox" required>
+          <span data-i18n-html="form.terms">I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
+        </label>
+        <div class="submit-row">
+          <button type="submit" class="btn btn-accent">
+            <span data-i18n="form.submit">Send</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+      <div class="form-success" role="status" aria-live="polite">
+        <div class="check-ring"><i data-lucide="check"></i></div>
+        <div class="form-success-title" data-i18n="form.success.title">Got it. We're on it.</div>
+        <div class="form-success-sub" data-i18n="form.success.sub">An expert will reach out within one business day.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="../assets/wtm_branco.svg" alt="WTM">
+      <p class="versatylo" data-i18n="footer.tagline">empowering expansion.</p>
+      <div class="footer-meta-row">
+        <span data-i18n="footer.taxid">Tax ID: 20.711.662/0001-87</span><br>
+        <a href="mailto:we@wtm.international">we@wtm.international</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/wtm-international" aria-label="LinkedIn" target="_blank" rel="noopener"><i data-lucide="linkedin"></i></a>
+        <a href="https://www.instagram.com/wtm.international" aria-label="Instagram" target="_blank" rel="noopener"><i data-lucide="instagram"></i></a>
+        <a href="https://wa.me/" aria-label="WhatsApp" target="_blank" rel="noopener"><i data-lucide="message-circle"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.product">Product</h4>
+      <ul>
+        <li><a href="../mor/" data-i18n="footer.l.mor" data-keep-lang>Merchant of Record</a></li>
+        <li><a href="../home/#value" data-i18n="footer.l.benefits" data-keep-lang>Benefits</a></li>
+        <li><a href="../" data-i18n="footer.l.taxreform" data-keep-lang>Brazil tax reform</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.company">Company</h4>
+      <ul>
+        <li><a href="../about/" data-i18n="footer.l.about" data-keep-lang>About</a></li>
+        <li><a href="#contact" data-i18n="footer.l.contact">Get in touch</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 data-i18n="footer.h.legal">Legal</h4>
+      <ul>
+        <li><a href="../privacy/" data-i18n="footer.l.privacy" data-keep-lang>Privacy policy</a></li>
+        <li><a href="../privacy/#channel" data-i18n="footer.l.channel" data-keep-lang>Privacy channel</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-base">
+    <span data-i18n-html="footer.copy">© YEAR WTM International. All rights reserved.</span>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <span class="on" data-lang="en">EN</span><span data-lang="pt">PT</span><span data-lang="es">ES</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── MODAL ─── -->
+<div class="modal-overlay" id="specialistModal" role="dialog" aria-modal="true" aria-labelledby="specialistModalTitle" hidden>
+  <div class="modal-card">
+    <button type="button" class="modal-close" aria-label="Close" data-modal-close><i data-lucide="x"></i></button>
+    <h3 class="modal-title" id="specialistModalTitle" data-i18n="modal.title">Speak to an expert</h3>
+    <p class="modal-sub" data-i18n="modal.sub">Tell us about your business and we'll come back within one business day.</p>
+    <form class="lead-form" id="modalLeadForm" novalidate data-source="corp_home_modal">
+      <div class="hp-field" aria-hidden="true">
+        <label for="mf-website">Website</label>
+        <input type="text" id="mf-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="mf-name" data-i18n="form.name">Name</label>
+        <input type="text" id="mf-name" name="name" required minlength="2" maxlength="100" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="mf-company" data-i18n="form.company">Company</label>
+        <input type="text" id="mf-company" name="company" required minlength="2" maxlength="120" autocomplete="organization">
+      </div>
+      <div class="field field-full">
+        <label for="mf-email" data-i18n="form.email">Corporate email</label>
+        <input type="email" id="mf-email" name="email" required maxlength="160" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="mf-whatsapp" data-i18n="form.whatsapp">WhatsApp</label>
+        <input type="tel" id="mf-whatsapp" name="whatsapp" maxlength="40" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="mf-sells" data-i18n="form.sells_latam">Sells in LATAM?</label>
+        <select id="mf-sells" name="sells_latam">
+          <option value="" data-i18n="form.select">Select…</option>
+          <option value="yes" data-i18n="form.yes">Yes</option>
+          <option value="no" data-i18n="form.no">No</option>
+        </select>
+      </div>
+      <div class="field field-full">
+        <label for="mf-message" data-i18n="form.message">Message</label>
+        <textarea id="mf-message" name="message" maxlength="500"></textarea>
+      </div>
+      <label class="terms">
+        <input type="checkbox" required>
+        <span data-i18n-html="form.terms">I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
+      </label>
+      <div class="submit-row">
+        <button type="submit" class="btn btn-brand">
+          <span data-i18n="form.submit">Send</span>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Page veil -->
+<div class="page-veil" id="pageVeil" aria-hidden="true">
+  <div class="veil-mark"><i data-lucide="check"></i></div>
+</div>
+
+<script>
+window.PAGE_SOURCE = 'corp_home';
+window.I18N = {
+  en: {
+    'nav.home':'Home','nav.about':'About','nav.mor':'MoR','nav.tax-reform':'Tax reform','nav.cta':'Get in touch',
+    'hero.eyebrow':'Cross-border payments & compliance · 20+ years',
+    'hero.h1':'Simplify and consolidate your services and software negotiations <span class="accent">around the world.</span>',
+    'hero.lead':'Management of cross-border payments, compliance, pricing, negotiation and international taxation — without the bureaucracy.',
+    'hero.cta1':'Speak to an expert <i data-lucide="arrow-right"></i>','hero.cta2':'Explore MoR',
+    'vp.eyebrow':'Why WTM','vp.h2':'Local currency payment and receipt experience — without the bureaucracy.','vp.lead':'For service sellers and buyers operating across borders.',
+    'vp1.title':'Local currency','vp1.body':'Conduct business in national currency, avoiding exchange rate complications and FX friction at every transaction.',
+    'vp2.title':'Increased sales','vp2.body':'Grow revenue and reduce customer churn through strengthened, locally compliant payment relationships.',
+    'vp3.title':'Easier reconciliation','vp3.body':'Streamlined procedures and one consolidated billing layer — improving operational clarity across geographies.',
+    'vp4.title':'Tax cost reduction','vp4.body':'Up to 20% tactical tax burden reduction through structured local billing and proper credit allocation.',
+    'globe.eyebrow':'Global presence','globe.h2':'Think global.','globe.lead':'We are expanding and transforming business around the world.',
+    'globe.s1':'Customers acquired','globe.s2':'Years of expertise',
+    'testi.eyebrow':'Voices from our clients','testi.h2':'We learn a lot from you.',
+    'testi1.quote':'The amounts saved are very significant — even a simple recommendation about which step to take makes a big difference for our operation.',
+    'testi1.name':'Gil Pletsch','testi1.role':'CEO, Quiron',
+    'testi2.quote':'WTM combines real LATAM expertise with a smooth, professional process — they remove the friction we used to face entering new markets.',
+    'testi2.name':'Orlando Mazzotta','testi2.role':'VP Sales & Success, Veriff',
+    'testi3.quote':'I recommend WTM whenever the conversation turns to international expansion — their depth of knowledge and willingness to share it stands out.',
+    'testi3.name':'Valmor Kerber','testi3.role':'Executive Director, AHK Brazil–Germany',
+    'trust.eyebrow':'Trusted globally','trust.h2':'Connecting global clients.','trust.lead':'A growing ecosystem of partners and clients who chose WTM to expand across borders.',
+    'cta.eyebrow':'Talk to us','cta.h2':'Start a conversation with our experts now.',
+    'cta.lead':"Tell us where you sell and we'll come back within one business day with a tailored expansion plan.",
+    'cta.b1':'Challenge identification & exposure assessment','cta.b2':'Expert guidance from cross-border specialists','cta.b3':'Personalized recommendations for your business',
+    'form.name':'Name','form.company':'Company','form.email':'Corporate email','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'Does your company sell in LATAM?','form.has_br_entity':'Do you have a company in Brazil?',
+    'form.message':'Message','form.select':'Select…','form.yes':'Yes','form.no':'No','form.submit':'Send',
+    'form.terms':'I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.',
+    'form.success.title':"Got it. We're on it.",'form.success.sub':'An expert will reach out within one business day.',
+    'modal.title':'Speak to an expert','modal.sub':"Tell us about your business and we'll come back within one business day.",
+    'footer.tagline':'empowering expansion.','footer.taxid':'Tax ID: 20.711.662/0001-87',
+    'footer.h.product':'Product','footer.l.mor':'Merchant of Record','footer.l.benefits':'Benefits','footer.l.taxreform':'Brazil tax reform',
+    'footer.h.company':'Company','footer.l.about':'About','footer.l.contact':'Get in touch',
+    'footer.h.legal':'Legal','footer.l.privacy':'Privacy policy','footer.l.channel':'Privacy channel',
+    'footer.copy':'© YEAR WTM International. All rights reserved.'
+  },
+  pt: {
+    'nav.home':'Início','nav.about':'Sobre','nav.mor':'MoR','nav.tax-reform':'Reforma tributária','nav.cta':'Fale conosco',
+    'hero.eyebrow':'Pagamentos cross-border & compliance · 20+ anos',
+    'hero.h1':'Simplifique e consolide suas negociações de serviços e software <span class="accent">em todo o mundo.</span>',
+    'hero.lead':'Gestão de pagamentos cross-border, compliance, pricing, negociação e tributação internacional — sem burocracia.',
+    'hero.cta1':'Falar com um especialista <i data-lucide="arrow-right"></i>','hero.cta2':'Conhecer o MoR',
+    'vp.eyebrow':'Por que WTM','vp.h2':'Experiência de pagamento e recebimento em moeda local — sem burocracia.','vp.lead':'Para quem vende ou compra serviços através das fronteiras.',
+    'vp1.title':'Moeda local','vp1.body':'Faça negócios na moeda nacional, evitando complicações cambiais e fricção em cada transação.',
+    'vp2.title':'Mais vendas','vp2.body':'Aumente a receita e reduza o churn fortalecendo a relação com pagamentos localmente conformes.',
+    'vp3.title':'Conciliação simples','vp3.body':'Processos simplificados e uma camada única de faturamento — clareza operacional em todas as geografias.',
+    'vp4.title':'Redução tributária','vp4.body':'Até 20% de redução tática na carga tributária com faturamento local estruturado e alocação correta de créditos.',
+    'globe.eyebrow':'Presença global','globe.h2':'Pense global.','globe.lead':'Expandindo e transformando negócios pelo mundo.',
+    'globe.s1':'Clientes conquistados','globe.s2':'Anos de expertise',
+    'testi.eyebrow':'A voz dos nossos clientes','testi.h2':'A gente aprende muito com você.',
+    'testi1.quote':'Os valores economizados são muito significativos — só indicar por qual caminho seguir já faz uma grande diferença para a operação.',
+    'testi1.name':'Gil Pletsch','testi1.role':'CEO, Quiron',
+    'testi2.quote':'A WTM combina expertise real em LATAM com um processo fluido e profissional — eles tiram a fricção que tínhamos ao entrar em novos mercados.',
+    'testi2.name':'Orlando Mazzotta','testi2.role':'VP Vendas & Sucesso, Veriff',
+    'testi3.quote':'Recomendo a WTM sempre que o assunto é expansão internacional — a profundidade do conhecimento e a vontade de compartilhar se destacam.',
+    'testi3.name':'Valmor Kerber','testi3.role':'Diretor Executivo, AHK Brasil–Alemanha',
+    'trust.eyebrow':'Confiados globalmente','trust.h2':'Conectando clientes globais.','trust.lead':'Um ecossistema crescente de parceiros e clientes que escolheram a WTM para expandir.',
+    'cta.eyebrow':'Fale com a gente','cta.h2':'Inicie uma conversa com nossos especialistas agora.',
+    'cta.lead':'Conte onde você vende e retornaremos em até um dia útil com um plano sob medida.',
+    'cta.b1':'Identificação de desafios e análise de exposição','cta.b2':'Orientação de especialistas em cross-border','cta.b3':'Recomendações personalizadas para o seu negócio',
+    'form.name':'Nome','form.company':'Empresa','form.email':'E-mail corporativo','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'Sua empresa vende na LATAM?','form.has_br_entity':'Tem empresa no Brasil?',
+    'form.message':'Mensagem','form.select':'Selecione…','form.yes':'Sim','form.no':'Não','form.submit':'Enviar',
+    'form.terms':'Concordo com a <a href="../privacy/" data-keep-lang>política de privacidade</a> e em ser contatado pela WTM.',
+    'form.success.title':'Recebido. Já estamos cuidando.','form.success.sub':'Um especialista entrará em contato em até um dia útil.',
+    'modal.title':'Falar com um especialista','modal.sub':'Conte sobre seu negócio e retornaremos em até um dia útil.',
+    'footer.tagline':'expansão com poder.','footer.taxid':'CNPJ: 20.711.662/0001-87',
+    'footer.h.product':'Produto','footer.l.mor':'Merchant of Record','footer.l.benefits':'Benefícios','footer.l.taxreform':'Reforma tributária BR',
+    'footer.h.company':'Empresa','footer.l.about':'Sobre','footer.l.contact':'Fale conosco',
+    'footer.h.legal':'Legal','footer.l.privacy':'Política de privacidade','footer.l.channel':'Canal de privacidade',
+    'footer.copy':'© YEAR WTM International. Todos os direitos reservados.'
+  },
+  es: {
+    'nav.home':'Inicio','nav.about':'Sobre','nav.mor':'MoR','nav.tax-reform':'Reforma tributaria','nav.cta':'Hablemos',
+    'hero.eyebrow':'Pagos cross-border y compliance · 20+ años',
+    'hero.h1':'Simplifique y consolide sus negociaciones de servicios y software <span class="accent">en todo el mundo.</span>',
+    'hero.lead':'Gestión de pagos cross-border, compliance, pricing, negociación y tributación internacional — sin burocracia.',
+    'hero.cta1':'Hablar con un especialista <i data-lucide="arrow-right"></i>','hero.cta2':'Conocer el MoR',
+    'vp.eyebrow':'Por qué WTM','vp.h2':'Experiencia de pago y cobro en moneda local — sin burocracia.','vp.lead':'Para quien vende o compra servicios entre países.',
+    'vp1.title':'Moneda local','vp1.body':'Opere en moneda nacional, evitando complicaciones cambiarias y fricción en cada transacción.',
+    'vp2.title':'Más ventas','vp2.body':'Aumente los ingresos y reduzca el churn fortaleciendo la relación con pagos localmente conformes.',
+    'vp3.title':'Conciliación fácil','vp3.body':'Procesos simplificados y una capa de facturación consolidada — claridad operativa en todas las geografías.',
+    'vp4.title':'Reducción tributaria','vp4.body':'Hasta un 20% de reducción táctica de la carga tributaria con facturación local estructurada y asignación correcta de créditos.',
+    'globe.eyebrow':'Presencia global','globe.h2':'Piense global.','globe.lead':'Expandiendo y transformando negocios en todo el mundo.',
+    'globe.s1':'Clientes adquiridos','globe.s2':'Años de experiencia',
+    'testi.eyebrow':'La voz de nuestros clientes','testi.h2':'Aprendemos mucho de usted.',
+    'testi1.quote':'Los montos ahorrados son muy significativos — incluso indicar por qué camino ir hace una gran diferencia para nuestra operación.',
+    'testi1.name':'Gil Pletsch','testi1.role':'CEO, Quiron',
+    'testi2.quote':'WTM combina experiencia real en LATAM con un proceso fluido y profesional — eliminan la fricción que teníamos al entrar en nuevos mercados.',
+    'testi2.name':'Orlando Mazzotta','testi2.role':'VP Ventas y Éxito, Veriff',
+    'testi3.quote':'Recomiendo a WTM cada vez que se habla de expansión internacional — su profundidad de conocimiento y disposición a compartir se destacan.',
+    'testi3.name':'Valmor Kerber','testi3.role':'Director Ejecutivo, AHK Brasil–Alemania',
+    'trust.eyebrow':'Confiados globalmente','trust.h2':'Conectando clientes globales.','trust.lead':'Un ecosistema creciente de socios y clientes que eligieron a WTM para expandirse.',
+    'cta.eyebrow':'Hablemos','cta.h2':'Inicie una conversación con nuestros expertos ahora.',
+    'cta.lead':'Cuéntenos dónde vende y volveremos en un día hábil con un plan a medida.',
+    'cta.b1':'Identificación de desafíos y análisis de exposición','cta.b2':'Orientación experta en cross-border','cta.b3':'Recomendaciones personalizadas para su negocio',
+    'form.name':'Nombre','form.company':'Empresa','form.email':'Correo corporativo','form.whatsapp':'WhatsApp',
+    'form.sells_latam':'¿Su empresa vende en LATAM?','form.has_br_entity':'¿Tiene empresa en Brasil?',
+    'form.message':'Mensaje','form.select':'Seleccionar…','form.yes':'Sí','form.no':'No','form.submit':'Enviar',
+    'form.terms':'Acepto la <a href="../privacy/" data-keep-lang>política de privacidad</a> y ser contactado por WTM.',
+    'form.success.title':'Recibido. Ya estamos en ello.','form.success.sub':'Un experto se pondrá en contacto en un día hábil.',
+    'modal.title':'Hablar con un especialista','modal.sub':'Cuéntenos sobre su negocio y volveremos en un día hábil.',
+    'footer.tagline':'expansión con poder.','footer.taxid':'NIF: 20.711.662/0001-87',
+    'footer.h.product':'Producto','footer.l.mor':'Merchant of Record','footer.l.benefits':'Beneficios','footer.l.taxreform':'Reforma tributaria BR',
+    'footer.h.company':'Empresa','footer.l.about':'Sobre','footer.l.contact':'Hablemos',
+    'footer.h.legal':'Legal','footer.l.privacy':'Política de privacidad','footer.l.channel':'Canal de privacidad',
+    'footer.copy':'© YEAR WTM International. Todos los derechos reservados.'
+  }
+};
+</script>
+<script src="../shared/shared.js"></script>
+</body>
+</html>

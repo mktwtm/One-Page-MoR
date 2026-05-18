@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# Scope: tax-reform landing page only (wtm/index.html).
+# The corporate-site pages (home, about, mor, privacy) ship i18n inline
+# via `window.I18N` and do NOT need this script.
 import sys, re
 sys.stdout.reconfigure(encoding='utf-8')
 
