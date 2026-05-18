@@ -27,7 +27,11 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/about/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/mor/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8765/privacy/)",
-      "Bash(pkill -f \"http.server 8765\")"
+      "Bash(pkill -f \"http.server 8765\")",
+      "Skill(superpowers:systematic-debugging)",
+      "Skill(superpowers:systematic-debugging:*)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}\\\\n' http://localhost:8765/__TRACKED_VAR__/)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}\\\\n' http://localhost:8765/assets/logos/__TRACKED_VAR__.png)"
     ]
   }
 }

@@ -340,6 +340,75 @@ a { color: inherit; text-decoration: none; }
 }
 .logo-cell:hover { border-color: var(--border); color: var(--fg-muted); }
 
+/* ---------- 9b. LOGO MARQUEE (auto-scrolling carousel) ---------- */
+.logo-marquee-wrap {
+  margin-top: 32px;
+}
+.logo-marquee-label {
+  display: block;
+  text-align: center;
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--fg-soft);
+  margin-bottom: 18px;
+}
+.logo-marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  /* Soft fade-out on the edges so logos appear/disappear gracefully */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+.logo-marquee-track {
+  display: flex;
+  gap: 64px;
+  width: max-content;
+  padding: 8px 0;
+  animation: marquee-scroll 36s linear infinite;
+}
+.logo-marquee:hover .logo-marquee-track { animation-play-state: paused; }
+.logo-marquee-track img {
+  height: 44px; width: auto; flex-shrink: 0;
+  opacity: .85;
+  transition: opacity var(--dur-base) var(--ease-out), filter var(--dur-base) var(--ease-out);
+}
+.logo-marquee-track img:hover { opacity: 1; }
+
+/* Dark-section variant: invert + raise opacity */
+.section-dark .logo-marquee-track img,
+.section-deep .logo-marquee-track img,
+.dark .logo-marquee-track img {
+  filter: brightness(0) invert(1);
+  opacity: .75;
+}
+.section-dark .logo-marquee-track img:hover,
+.section-deep .logo-marquee-track img:hover,
+.dark .logo-marquee-track img:hover { opacity: 1; }
+.section-dark .logo-marquee-label,
+.section-deep .logo-marquee-label { color: rgba(236, 236, 238, .55); }
+.section-dark .logo-marquee,
+.section-deep .logo-marquee {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee-track { animation: none; }
+  .logo-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none; mask-image: none;
+  }
+}
+@media (max-width: 720px) {
+  .logo-marquee-track { gap: 40px; }
+  .logo-marquee-track img { height: 34px; }
+}
+
 /* ---------- 10. CHIPS / TAGS ---------- */
 .chip-row { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
