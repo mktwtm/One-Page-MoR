@@ -28,9 +28,10 @@
   .globe-stat .stat-cell { padding: 22px 18px; }
 
   .testi-section { background: #fff; }
-  .trust-section { background: var(--bg-soft); }
-  .trust-section .h-section { text-align: center; }
-  .trust-section .lead { margin: 14px auto 56px; text-align: center; }
+  .trust-section { background: var(--wtm-ink); color: #fff; padding-top: clamp(64px, 7vw, 96px); padding-bottom: clamp(64px, 7vw, 96px); }
+  .trust-section .eyebrow { color: rgba(236, 236, 238, .55); }
+  .trust-section .h-section { text-align: center; color: #fff; }
+  .trust-section .lead { margin: 14px auto 40px; text-align: center; color: rgba(236, 236, 238, .75); }
 
   .cta-section { color: #fff; }
   .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
@@ -58,7 +59,7 @@
     </a>
     <div class="nav-links">
       <a href="../home/" data-page="home" data-i18n="nav.home" data-keep-lang>Home</a>
-      <a href="../about/" data-page="about" data-i18n="nav.about" data-keep-lang>About</a>
+      <a href="../about-page/" data-page="about" data-i18n="nav.about" data-keep-lang>About</a>
       <a href="../mor/" data-page="mor" data-i18n="nav.mor" data-keep-lang>MoR</a>
       <a href="../" data-i18n="nav.tax-reform" data-keep-lang>Tax reform</a>
     </div>
@@ -186,7 +187,7 @@
 </section>
 
 <!-- ─── TRUSTED GLOBALLY ─── -->
-<section class="section trust-section" id="trusted">
+<section class="section section-dark trust-section" id="trusted">
   <div class="section-inner">
     <div class="eyebrow" style="justify-content:center;display:flex" data-i18n="trust.eyebrow">Trusted globally</div>
     <h2 class="h-section" data-i18n="trust.h2">Connecting global clients.</h2>
@@ -291,7 +292,7 @@
         </div>
         <label class="terms">
           <input type="checkbox" required>
-          <span data-i18n-html="form.terms">I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
+          <span data-i18n-html="form.terms">I agree to the <a href="../privacy-policy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
         </label>
         <div class="submit-row">
           <button type="submit" class="btn btn-accent">
@@ -344,15 +345,15 @@
     <div class="footer-col">
       <h4 data-i18n="footer.h.company">Company</h4>
       <ul>
-        <li><a href="../about/" data-i18n="footer.l.about" data-keep-lang>About</a></li>
+        <li><a href="../about-page/" data-i18n="footer.l.about" data-keep-lang>About</a></li>
         <li><a href="#contact" data-i18n="footer.l.contact">Get in touch</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4 data-i18n="footer.h.legal">Legal</h4>
       <ul>
-        <li><a href="../privacy/" data-i18n="footer.l.privacy" data-keep-lang>Privacy policy</a></li>
-        <li><a href="../privacy/#channel" data-i18n="footer.l.channel" data-keep-lang>Privacy channel</a></li>
+        <li><a href="../privacy-policy/" data-i18n="footer.l.privacy" data-keep-lang>Privacy policy</a></li>
+        <li><a href="../privacy-policy/#channel" data-i18n="footer.l.channel" data-keep-lang>Privacy channel</a></li>
       </ul>
     </div>
   </div>
@@ -405,7 +406,7 @@
       </div>
       <label class="terms">
         <input type="checkbox" required>
-        <span data-i18n-html="form.terms">I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
+        <span data-i18n-html="form.terms">I agree to the <a href="../privacy-policy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.</span>
       </label>
       <div class="submit-row">
         <button type="submit" class="btn btn-brand">
@@ -453,7 +454,7 @@ window.I18N = {
     'form.name':'Name','form.company':'Company','form.email':'Corporate email','form.whatsapp':'WhatsApp',
     'form.sells_latam':'Does your company sell in LATAM?','form.has_br_entity':'Do you have a company in Brazil?',
     'form.message':'Message','form.select':'Select…','form.yes':'Yes','form.no':'No','form.submit':'Send',
-    'form.terms':'I agree to the <a href="../privacy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.',
+    'form.terms':'I agree to the <a href="../privacy-policy/" data-keep-lang>privacy policy</a> and to be contacted by WTM.',
     'form.success.title':"Got it. We're on it.",'form.success.sub':'An expert will reach out within one business day.',
     'modal.title':'Speak to an expert','modal.sub':"Tell us about your business and we'll come back within one business day.",
     'footer.tagline':'empowering expansion.','footer.taxid':'Tax ID: 20.711.662/0001-87',
@@ -490,7 +491,7 @@ window.I18N = {
     'form.name':'Nome','form.company':'Empresa','form.email':'E-mail corporativo','form.whatsapp':'WhatsApp',
     'form.sells_latam':'Sua empresa vende na LATAM?','form.has_br_entity':'Tem empresa no Brasil?',
     'form.message':'Mensagem','form.select':'Selecione…','form.yes':'Sim','form.no':'Não','form.submit':'Enviar',
-    'form.terms':'Concordo com a <a href="../privacy/" data-keep-lang>política de privacidade</a> e em ser contatado pela WTM.',
+    'form.terms':'Concordo com a <a href="../privacy-policy/" data-keep-lang>política de privacidade</a> e em ser contatado pela WTM.',
     'form.success.title':'Recebido. Já estamos cuidando.','form.success.sub':'Um especialista entrará em contato em até um dia útil.',
     'modal.title':'Falar com um especialista','modal.sub':'Conte sobre seu negócio e retornaremos em até um dia útil.',
     'footer.tagline':'expansão com poder.','footer.taxid':'CNPJ: 20.711.662/0001-87',
@@ -527,7 +528,7 @@ window.I18N = {
     'form.name':'Nombre','form.company':'Empresa','form.email':'Correo corporativo','form.whatsapp':'WhatsApp',
     'form.sells_latam':'¿Su empresa vende en LATAM?','form.has_br_entity':'¿Tiene empresa en Brasil?',
     'form.message':'Mensaje','form.select':'Seleccionar…','form.yes':'Sí','form.no':'No','form.submit':'Enviar',
-    'form.terms':'Acepto la <a href="../privacy/" data-keep-lang>política de privacidad</a> y ser contactado por WTM.',
+    'form.terms':'Acepto la <a href="../privacy-policy/" data-keep-lang>política de privacidad</a> y ser contactado por WTM.',
     'form.success.title':'Recibido. Ya estamos en ello.','form.success.sub':'Un experto se pondrá en contacto en un día hábil.',
     'modal.title':'Hablar con un especialista','modal.sub':'Cuéntenos sobre su negocio y volveremos en un día hábil.',
     'footer.tagline':'expansión con poder.','footer.taxid':'NIF: 20.711.662/0001-87',

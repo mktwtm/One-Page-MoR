@@ -1,8 +1,12 @@
-# Pretty URLs for corporate site
-/home      /home/index.html      200
-/about     /about/index.html     200
-/mor       /mor/index.html       200
-/privacy   /privacy/index.html   200
+# Pretty URLs for corporate site (match wtm.international original slugs)
+/home              /home/index.html              200
+/about-page       /about-page/index.html        200
+/mor               /mor/index.html               200
+/privacy-policy   /privacy-policy/index.html    200
+
+# Legacy slug redirects (in case old links exist)
+/about            /about-page/                  301
+/privacy          /privacy-policy/              301
 
 # SPA fallback for the tax-reform landing
 /*  /index.html  404

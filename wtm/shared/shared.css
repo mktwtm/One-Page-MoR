@@ -597,8 +597,18 @@ a { color: inherit; text-decoration: none; }
   gap: 48px;
   align-items: flex-start;
 }
-.footer-brand { display: flex; flex-direction: column; gap: 14px; max-width: 320px; }
-.footer-brand img { height: 32px; width: auto; }
+.footer-brand {
+  display: flex; flex-direction: column;
+  align-items: flex-start;
+  gap: 14px; max-width: 320px;
+}
+.footer-brand img {
+  height: 44px; width: auto;
+  /* The wtm_branco SVG has internal padding around the wordmark.
+     Nudge it left so the visual edge aligns with the text/links column. */
+  margin-left: -4px;
+  display: block;
+}
 .footer-brand .versatylo { font-size: 1.4rem; color: rgba(255, 255, 255, .85); }
 .footer-brand .footer-meta-row {
   font-size: 13px; color: rgba(236, 236, 238, .55); line-height: 1.6; margin-top: 6px;
